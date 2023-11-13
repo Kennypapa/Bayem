@@ -1,11 +1,9 @@
-// import { initFlowbite } from 'flowbite';
+
 import { useEffect } from 'react';
 const Navbar = () => {
-    // useEffect(() => {
-    //     initFlowbite();
-    // })
+
     return (
-        <div className=" h-[90px] w-full flex justify-between items-center bg-white pl-6 pr-10 top-0 fixed z-40 shadow-md">
+        <div className=" h-[70px] w-full flex justify-between items-center bg-white pl-6 pr-10 top-0 fixed z-40">
             <div className="w-[200px]">
                 <img src="assets/img/logos/Bayem-Logo.png" alt="logo" />
             </div>
