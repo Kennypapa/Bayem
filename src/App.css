@@ -1,38 +1,158 @@
-.App {
+body {
+  background: #e3edf7;
+}
+.btn-pri {
+  background: #7878ff;
+}
+
+.btn-pri:before {
+  background: #7878ff;
+}
+
+.btn-pri:after {
+  background: #7878ff;
+}
+
+.btn-pri:hover {
+  color: #7878ff;
+  border: 2px solid #7878ff;
+}
+
+.btn-theme {
+  color: #fff;
   text-align: center;
+  border: 2px solid transparent;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  transition: all 0.7s ease;
+  border-radius: 3px;
+  font-size: 17px;
+  font-weight: 400;
+  font-family: "Jost", sans-serif;
+}
+.btn-theme:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.7s ease;
+  z-index: -1;
+  border-radius: 3px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.btn-theme:after {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.7s ease;
+  z-index: -1;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.btn-theme:hover {
+  background: transparent;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.btn-theme:hover:before {
+  width: 0;
+  opacity: 1;
+  visibility: visible;
+}
+
+.btn-theme:hover:after {
+  width: 0;
+  opacity: 1;
+  visibility: visible;
+}
+
+.btn-lg {
+  padding: 0 50px;
+  line-height: 46px;
+}
+
+.btn {
+  box-shadow: none !important;
+}
+
+.btn-md {
+  padding: 0 45px;
+  line-height: 41px;
+}
+
+.btn-pri {
+  background: #7878ff;
+}
+
+.btn-pri:before {
+  background: #7878ff;
+}
+
+.btn-pri:after {
+  background: #7878ff;
+}
+
+.btn-pri:hover {
+  color: #7878ff;
+  border: 2px solid #7878ff;
+}
+
+/*=====================*/
+.accordion {
+  margin: 60px auto;
+  width: 600px;
+}
+
+.accordion li {
+  list-style: none;
+  width: 100%;
+  margin: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #e3edf7;
+  background: #e3edf7;
+  box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
+    6px 6px 10px -1px rgba(255, 255, 255, 0.7);
+}
+.accordion li label {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+label::before {
+  content: "+";
+  margin-right: 10px;
+  font-size: 24px;
+  font-weight: 600;
+}
+input[type="radio"] {
+  display: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.accordion .content {
+  color: #555;
+  padding: 0 10px;
+  line-height: 26px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s, padding 0.5s;
+}
+.accordion input[type="radio"]:checked + label + .content {
+  max-height: 400px;
+  padding: 10px 10px 20px;
+}
+.accordion input[type="radio"]:checked + label::before{
+  content: "-";
 }
