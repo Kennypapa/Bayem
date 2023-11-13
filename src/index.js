@@ -6,15 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from './components/auth/login';
 import Dashboard from './pages/dashboard';
-
+import Roles from './pages/roles/index';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="" element={<App />} >
-          <Route path="/login" element={<Login/>} />
-          <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/roles" element={<Roles />} />
         </Route>
       </Routes>
     </BrowserRouter>
