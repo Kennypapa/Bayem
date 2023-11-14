@@ -6,7 +6,9 @@ import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../firebase.config";
 const Roles = () => {
     const [roles, setRoles] = useState([]);
-
+    
+    const [title, setTitle] = useState("");
+    const [id, setId] = useState("");
     //=== referencing to particular collection in firestore
     const usersCollectionRef = collection(db, "roles");
     useEffect(() => {
@@ -21,11 +23,15 @@ const Roles = () => {
         }, 200);
     };
 
+    const handleEdit = (id,title) => {
+      setTitle(title);
+      setId(id);
+    }
+    
 
     return (
         <div className="e_pages">
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg px-3 bg-white">
-
                 <div className="flex justify-between items-center py-3">
                     <p className=" font-semibold text-lg">
                         Roles
@@ -49,7 +55,6 @@ const Roles = () => {
                         </tr>
                     </thead>
                     <tbody>
-
                         {
                             roles.map((role) => {
                                 return (
@@ -59,9 +64,13 @@ const Roles = () => {
                                         </th>
 
                                         <td className="flex items-center px-6 py-3">
-                                            <i className="fa-solid fa-pen-to-square text-[#174b09] mr-4 cursor-pointer" data-modal-target="static-modal" data-modal-toggle="static-modal"
-                                            ></i>
 
+                                            <button 
+                                            onClick={() => handleEdit(role.id, role.title)} data-modal-target="static-modal" 
+                                            data-modal-toggle="static-modal">
+                                                <i className="fa-solid fa-pen-to-square text-[#174b09] mr-4 cursor-pointer"
+                                                ></i>
+                                            </button>
 
                                             <i className="fa-solid fa-eye mr-4"></i>
                                             <a><i className="fa-solid fa-trash text-[#f44269] text-lg"></i></a>
@@ -75,8 +84,7 @@ const Roles = () => {
                 </table>
 
             </div>
-
-            <EditModal />
+            <EditModal  editTitle={title} userId={id} setEditTitle={setTitle}/>
             <CreateModal />
 
 
