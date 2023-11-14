@@ -1,5 +1,6 @@
 body{
     font-family: 'Roboto', sans-serif!important;
+    background-color: #d3d3d30d;
 }
 .s_btn[aria-selected="true"] {
     background-color:#d3d3d363;
@@ -12,6 +13,7 @@ body{
 }
 
 .e_pages{
-    margin-left: 206px;
-    margin-top: 91px;
+    margin-left: 236px;
+    margin-right: 40px;
+    margin-top: 111px;
 }
