@@ -59,7 +59,7 @@ const Roles = () => {
                                         </th>
 
                                         <td className="flex items-center px-6 py-3">
-                                            <i className="fa-solid fa-pen-to-square text-[#174b09] mr-4 cursor-pointer" data-modal-target="default-modal" data-modal-toggle="default-modal"
+                                            <i className="fa-solid fa-pen-to-square text-[#174b09] mr-4 cursor-pointer" data-modal-target="static-modal" data-modal-toggle="static-modal"
                                             ></i>
 
 
