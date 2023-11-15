@@ -2,19 +2,23 @@ import { initFlowbite } from "flowbite";
 import { useEffect, useState } from "react";
 import EditModal from './edit-modal';
 import CreateModal from './create-modal';
+import DeleteModal from "./delete-modal";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../firebase.config";
 const Roles = () => {
+
     const [roles, setRoles] = useState([]);
-    
     const [title, setTitle] = useState("");
     const [id, setId] = useState("");
-    //=== referencing to particular collection in firestore
+    const [deleteId, setDeleteId] = useState("");
+
+    //=== Referencing to particular collection in firestore
     const usersCollectionRef = collection(db, "roles");
     useEffect(() => {
         getRoles();
     }, []);
 
+    //=======Get Roles Handler====//
     const getRoles = async () => {
         const data = await getDocs(usersCollectionRef);
         setRoles(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -23,12 +27,17 @@ const Roles = () => {
         }, 200);
     };
 
-    const handleEdit = (id,title) => {
-      setTitle(title);
-      setId(id);
+    //=========Edit Handler ======//
+    const handleEdit = (id, title) => {
+        setTitle(title);
+        setId(id);
     }
-    
 
+
+    //===== DeleteHandler ====//
+    const handleDelete = async (id) => {
+       setDeleteId(id)
+    }
     return (
         <div className="e_pages">
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg px-3 bg-white">
@@ -65,15 +74,21 @@ const Roles = () => {
 
                                         <td className="flex items-center px-6 py-3">
 
-                                            <button 
-                                            onClick={() => handleEdit(role.id, role.title)} data-modal-target="static-modal" 
-                                            data-modal-toggle="static-modal">
+                                            <button
+                                                onClick={() => handleEdit(role.id, role.title)} data-modal-target="static-modal"
+                                                data-modal-toggle="static-modal">
                                                 <i className="fa-solid fa-pen-to-square text-[#174b09] mr-4 cursor-pointer"
                                                 ></i>
                                             </button>
 
                                             <i className="fa-solid fa-eye mr-4"></i>
-                                            <a><i className="fa-solid fa-trash text-[#f44269] text-lg"></i></a>
+                                            <button
+                                            onClick={() => handleDelete(role.id)}
+                                                data-modal-target="popup-modal"
+                                                data-modal-toggle="popup-modal"
+                                            >
+                                                <i className="fa-solid fa-trash text-[#f44269] text-lg"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 )
@@ -84,11 +99,10 @@ const Roles = () => {
                 </table>
 
             </div>
-            <EditModal  editTitle={title} userId={id} setEditTitle={setTitle}/>
+         
+            <EditModal editTitle={title} userId={id} setEditTitle={setTitle}  />
             <CreateModal />
-
-
-
+            <DeleteModal deleteId={deleteId} />
         </div>
     )
 }
