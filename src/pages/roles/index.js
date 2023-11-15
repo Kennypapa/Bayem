@@ -95,14 +95,13 @@ const Roles = () => {
                             })
                         }
                     </tbody>
-
                 </table>
-
             </div>
          
-            <EditModal editTitle={title} userId={id} setEditTitle={setTitle}  />
-            <CreateModal />
-            <DeleteModal deleteId={deleteId} />
+
+            <EditModal editTitle={title} userId={id} setEditTitle={setTitle} getRoles={getRoles}  />
+            <CreateModal getRoles={getRoles} />
+            <DeleteModal deleteId={deleteId} getRoles={getRoles}/>
         </div>
     )
 }

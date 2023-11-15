@@ -27,8 +27,13 @@ const EditModal = (props) => {
         setTimeout(() => {
             setSuccess(false);
         }, 3000)
-       
+
     };
+
+    //========== refresh the roles ====//
+    const handleRefresh = () => {
+        props.getRoles();
+    }
     return (
         <div>
             <div
@@ -57,6 +62,7 @@ const EditModal = (props) => {
                                 }
 
                                 <button
+                                    onClick={handleRefresh}
                                     type="button"
                                     className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                                     data-modal-hide="static-modal"
@@ -83,7 +89,7 @@ const EditModal = (props) => {
                         {/* Modal body */}
                         {
                             success ? <div className="px-4 py-2.5 mb-1 text-sm text-green-800 bg-green-50 " role="alert">
-                             Role Edited <span className="font-medium">Successfully!</span>
+                                Role Edited <span className="font-medium">Successfully!</span>
                             </div> : null
                         }
                         {
