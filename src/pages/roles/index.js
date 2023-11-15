@@ -1,107 +1,134 @@
-import { initFlowbite } from "flowbite";
+import { Modal } from "flowbite";
 import { useEffect, useState } from "react";
 import EditModal from './edit-modal';
 import CreateModal from './create-modal';
 import DeleteModal from "./delete-modal";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../firebase.config";
-const Roles = () => {
-
+import DataTable from "react-data-table-component";
+const Roles = (props) => {
+    const [modal, setShowModal] = useState(false);
     const [roles, setRoles] = useState([]);
     const [title, setTitle] = useState("");
     const [id, setId] = useState("");
     const [deleteId, setDeleteId] = useState("");
+    const [showSuccessNotif, setShowSuccessNotif] = useState("");
 
     //=== Referencing to particular collection in firestore
     const usersCollectionRef = collection(db, "roles");
+
     useEffect(() => {
         getRoles();
+
+        setShowModal(
+            new Modal(document.querySelector("#static-modal"), {
+                backdrop: "dynamic",
+                backdropClasses: "bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40",
+                closable: true,
+            })
+        )
     }, []);
 
     //=======Get Roles Handler====//
     const getRoles = async () => {
         const data = await getDocs(usersCollectionRef);
         setRoles(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        setTimeout(() => {
-            initFlowbite();
-        }, 200);
     };
 
     //=========Edit Handler ======//
     const handleEdit = (id, title) => {
         setTitle(title);
         setId(id);
+        modal.show();
+    }
+
+    //===== DeleteHandler ====//    
+    const handleDelete = async (id) => {
+        setDeleteId(id)
+    }
+
+    //======== successHandler ====//
+    const successNotif = (success) => {
+        setShowSuccessNotif(success);
     }
 
 
-    //===== DeleteHandler ====//
-    const handleDelete = async (id) => {
-       setDeleteId(id)
+    //==============Table Columns && Rows ============//
+    const columns = [
+        {
+            name: "Title",
+            selector: (row) => row.title
+        },
+        {
+            name: "Actions",
+            cell: (row) => (
+                <div className="inline-flex rounded-md py-2" role="group">
+                    <button onClick={() => handleEdit(row.id, row.title)}
+                        type="button" className="px-3 py-1 text-sm font-medium text-gray-900 border border-gray-100 rounded-s-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent">
+                        <i className="fa-solid fa-pen-to-square text-[#0e90c6] cursor-pointer"
+                        ></i>
+                    </button>
+                    <button type="button" className="px-3 py-1 text-sm font-medium text-gray-900 border-t border-b  border-gray-100 hover:bg-[#d3d3d324] focus:z-10 focus:ring-0">
+                        <i className="fa-solid fa-eye text-[#03543f]"></i>
+                    </button>
+                    <button onClick={() => handleDelete(row.id)} data-modal-target="popup-modal"
+                        data-modal-toggle="popup-modal" type="button" className="px-3 py-1 text-sm font-medium text-gray-900 border border-gray-100 rounded-e-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0">
+                        <i className="fa-solid fa-trash text-[#f44269] text-lg"></i>
+                    </button>
+                </div>
+            )
+        }
+    ]
+
+    const tableHeaderstyle = {
+        headCells:{
+            style:{
+               fontWeight:"bold",
+               fontSize: "16px",
+         
+            },
+        }
     }
     return (
-        <div className="e_pages">
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg px-3 bg-white">
-                <div className="flex justify-between items-center py-3">
-                    <p className=" font-semibold text-lg">
-                        Roles
-                    </p>
-                    <div>
-                        <button data-modal-target="default-modal" data-modal-toggle="default-modal" className="bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150 text-sm w-[150px] h-[40px]">
-                            Create New Role <i className="fa-solid pl-2 fa-circle-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-white">
-                        <tr>
-                            <th scope="col" className="pr-6 pl-4 py-3">
-                                Title
-                            </th>
+        <div className="e_pages pb-20">
+            <div className="">
+           
+            <DataTable 
+            columns={columns} 
+            fixedHeader 
+            isSortable
+            customStyles={tableHeaderstyle}
+            data={roles} 
+            pagination 
+            subHeader
+            subHeaderComponent={
+                <input
+                type="text"
+                id="search"
+                placeholder="Search..."
+                className="bg-gray-50 w-25 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
 
-                            <th scope="col" className="px-6 py-3">
-                                Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            roles.map((role) => {
-                                return (
-                                    <tr className="bg-white border-b border-b-gray-100 hover:bg-gray-50" key={role.id}>
-                                        <th scope="row" className="pr-6 pl-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {role.title}
-                                        </th>
-
-                                        <td className="flex items-center px-6 py-3">
-
-                                            <button
-                                                onClick={() => handleEdit(role.id, role.title)} data-modal-target="static-modal"
-                                                data-modal-toggle="static-modal">
-                                                <i className="fa-solid fa-pen-to-square text-[#174b09] mr-4 cursor-pointer"
-                                                ></i>
-                                            </button>
-
-                                            <i className="fa-solid fa-eye mr-4"></i>
-                                            <button
-                                            onClick={() => handleDelete(role.id)}
-                                                data-modal-target="popup-modal"
-                                                data-modal-toggle="popup-modal"
-                                            >
-                                                <i className="fa-solid fa-trash text-[#f44269] text-lg"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </table>
-            </div>
-         
-
-            <EditModal editTitle={title} userId={id} setEditTitle={setTitle} getRoles={getRoles}  />
+            />
+            }
+           
+            />
+             </div>
+            <EditModal successNotif={successNotif} modal={modal} editTitle={title} userId={id} setEditTitle={setTitle} getRoles={getRoles} />
             <CreateModal getRoles={getRoles} />
-            <DeleteModal deleteId={deleteId} getRoles={getRoles}/>
+            <DeleteModal deleteId={deleteId} getRoles={getRoles} />
+            {
+                showSuccessNotif && (
+                    <div className="absolute bottom-18 z-40 right-10 px-4 h-[55px] mb-1 text-sm text-green-800 bg-green-200 w-[300px] flex justify-start items-center" role="alert">
+                        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                        </svg>
+                        <span className="font-medium pl-2"> Role Edited  Successfully!</span>
+
+                    </div>
+                )
+            }
+
+
         </div>
     )
 }

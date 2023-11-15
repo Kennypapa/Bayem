@@ -12,7 +12,7 @@ const Sidebar = () => {
                     </li>
                     <li className='mb-3'>
                         <Link
-                            className='flex justify-start items-center pl-5 bg-gray-100 s_btn border-r-[#103d15] border-r-2 w-full'
+                            className='flex justify-start items-center pl-5 hover:bg-gray-100 s_btn hover:border-r-[#103d15] hover:border-r-2 w-full'
                             to="/roles">
                             <i className="fa-solid fa-list text-[#103d15]"></i>
                             <p className='text-[#6b7280] pl-3 text-left text-base py-2 hover:bg-gray-100 '> Roles</p>

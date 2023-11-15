@@ -9,6 +9,7 @@ const EditModal = (props) => {
     const [error, setError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+
     //===== Update Handler ==========//
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -24,15 +25,18 @@ const EditModal = (props) => {
         await updateDoc(updateData, { title: props.editTitle })
         setIsLoading(false);
         setSuccess(true);
+        props.modal.hide();
+        props.getRoles();
         setTimeout(() => {
             setSuccess(false);
-        }, 3000)
-
+        }, 4000)
     };
+    props.successNotif(success);
 
     //========== refresh the roles ====//
     const handleRefresh = () => {
         props.getRoles();
+        props.modal.hide();
     }
     return (
         <div>
@@ -87,11 +91,7 @@ const EditModal = (props) => {
                             </div>
                         </div>
                         {/* Modal body */}
-                        {
-                            success ? <div className="px-4 py-2.5 mb-1 text-sm text-green-800 bg-green-50 " role="alert">
-                                Role Edited <span className="font-medium">Successfully!</span>
-                            </div> : null
-                        }
+
                         {
                             error ?
                                 <div className="px-4 py-2.5 mb-1 text-sm text-red-800 bg-red-50" role="alert">
@@ -113,16 +113,16 @@ const EditModal = (props) => {
                                     <input
                                         value={props.editTitle}
                                         onChange={(e) => props.setEditTitle(e.target.value)}
-                                        type="title"
+                                        type="text"
                                         id="email"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
 
                                     />
                                 </div>
-                                <div className="flex items-center rounded-b">
+                                <div className="flex items-center rounded-b w-full">
                                     <button
                                         type="submit"
-                                        className="text-white bg-[#103d15] hover:bg-[#ff9c40] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center"
+                                        className="text-white bg-[#103d15] hover:bg-[#ff9c40] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center w-full"
                                     >
                                         Submit
                                     </button>
