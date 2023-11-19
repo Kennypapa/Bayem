@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from './components/auth/login';
 import Dashboard from './pages/dashboard';
 import Roles from './pages/roles/index';
+import ProtectedLayout from './components/protectedLayout';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -14,8 +15,10 @@ root.render(
       <Routes>
         <Route path="" element={<App />} >
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/roles" element={<Roles />} />
+          <Route path="" element={<ProtectedLayout />} >
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="roles" element={<Roles />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

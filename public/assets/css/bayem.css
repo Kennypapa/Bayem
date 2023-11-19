@@ -15,8 +15,21 @@ body{
 .e_pages{
     margin-left: 236px;
     margin-right: 40px;
-    margin-top: 111px;
+    margin-top: 101px;
 }
 .goZmTm{
     padding-top: 16px!important;
+    padding-left: 17px!important;
+
+}
+
+
+
+/*===========Queries ===========*/
+@media only  screen and (max-width: 766px) {
+    .e_pages{
+        margin-left:24px;
+        margin-right: 24px;
+        margin-top: 101px;
+    } 
 }

@@ -1,39 +1,38 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from "react";
 import { auth } from '../../firebase.config';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, redirect } from 'react-router-dom';
 const Login = () => {
-    const [email, setEmail] = useState("daramolakehinde339@gmail.com");
+    const [email, setEmail] = useState("daramolakehinde340@gmail.com");
     const [password, setPassword] = useState("kennyd");
     const navigate = useNavigate();
     const Swal = require("sweetalert2");
-
     // LOGIN HANDLER
     const loginHandler = (e) => {
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
-                Swal.fire({
-                    title: 'Logged in Successfully',
-                    text: "Do you want to continue",
-                    icon: "success",
-                    confirmButtonText: "Cool",
-                });
-                navigate("/dashboard");
-                console.log(user);
+            .then((userCredentials) => {
+                localStorage.setItem('tokenId', JSON.stringify(userCredentials._tokenResponse.idToken));
+                const user = localStorage.getItem('tokenId');
+                if (user) {
+                    navigate('/dashboard');
+                    Swal.fire({
+                        title: "User Allowed",
+                        text: "Do you want to continue",
+                        icon: "success",
+                        confirmButtonText: "OK",
+                    });
+                }
             }).catch((error) => {
-                console.log(error);
-                const errorCode = error.code;
                 Swal.fire({
-                    title: errorCode,
+                    title: error.message,
                     text: "Do you want to continue",
                     icon: "error",
                     confirmButtonText: "OK",
                 });
             })
     }
+
     return (
         <div className="login-38">
             <div className="container-fluid">

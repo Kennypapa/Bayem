@@ -91,7 +91,6 @@ const EditModal = (props) => {
                             </div>
                         </div>
                         {/* Modal body */}
-
                         {
                             error ?
                                 <div className="px-4 py-2.5 mb-1 text-sm text-red-800 bg-red-50" role="alert">
@@ -100,7 +99,6 @@ const EditModal = (props) => {
                                 :
                                 null
                         }   <div className="px-4 md:p-5">
-
 
                             <form onSubmit={handleUpdate}>
                                 <div className="mb-4">
