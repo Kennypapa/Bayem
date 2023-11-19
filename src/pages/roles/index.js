@@ -17,6 +17,7 @@ const Roles = (props) => {
     const [showSuccessNotif, setShowSuccessNotif] = useState("");
     const [createNotif, setCreateNotif] = useState("");
     const [deleteNotif, setDeleteNotif] = useState("");
+    const [search, setSearch] = useState("");
     //=== Referencing to particular collection in firestore
     const usersCollectionRef = collection(db, "roles");
 
@@ -78,7 +79,7 @@ const Roles = (props) => {
     }
     //=========== delete Notif ======//
     const handleDeleteNotif = (success) => {
-      setDeleteNotif(success)
+        setDeleteNotif(success)
     }
 
     //==============Table Columns && Rows ============//
@@ -86,6 +87,10 @@ const Roles = (props) => {
         {
             name: "Title",
             selector: (row) => row.title
+        },
+        {
+            name: 'CreatedAt',
+            selector: (row) => row.createdAt
         },
         {
             name: "Actions",
@@ -96,7 +101,7 @@ const Roles = (props) => {
                         <i className="fa-solid fa-pen-to-square text-[#0e90c6] cursor-pointer text-[15px]"
                         ></i>
                     </button>
-                  
+
                     <button onClick={() => handleDelete(row.id)} data-modal-target="popup-modal"
                         data-modal-toggle="popup-modal" type="button" className="px-3 py-2  font-medium text-gray-900 border !border-l-0 border-y-gray-100 rounded-e-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0">
                         <i className="fa-solid fa-trash text-[#c60e0e] text-[15px]"></i>
@@ -138,19 +143,30 @@ const Roles = (props) => {
                     pagination
                     subHeader
                     subHeaderComponent={
-                        <input
-                            type="text"
-                            id="search"
-                            placeholder="Search..."
-                            className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+                        <div className="w-full flex justify-between items-center">
 
-                        />
+                            <input
+                                type="text"
+                                id="search"
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                placeholder="Search..."
+                                className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+
+                            />
+                            <button type="submit" class="p-2.5 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
+                                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                                <span class="sr-only">Search</span>
+                            </button>
+                        </div>
                     }
                 />
             </div>
             <EditModal successNotif={successNotif} modal={modal} editTitle={title} userId={id} setEditTitle={setTitle} getRoles={getRoles} />
             <CreateModal getRoles={getRoles} successNotif={createSuccessNotif} showModal={showModalCreate} />
-            <DeleteModal deleteId={deleteId} showDeleteNotif={handleDeleteNotif} getRoles={getRoles}  hideDeleteModal={showModalDelete}/>
+            <DeleteModal deleteId={deleteId} showDeleteNotif={handleDeleteNotif} getRoles={getRoles} hideDeleteModal={showModalDelete} />
             {
                 showSuccessNotif && (
                     <div className="fixed bottom-8 z-40 right-10 px-4 h-[55px] mb-1 text-sm text-green-800 bg-green-200 w-[300px] flex justify-start items-center" role="alert">
