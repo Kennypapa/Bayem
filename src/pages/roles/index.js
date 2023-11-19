@@ -96,11 +96,9 @@ const Roles = (props) => {
                         <i className="fa-solid fa-pen-to-square text-[#0e90c6] cursor-pointer text-[15px]"
                         ></i>
                     </button>
-                    <button type="button" className="px-3 py-2 font-medium text-gray-900 border-t border-b  hover:bg-[#d3d3d324] focus:z-10 focus:ring-0">
-                        <i className="fa-solid fa-eye text-[#0ec60e] text-[15px]"></i>
-                    </button>
+                  
                     <button onClick={() => handleDelete(row.id)} data-modal-target="popup-modal"
-                        data-modal-toggle="popup-modal" type="button" className="px-3 py-2  font-medium text-gray-900 border border-gray-100 rounded-e-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0">
+                        data-modal-toggle="popup-modal" type="button" className="px-3 py-2  font-medium text-gray-900 border !border-l-0 border-y-gray-100 rounded-e-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0">
                         <i className="fa-solid fa-trash text-[#c60e0e] text-[15px]"></i>
                     </button>
                 </div>
