@@ -1,17 +1,27 @@
-import { Outlet, redirect} from "react-router-dom";
+import { Outlet, redirect, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Navbar from "./navbar";
+import Sidebar from './sidebar';
 const ProtectedLayout = () => {
+    const navigate = useNavigate();
     useEffect(() => {
+        authUser();
+    })
+    
+    const authUser = () => {
         const user = localStorage.getItem('tokenId');
         if (user) {
-             console.log("user allowed");
-        }else{
-           return redirect("/login");
+           return;
+        } else {
+            return navigate("/login");
         }
-    })
-
+    }
     return (
-        <Outlet />
+        <div>
+            <Outlet />
+            <Navbar />
+            <Sidebar />
+        </div>
     )
 }
 

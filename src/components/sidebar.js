@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 const Sidebar = () => {
     return (
-        <div className=" w-[200px] h-[100vh] hidden pl-0 pr-0 fixed top-0 md:left-0 left-[-200px] bg-white pt-24 shadow-md z-10">
+        <div className=" w-[200px] h-[100vh] pl-0 pr-0 fixed top-0 md:left-0 left-[-200px] bg-white pt-24 shadow-md z-10">
             <div className="mb-4">
                 <ul className="flex flex-col text-sm font-medium text-center">
                     <li className='mb-3 w-full'>

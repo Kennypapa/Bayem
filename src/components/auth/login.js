@@ -17,7 +17,7 @@ const Login = () => {
                 if (user) {
                     navigate('/dashboard');
                     Swal.fire({
-                        title: "User Allowed",
+                        title: "Logged in successfully",
                         text: "Do you want to continue",
                         icon: "success",
                         confirmButtonText: "OK",
