@@ -18,6 +18,7 @@ const Roles = (props) => {
     const [createNotif, setCreateNotif] = useState("");
     const [deleteNotif, setDeleteNotif] = useState("");
     const [search, setSearch] = useState("");
+    const [filter, setFilter] = useState([]);
     //=== Referencing to particular collection in firestore
     const usersCollectionRef = collection(db, "roles");
 
@@ -49,6 +50,7 @@ const Roles = (props) => {
     const getRoles = async () => {
         const data = await getDocs(usersCollectionRef);
         setRoles(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        setFilter(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
 
     //=========Edit Handler ======//
@@ -81,7 +83,22 @@ const Roles = (props) => {
     const handleDeleteNotif = (success) => {
         setDeleteNotif(success)
     }
+    
+    //==========search Handler ====//
+    const searchhandler = () => {
+        const result = roles.filter((role) => {
+            return role.title.toLowerCase().match(search.toLocaleLowerCase());
+        });
+        setFilter(result)
+    }
 
+    const refreshHandler = () => {
+        getRoles();
+        setSearch('');
+    }
+    
+
+     
     //==============Table Columns && Rows ============//
     const columns = [
         {
@@ -139,7 +156,7 @@ const Roles = (props) => {
                     fixedHeader
                     isSortable
                     customStyles={tableHeaderstyle}
-                    data={roles}
+                    data={filter}
                     pagination
                     subHeader
                     subHeaderComponent={
@@ -154,11 +171,14 @@ const Roles = (props) => {
                                 className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
 
                             />
-                            <button type="submit" class="p-2.5 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
+                            <button type="button" onClick={() => searchhandler()} class="p-2.5 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
                                 <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                 </svg>
                                 <span class="sr-only">Search</span>
+                            </button>
+                            <button onClick={() => refreshHandler()} type="button" class="w-9 h-9 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
+                                <i class="fa-solid fa-rotate-right"></i>
                             </button>
                         </div>
                     }

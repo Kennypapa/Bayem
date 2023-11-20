@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from './components/auth/login';
 import Dashboard from './pages/dashboard';
 import Roles from './pages/roles/index';
+import Workers from './pages/workers';
 import ProtectedLayout from './components/protectedLayout';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +19,7 @@ root.render(
           <Route path="" element={<ProtectedLayout />} >
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="roles" element={<Roles />} />
+            <Route path="workers" element={<Workers />} />
           </Route>
         </Route>
       </Routes>
