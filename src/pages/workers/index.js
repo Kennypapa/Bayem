@@ -20,21 +20,11 @@ const Workers = () => {
         closable: true,
       })
     )
-
   }, []);
   //========= Create Handler =========//
   const handleCreateModal = () => {
     showModalCreate.show();
   }
-
-  const inputChangeHandler = (input, value) => {
-    setUserData((prevState) => {
-      return {
-        ...prevState,
-        [input]: value,
-      };
-    });
-  };
 
   //============create-success-notif ===//
   const createSuccessNotif = (success) => {
@@ -72,7 +62,7 @@ const Workers = () => {
             <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
             </svg>
-            <span className="font-medium pl-2">New role created successfully!</span>
+            <span className="font-medium pl-2">New worker created successfully!</span>
 
           </div>
         )

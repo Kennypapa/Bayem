@@ -1,5 +1,5 @@
-import { addDoc, collection } from "firebase/firestore";
-import { useState } from "react";
+import { addDoc, collection, getDocs } from "firebase/firestore";
+import { useState, useEffect } from "react";
 import { db } from "../../firebase.config";
 
 const CreateModal = (props) => {
@@ -12,9 +12,14 @@ const CreateModal = (props) => {
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [roles, setRoles] = useState([]);
 
+
+    useEffect(() => {
+        getRoles();
+    }, []);
     //=== referencing to particular collection in firestore
-    const usersCollectionRef = collection(db, "workers");
+    const usersCollectionRef = collection(db, "roles");
 
     const inputChangeHandler = (input, value) => {
         setUserData((prevState) => {
@@ -24,6 +29,8 @@ const CreateModal = (props) => {
             };
         });
     };
+
+    // ========submitHandler =======//
     const submitHandler = async (e) => {
         e.preventDefault();
         if (userData.length === 0) {
@@ -44,17 +51,23 @@ const CreateModal = (props) => {
         }, 3000)
         setUserData("");
     }
+
+    //=======Get Roles Handler====//
+    const getRoles = async () => {
+        const data = await getDocs(usersCollectionRef);
+        setRoles(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
     props.successNotif(success);
     //========== refresh the roles ====//
     const handleRefresh = () => {
         props.showModal.hide();
-
     }
     return (
         <div id="default-modal" tabIndex="-1" aria-hidden="true" className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div className="relative p-4 w-full max-w-2xl max-h-full">
                 {/* Modal content */}
                 <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                
                     {/* Modal header */}
                     <div className="flex items-center justify-between md:p-3 border-b border-b-gray-100 rounded-t">
                         <div>
@@ -80,6 +93,7 @@ const CreateModal = (props) => {
                             </button>
                         </div>
                     </div>
+
                     {/* Modal body */}
                     {
                         error ?
@@ -87,7 +101,7 @@ const CreateModal = (props) => {
                                 Input Field Is Empty!
                             </div>
                             :
-                            null
+                        null
                     }
                     <div className="px-3 pt-3 pb-4">
                         <form onSubmit={submitHandler}>
@@ -155,6 +169,25 @@ const CreateModal = (props) => {
                                 <select id="gender" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5">
                                     <option value="US">Male</option>
                                     <option value="CA">Female</option>
+                                </select>
+                            </div>
+                            <div className="mb-6">
+                                <label
+                                    for="gender"
+                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                >
+                                    Role Title:
+                                </label>
+                                <select id="gender" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5">
+                                    {
+                                        roles.map((role) => {
+                                            return (
+                                                <option value="US" className="text-gray-500">{role.title}</option>
+                                            )
+                                        })
+                                    }
+
+
                                 </select>
                             </div>
                             <div>
