@@ -7,6 +7,8 @@ const CreateModal = (props) => {
         firstname: "",
         lastname: "",
         email: "",
+        gender: "",
+        role: ""
     });
 
     const [success, setSuccess] = useState(false);
@@ -14,12 +16,14 @@ const CreateModal = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [roles, setRoles] = useState([]);
 
-
     useEffect(() => {
         getRoles();
     }, []);
     //=== referencing to particular collection in firestore
     const usersCollectionRef = collection(db, "roles");
+
+    //=== referencing to particular collection in firestore
+    const workersCollectionRef = collection(db, "workers");
 
     const inputChangeHandler = (input, value) => {
         setUserData((prevState) => {
@@ -41,10 +45,18 @@ const CreateModal = (props) => {
             return;
         }
         setIsLoading(true);
-        await addDoc(usersCollectionRef, { workers: userData });
+        // let userD = [];
+        // userD.push(userData);
+        // console.log(userD)
+        await addDoc(workersCollectionRef, { 
+            firstname:userData.firstname,
+            lastname: userData.lastname,
+            email: userData.email,
+            gender: userData.gender,
+            role: userData.role,
+        });
         setIsLoading(false);
         setSuccess(true);
-
         props.showModal.hide();
         setTimeout(() => {
             setSuccess(false);
@@ -67,7 +79,7 @@ const CreateModal = (props) => {
             <div className="relative p-4 w-full max-w-2xl max-h-full">
                 {/* Modal content */}
                 <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                
+
                     {/* Modal header */}
                     <div className="flex items-center justify-between md:p-3 border-b border-b-gray-100 rounded-t">
                         <div>
@@ -101,7 +113,7 @@ const CreateModal = (props) => {
                                 Input Field Is Empty!
                             </div>
                             :
-                        null
+                            null
                     }
                     <div className="px-3 pt-3 pb-4">
                         <form onSubmit={submitHandler}>
@@ -166,9 +178,15 @@ const CreateModal = (props) => {
                                 >
                                     Gender:
                                 </label>
-                                <select id="gender" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5">
-                                    <option value="US">Male</option>
-                                    <option value="CA">Female</option>
+                                <select
+                                    value={userData['gender']}
+                                    onChange={(e) => inputChangeHandler("gender", e.target.value)}
+                                    id="gender"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+                                >
+                                    <option>Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
                                 </select>
                             </div>
                             <div className="mb-6">
@@ -178,16 +196,21 @@ const CreateModal = (props) => {
                                 >
                                     Role Title:
                                 </label>
-                                <select id="gender" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5">
+                                <select
+                                    id="gender"
+                                    value={userData['roles']}
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+                                    onChange={(e) => inputChangeHandler("role", e.target.value)}
+                                >
+
+                                    <option className="text-gray-500" selected>Select Role</option>
                                     {
                                         roles.map((role) => {
                                             return (
-                                                <option value="US" className="text-gray-500">{role.title}</option>
+                                                <option className="text-gray-500">{role.title}</option>
                                             )
                                         })
                                     }
-
-
                                 </select>
                             </div>
                             <div>
@@ -211,8 +234,6 @@ const CreateModal = (props) => {
                 </div>
             </div>
         </div>
-
-
     )
 }
 

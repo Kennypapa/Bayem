@@ -7,6 +7,7 @@ import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../firebase.config";
 import DataTable from "react-data-table-component";
 const Roles = (props) => {
+
     const [modal, setShowModal] = useState(false);
     const [showModalCreate, setModalCreate] = useState(false);
     const [showModalDelete, setShowModalDelete] = useState(false);
@@ -52,6 +53,8 @@ const Roles = (props) => {
         setRoles(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         setFilter(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
+    
+    
 
     //=========Edit Handler ======//
     const handleEdit = (id, title) => {
@@ -83,7 +86,7 @@ const Roles = (props) => {
     const handleDeleteNotif = (success) => {
         setDeleteNotif(success)
     }
-    
+
     //==========search Handler ====//
     const searchhandler = () => {
         const result = roles.filter((role) => {
@@ -96,9 +99,7 @@ const Roles = (props) => {
         getRoles();
         setSearch('');
     }
-    
-
-     
+    console.log(title)
     //==============Table Columns && Rows ============//
     const columns = [
         {
@@ -161,7 +162,6 @@ const Roles = (props) => {
                     subHeader
                     subHeaderComponent={
                         <div className="w-full flex justify-between items-center">
-
                             <input
                                 type="text"
                                 id="search"
@@ -216,12 +216,9 @@ const Roles = (props) => {
                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                         </svg>
                         <span className="font-medium pl-2">Role deleted successfully!</span>
-
                     </div>
                 )
             }
-
-
         </div>
     )
 }
