@@ -9,7 +9,6 @@ const EditModal = (props) => {
     const [error, setError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-
     //===== Update Handler ==========//
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -64,7 +63,7 @@ const EditModal = (props) => {
                                         </svg>
                                     </span> : null
                                 }
-
+                                
                                 <button
                                     onClick={handleRefresh}
                                     type="button"

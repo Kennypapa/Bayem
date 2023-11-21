@@ -29,12 +29,13 @@ const EditModal = (props) => {
             setSuccess(false);
         }, 4000)
     };
-    // props.successNotif(success);
+    props.successNotif(success);
 
     //========== refresh the roles ====//
     const handleRefresh = () => {
         props.modal.hide();
     }
+
     return (
         <div>
             <div
@@ -106,7 +107,8 @@ const EditModal = (props) => {
                                         Firstname:
                                     </label>
                                     <input
-
+                                        value={props.workerDetails.firstname}
+                                        onChange={(e) => props.setEditTitle(e.target.value)}
                                         type="text"
                                         id="firstname"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
@@ -122,7 +124,8 @@ const EditModal = (props) => {
                                     </label>
                                     <input
                                         type="text"
-
+                                        value={props.workerDetails.lastname}
+                                        onChange={(e) => props.setEditTitle(e.target.value)}
                                         id="lastname"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                         required
@@ -138,8 +141,8 @@ const EditModal = (props) => {
                                     <input
                                         type="email"
                                         id="email"
-
-
+                                        value={props.workerDetails.email}
+                                        onChange={(e) => props.setEditTitle(e.target.value)}
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                         required
                                     />
@@ -153,7 +156,8 @@ const EditModal = (props) => {
                                             Gender:
                                         </label>
                                         <select
-
+                                            value={props.workerDetails.gender}
+                                            onChange={(e) => props.setEditTitle(e.target.value)}
                                             id="gender"
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                         >
@@ -170,10 +174,19 @@ const EditModal = (props) => {
                                             Role Title:
                                         </label>
                                         <select
+                                            value={props.workerDetails.role}
+                                            onChange={(e) => props.setEditTitle(e.target.value)}
                                             id="gender"
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                         >
-
+                                            <option className="text-gray-500" selected>{props.workerDetails.role}</option>
+                                            {
+                                                props.allRoles.map((role) => {
+                                                    return (
+                                                        <option className="text-gray-500">{role.title}</option>
+                                                    )
+                                                })
+                                            }
                                         </select>
                                     </div>
                                 </div>

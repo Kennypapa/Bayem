@@ -15,6 +15,7 @@ const CreateModal = (props) => {
     const [error, setError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [roles, setRoles] = useState([]);
+    const [allRoles, setAllRoles] = useState('');
 
     useEffect(() => {
         getRoles();
@@ -32,7 +33,12 @@ const CreateModal = (props) => {
                 [input]: value,
             };
         });
-    };
+    }; 
+
+    //=========== roles Handler ======//
+     const rolesHandler = (roles) => {
+        setAllRoles(roles);
+     }
 
     // ========submitHandler =======//
     const submitHandler = async (e) => {
@@ -68,6 +74,7 @@ const CreateModal = (props) => {
     const getRoles = async () => {
         const data = await getDocs(usersCollectionRef);
         setRoles(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        
     };
     props.successNotif(success);
     //========== refresh the roles ====//
@@ -203,7 +210,6 @@ const CreateModal = (props) => {
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                         onChange={(e) => inputChangeHandler("role", e.target.value)}
                                     >
-
                                         <option className="text-gray-500" selected>Select Role</option>
                                         {
                                             roles.map((role) => {

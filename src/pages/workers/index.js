@@ -12,8 +12,10 @@ const Workers = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [createNotif, setCreateNotif] = useState("");
   const [allWorkers, setAllWorkers] = useState([]);
+  const [showSuccessNotif, setShowSuccessNotif] = useState("");
   const [filter, setFilter] = useState([]);
   const [search, setSearch] = useState("");
+  const [roles, setRoles] = useState([]);
   const [workerDetails, setWorkerDetails] = useState({})
   const [userData, setUserData] = useState({
     firstname: "",
@@ -36,11 +38,20 @@ const Workers = () => {
         closable: true,
       })
     )
+    getRoles();
     getWorkers();
   }, []);
 
   //=== Referencing to particular collection in firestore ==//
   const usersCollectionRef = collection(db, "workers");
+    //=== referencing to particular collection in firestore
+    const rolesCollectionRef = collection(db, "roles");
+  //=======Get Roles Handler====//
+  const getRoles = async () => {
+    const data = await getDocs(rolesCollectionRef);
+    setRoles(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    
+};
   //========= Create Handler =========//
   const handleCreateModal = () => {
     showModalCreate.show();
@@ -50,10 +61,15 @@ const Workers = () => {
   const createSuccessNotif = (success) => {
     setCreateNotif(success);
   }
+  //======== successHandler ====//
+  const successNotif = (success) => {
+    setShowSuccessNotif(success);
+  }
 
   //=========Edit Handler ======//
   const handleEdit = (worker) => {
     setWorkerDetails(worker);
+    console.log(worker)
     modal.show();
   }
   console.log(workerDetails);
@@ -173,7 +189,7 @@ const Workers = () => {
         />
       </div>
       <CreateModal successNotif={createSuccessNotif} showModal={showModalCreate} />
-      <EditModal workerDetails={workerDetails} />
+      <EditModal allRoles={roles} successNotif={successNotif} workerDetails={workerDetails} modal={modal} />
 
       {/*=========Nofication ======*/}
       {
