@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
-import {  getDocs, collection } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 import CreateModal from './create-modal';
+import EditModal from './edit-modal';
 import { Modal } from "flowbite";
 import DataTable from "react-data-table-component";
 import { db } from "../../firebase.config";
 
 const Workers = () => {
+  const [modal, setShowModal] = useState(false);
   const [showModalCreate, setModalCreate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [createNotif, setCreateNotif] = useState("");
   const [allWorkers, setAllWorkers] = useState([]);
   const [filter, setFilter] = useState([]);
   const [search, setSearch] = useState("");
+  const [workerDetails, setWorkerDetails] = useState({})
   const [userData, setUserData] = useState({
     firstname: "",
     lastname: "",
@@ -21,6 +24,13 @@ const Workers = () => {
   useEffect(() => {
     setModalCreate(
       new Modal(document.querySelector("#default-modal"), {
+        backdrop: "dynamic",
+        backdropClasses: "bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40",
+        closable: true,
+      })
+    )
+    setShowModal(
+      new Modal(document.querySelector("#static-modal"), {
         backdrop: "dynamic",
         backdropClasses: "bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40",
         closable: true,
@@ -41,6 +51,12 @@ const Workers = () => {
     setCreateNotif(success);
   }
 
+  //=========Edit Handler ======//
+  const handleEdit = (worker) => {
+    setWorkerDetails(worker);
+    modal.show();
+  }
+  console.log(workerDetails);
   //=============== fetch all workers ===========//
   const getWorkers = async () => {
     const data = await getDocs(usersCollectionRef);
@@ -48,7 +64,7 @@ const Workers = () => {
     setFilter(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
-   
+
   //==========search Handler ====//
   const searchhandler = () => {
     const result = allWorkers.filter((worker) => {
@@ -56,8 +72,8 @@ const Workers = () => {
     });
     setFilter(result);
   }
-   console.log(allWorkers)
- 
+  console.log(allWorkers)
+
 
   //==============Table Columns && Rows ============//
   const columns = [
@@ -81,6 +97,25 @@ const Workers = () => {
       name: 'Role',
       selector: (row) => <div class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">{row.role}</div>
     },
+
+    {
+      name: "Actions",
+      cell: (row) => (
+        <div className="inline-flex rounded-md py-2.5" role="group">
+          <button
+            onClick={() => handleEdit(row)}
+            type="button" className="px-3 py-2  font-medium text-gray-900 border border-gray-100 rounded-s-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent">
+            <i className="fa-solid fa-pen-to-square text-[#0e90c6] cursor-pointer text-[15px]"
+            ></i>
+          </button>
+
+          <button data-modal-target="popup-modal"
+            data-modal-toggle="popup-modal" type="button" className="px-3 py-2  font-medium text-gray-900 border !border-l-0 border-y-gray-100 rounded-e-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0">
+            <i className="fa-solid fa-trash text-[#c60e0e] text-[15px]"></i>
+          </button>
+        </div>
+      )
+    }
   ]
 
   const tableHeaderstyle = {
@@ -138,7 +173,7 @@ const Workers = () => {
         />
       </div>
       <CreateModal successNotif={createSuccessNotif} showModal={showModalCreate} />
-
+      <EditModal workerDetails={workerDetails} />
 
       {/*=========Nofication ======*/}
       {

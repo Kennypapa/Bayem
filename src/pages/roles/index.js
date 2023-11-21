@@ -53,8 +53,6 @@ const Roles = (props) => {
         setRoles(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         setFilter(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
-    
-    
 
     //=========Edit Handler ======//
     const handleEdit = (id, title) => {

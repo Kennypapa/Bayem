@@ -48,8 +48,8 @@ const CreateModal = (props) => {
         // let userD = [];
         // userD.push(userData);
         // console.log(userD)
-        await addDoc(workersCollectionRef, { 
-            firstname:userData.firstname,
+        await addDoc(workersCollectionRef, {
+            firstname: userData.firstname,
             lastname: userData.lastname,
             email: userData.email,
             gender: userData.gender,
@@ -171,47 +171,49 @@ const CreateModal = (props) => {
                                     required
                                 />
                             </div>
-                            <div className="mb-6">
-                                <label
-                                    for="gender"
-                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                >
-                                    Gender:
-                                </label>
-                                <select
-                                    value={userData['gender']}
-                                    onChange={(e) => inputChangeHandler("gender", e.target.value)}
-                                    id="gender"
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
-                                >
-                                    <option>Select Gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
-                            </div>
-                            <div className="mb-6">
-                                <label
-                                    for="gender"
-                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                >
-                                    Role Title:
-                                </label>
-                                <select
-                                    id="gender"
-                                    value={userData['roles']}
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
-                                    onChange={(e) => inputChangeHandler("role", e.target.value)}
-                                >
+                            <div className="flex justify-between items-center w-full">
+                                <div className="mb-6 mr-4 w-full">
+                                    <label
+                                        for="gender"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    >
+                                        Gender:
+                                    </label>
+                                    <select
+                                        value={userData['gender']}
+                                        onChange={(e) => inputChangeHandler("gender", e.target.value)}
+                                        id="gender"
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+                                    >
+                                        <option>Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                </div>
+                                <div className="mb-6 w-full">
+                                    <label
+                                        for="gender"
+                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    >
+                                        Role Title:
+                                    </label>
+                                    <select
+                                        id="gender"
+                                        value={userData['roles']}
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+                                        onChange={(e) => inputChangeHandler("role", e.target.value)}
+                                    >
 
-                                    <option className="text-gray-500" selected>Select Role</option>
-                                    {
-                                        roles.map((role) => {
-                                            return (
-                                                <option className="text-gray-500">{role.title}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
+                                        <option className="text-gray-500" selected>Select Role</option>
+                                        {
+                                            roles.map((role) => {
+                                                return (
+                                                    <option className="text-gray-500">{role.title}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                </div>
                             </div>
                             <div>
                                 <button
