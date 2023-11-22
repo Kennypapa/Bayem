@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getDocs, collection } from "firebase/firestore";
 import CreateModal from './create-modal';
 import EditModal from './edit-modal';
+import DeleteModal from "./delete-modal";
 import { Modal } from "flowbite";
 import DataTable from "react-data-table-component";
 import { db } from "../../firebase.config";
@@ -9,16 +10,17 @@ import { db } from "../../firebase.config";
 const Workers = () => {
   const [modal, setShowModal] = useState(false);
   const [showModalCreate, setModalCreate] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false);
   const [createNotif, setCreateNotif] = useState("");
   const [allWorkers, setAllWorkers] = useState([]);
   const [id, setId] = useState("");
+  const [deleteId, setDeleteId] = useState("");
   const [showSuccessNotif, setShowSuccessNotif] = useState("");
   const [filter, setFilter] = useState([]);
   const [search, setSearch] = useState("");
   const [roles, setRoles] = useState([]);
-  const [workerDetails, setWorkerDetails] = useState({})
-  console.log(workerDetails);
+  const [workerDetails, setWorkerDetails] = useState([]);
+  const [deleteNotif, setDeleteNotif] = useState("");
   useEffect(() => {
     setModalCreate(
       new Modal(document.querySelector("#default-modal"), {
@@ -34,6 +36,13 @@ const Workers = () => {
         closable: true,
       })
     )
+    setShowModalDelete(
+      new Modal(document.querySelector("#popup-modal"), {
+        backdrop: "dynamic",
+        backdropClasses: "bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40",
+        closable: true,
+      })
+    )
     getRoles();
     getWorkers();
   }, []);
@@ -42,14 +51,14 @@ const Workers = () => {
   const usersCollectionRef = collection(db, "workers");
   //=== referencing to particular collection in firestore
   const rolesCollectionRef = collection(db, "roles");
-  
+
   //=======Get Roles Handler====//
   const getRoles = async () => {
     const data = await getDocs(rolesCollectionRef);
     setRoles(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
-   //=============== fetch all workers ===========//
-   const getWorkers = async () => {
+  //=============== fetch all workers ===========//
+  const getWorkers = async () => {
     const data = await getDocs(usersCollectionRef);
     setAllWorkers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     setFilter(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -68,14 +77,23 @@ const Workers = () => {
     setShowSuccessNotif(success);
   }
 
+  //=========== delete Notif ======//
+  const handleDeleteNotif = (success) => {
+    setDeleteNotif(success)
+  }
+
   //=========Edit Handler ======//
   const handleEdit = (id, worker) => {
     setWorkerDetails(worker);
     setId(id);
     modal.show();
   }
-  
 
+  //===== DeleteHandler ====//    
+  const handleDelete = async (id) => {
+    setDeleteId(id)
+    showModalDelete.show();
+  }
 
   //==========search Handler ====//
   const searchhandler = () => {
@@ -84,7 +102,6 @@ const Workers = () => {
     });
     setFilter(result);
   }
-  console.log(allWorkers)
 
   //==============Table Columns && Rows ============//
   const columns = [
@@ -121,6 +138,7 @@ const Workers = () => {
           </button>
 
           <button data-modal-target="popup-modal"
+            onClick={() => handleDelete(row.id)}
             data-modal-toggle="popup-modal" type="button" className="px-3 py-2  font-medium text-gray-900 border !border-l-0 border-y-gray-100 rounded-e-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0">
             <i className="fa-solid fa-trash text-[#c60e0e] text-[15px]"></i>
           </button>
@@ -151,7 +169,6 @@ const Workers = () => {
             <i className="fa-solid fa-circle-plus"></i>
           </button>
         </div>
-
         <DataTable
           columns={columns}
           fixedHeader
@@ -183,10 +200,21 @@ const Workers = () => {
           }
         />
       </div>
-      <CreateModal successNotif={createSuccessNotif} showModal={showModalCreate} />
-      <EditModal userId={id} allRoles={roles} successNotif={successNotif} setWorkerDetail={setWorkerDetails} allWorkerDetails={workerDetails} modal={modal} />
+      <CreateModal successNotif={createSuccessNotif} getWorkers={getWorkers} showModal={showModalCreate} />
+      <EditModal userId={id} getWorkers={getWorkers} allRoles={roles} successNotif={successNotif} setWorkerDetail={setWorkerDetails} allWorkerDetails={workerDetails} modal={modal} />
+      <DeleteModal deleteId={deleteId} showDeleteNotif={handleDeleteNotif} getWorkers={getWorkers} hideDeleteModal={showModalDelete} />
+      {/*=========Nofications ======*/}
+      {
+        showSuccessNotif && (
+          <div className="fixed bottom-8 z-40 right-10 px-4 h-[55px] mb-1 text-sm text-green-800 bg-green-200 w-[300px] flex justify-start items-center" role="alert">
+            <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+            </svg>
+            <span className="font-medium pl-2"> Role Edited  Successfully!</span>
 
-      {/*=========Nofication ======*/}
+          </div>
+        )
+      }
       {
         createNotif && (
           <div className="fixed bottom-8 z-40 right-10 px-4 h-[55px] mb-1 text-sm text-green-800 bg-green-200 w-[300px] flex justify-start items-center" role="alert">
@@ -195,6 +223,16 @@ const Workers = () => {
             </svg>
             <span className="font-medium pl-2">New worker created successfully!</span>
 
+          </div>
+        )
+      }
+      {
+        deleteNotif && (
+          <div className="fixed bottom-8 z-40 right-10 px-4 h-[55px] mb-1 text-sm text-green-800 bg-green-200 w-[300px] flex justify-start items-center" role="alert">
+            <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+            </svg>
+            <span className="font-medium pl-2">Role deleted successfully!</span>
           </div>
         )
       }

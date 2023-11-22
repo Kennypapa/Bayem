@@ -9,6 +9,14 @@ const EditModal = (props) => {
     const [error, setError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+    const inputChangeHandler = (input, value) => {
+        props.setWorkerDetail((prevState) => {
+            return {
+                ...prevState,
+                [input]: value,
+            };
+        });
+    };
 
     //===== Update Handler ==========//
     const handleUpdate = async (e) => {
@@ -26,6 +34,7 @@ const EditModal = (props) => {
         setIsLoading(false);
         setSuccess(true);
         props.modal.hide();
+        props.getWorkers();
         setTimeout(() => {
             setSuccess(false);
         }, 4000)
@@ -34,6 +43,7 @@ const EditModal = (props) => {
 
     //========== refresh the roles ====//
     const handleRefresh = () => {
+        props.getWorkers();
         props.modal.hide();
     }
 
@@ -109,7 +119,7 @@ const EditModal = (props) => {
                                     </label>
                                     <input
                                         value={props.allWorkerDetails.firstname}
-                                        onChange={(e) => props.setWorkerDetail(e.target.value)}
+                                        onChange={(e) => inputChangeHandler("firstname", e.target.value)}
                                         type="text"
                                         id="firstname"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
@@ -126,7 +136,7 @@ const EditModal = (props) => {
                                     <input
                                         type="text"
                                         value={props.allWorkerDetails.lastname}
-                                        onChange={(e) => props.setWorkerDetail(e.target.value)}
+                                        onChange={(e) => inputChangeHandler("lastname", e.target.value)}
                                         id="lastname"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                         required
@@ -143,7 +153,7 @@ const EditModal = (props) => {
                                         type="email"
                                         id="email"
                                         value={props.allWorkerDetails.email}
-                                        onChange={(e) => props.setWorkerDetail(e.target.value)}
+                                        onChange={(e) => inputChangeHandler("email", e.target.value)}
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                         required
                                     />
@@ -158,7 +168,7 @@ const EditModal = (props) => {
                                         </label>
                                         <select
                                             value={props.allWorkerDetails.gender}
-                                            onChange={(e) => props.setWorkerDetail(e.target.value)}
+                                            onChange={(e) => inputChangeHandler("gender", e.target.value)}
                                             id="gender"
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                         >
@@ -176,7 +186,7 @@ const EditModal = (props) => {
                                         </label>
                                         <select
                                             value={props.allWorkerDetails.role}
-                                            onChange={(e) => props.setWorkerDetail(e.target.value)}
+                                            onChange={(e) => inputChangeHandler("role", e.target.value)}
                                             id="gender"
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                         >

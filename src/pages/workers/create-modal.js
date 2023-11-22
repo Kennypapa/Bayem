@@ -51,9 +51,7 @@ const CreateModal = (props) => {
             return;
         }
         setIsLoading(true);
-        // let userD = [];
-        // userD.push(userData);
-        // console.log(userD)
+
         await addDoc(workersCollectionRef, {
             firstname: userData.firstname,
             lastname: userData.lastname,
@@ -64,6 +62,7 @@ const CreateModal = (props) => {
         setIsLoading(false);
         setSuccess(true);
         props.showModal.hide();
+        props.getWorkers();
         setTimeout(() => {
             setSuccess(false);
         }, 3000)
@@ -74,11 +73,12 @@ const CreateModal = (props) => {
     const getRoles = async () => {
         const data = await getDocs(usersCollectionRef);
         setRoles(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        
+
     };
     props.successNotif(success);
     //========== refresh the roles ====//
     const handleRefresh = () => {
+        props.getWorkers();
         props.showModal.hide();
     }
     return (
