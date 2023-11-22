@@ -14,14 +14,15 @@ const EditModal = (props) => {
     const handleUpdate = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        const updateData = doc(db, "roles", props.userId);
+        const updateData = doc(db, "workers", props.userId);
         await updateDoc(updateData, {
-            firstname: props.workerDetails.firstname,
-            lastname: props.workerDetails.lastname,
-            email: props.workerDetails.email,
-            gender: props.workerDetails.gender,
-            role: props.workerDetails.role,
-        })
+            firstname: props.allWorkerDetails.firstname,
+            lastname: props.allWorkerDetails.lastname,
+            email: props.allWorkerDetails.email,
+            gender: props.allWorkerDetails.gender,
+            role: props.allWorkerDetails.role,
+        });
+
         setIsLoading(false);
         setSuccess(true);
         props.modal.hide();
@@ -98,7 +99,7 @@ const EditModal = (props) => {
                                 null
                         }
                         <div className="px-3 pt-3 pb-4">
-                            <form >
+                            <form onSubmit={handleUpdate}>
                                 <div className="mb-6">
                                     <label
                                         for="firstname"
@@ -107,8 +108,8 @@ const EditModal = (props) => {
                                         Firstname:
                                     </label>
                                     <input
-                                        value={props.workerDetails.firstname}
-                                        onChange={(e) => props.setEditTitle(e.target.value)}
+                                        value={props.allWorkerDetails.firstname}
+                                        onChange={(e) => props.setWorkerDetail(e.target.value)}
                                         type="text"
                                         id="firstname"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
@@ -124,8 +125,8 @@ const EditModal = (props) => {
                                     </label>
                                     <input
                                         type="text"
-                                        value={props.workerDetails.lastname}
-                                        onChange={(e) => props.setEditTitle(e.target.value)}
+                                        value={props.allWorkerDetails.lastname}
+                                        onChange={(e) => props.setWorkerDetail(e.target.value)}
                                         id="lastname"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                         required
@@ -141,8 +142,8 @@ const EditModal = (props) => {
                                     <input
                                         type="email"
                                         id="email"
-                                        value={props.workerDetails.email}
-                                        onChange={(e) => props.setEditTitle(e.target.value)}
+                                        value={props.allWorkerDetails.email}
+                                        onChange={(e) => props.setWorkerDetail(e.target.value)}
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                         required
                                     />
@@ -156,8 +157,8 @@ const EditModal = (props) => {
                                             Gender:
                                         </label>
                                         <select
-                                            value={props.workerDetails.gender}
-                                            onChange={(e) => props.setEditTitle(e.target.value)}
+                                            value={props.allWorkerDetails.gender}
+                                            onChange={(e) => props.setWorkerDetail(e.target.value)}
                                             id="gender"
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                         >
@@ -174,12 +175,12 @@ const EditModal = (props) => {
                                             Role Title:
                                         </label>
                                         <select
-                                            value={props.workerDetails.role}
-                                            onChange={(e) => props.setEditTitle(e.target.value)}
+                                            value={props.allWorkerDetails.role}
+                                            onChange={(e) => props.setWorkerDetail(e.target.value)}
                                             id="gender"
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                         >
-                                            <option className="text-gray-500" selected>{props.workerDetails.role}</option>
+                                            <option className="text-gray-500" selected>{props.allWorkerDetails.role}</option>
                                             {
                                                 props.allRoles.map((role) => {
                                                     return (

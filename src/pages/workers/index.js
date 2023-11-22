@@ -12,17 +12,13 @@ const Workers = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [createNotif, setCreateNotif] = useState("");
   const [allWorkers, setAllWorkers] = useState([]);
+  const [id, setId] = useState("");
   const [showSuccessNotif, setShowSuccessNotif] = useState("");
   const [filter, setFilter] = useState([]);
   const [search, setSearch] = useState("");
   const [roles, setRoles] = useState([]);
   const [workerDetails, setWorkerDetails] = useState({})
-  const [userData, setUserData] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-  });
-
+  console.log(workerDetails);
   useEffect(() => {
     setModalCreate(
       new Modal(document.querySelector("#default-modal"), {
@@ -44,14 +40,20 @@ const Workers = () => {
 
   //=== Referencing to particular collection in firestore ==//
   const usersCollectionRef = collection(db, "workers");
-    //=== referencing to particular collection in firestore
-    const rolesCollectionRef = collection(db, "roles");
+  //=== referencing to particular collection in firestore
+  const rolesCollectionRef = collection(db, "roles");
+  
   //=======Get Roles Handler====//
   const getRoles = async () => {
     const data = await getDocs(rolesCollectionRef);
     setRoles(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    
-};
+  };
+   //=============== fetch all workers ===========//
+   const getWorkers = async () => {
+    const data = await getDocs(usersCollectionRef);
+    setAllWorkers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    setFilter(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
   //========= Create Handler =========//
   const handleCreateModal = () => {
     showModalCreate.show();
@@ -67,18 +69,12 @@ const Workers = () => {
   }
 
   //=========Edit Handler ======//
-  const handleEdit = (worker) => {
+  const handleEdit = (id, worker) => {
     setWorkerDetails(worker);
-    console.log(worker)
+    setId(id);
     modal.show();
   }
-  console.log(workerDetails);
-  //=============== fetch all workers ===========//
-  const getWorkers = async () => {
-    const data = await getDocs(usersCollectionRef);
-    setAllWorkers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    setFilter(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  };
+  
 
 
   //==========search Handler ====//
@@ -89,7 +85,6 @@ const Workers = () => {
     setFilter(result);
   }
   console.log(allWorkers)
-
 
   //==============Table Columns && Rows ============//
   const columns = [
@@ -119,7 +114,7 @@ const Workers = () => {
       cell: (row) => (
         <div className="inline-flex rounded-md py-2.5" role="group">
           <button
-            onClick={() => handleEdit(row)}
+            onClick={() => handleEdit(row.id, row)}
             type="button" className="px-3 py-2  font-medium text-gray-900 border border-gray-100 rounded-s-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent">
             <i className="fa-solid fa-pen-to-square text-[#0e90c6] cursor-pointer text-[15px]"
             ></i>
@@ -189,7 +184,7 @@ const Workers = () => {
         />
       </div>
       <CreateModal successNotif={createSuccessNotif} showModal={showModalCreate} />
-      <EditModal allRoles={roles} successNotif={successNotif} workerDetails={workerDetails} modal={modal} />
+      <EditModal userId={id} allRoles={roles} successNotif={successNotif} setWorkerDetail={setWorkerDetails} allWorkerDetails={workerDetails} modal={modal} />
 
       {/*=========Nofication ======*/}
       {
