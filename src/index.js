@@ -8,6 +8,7 @@ import Login from './components/auth/login';
 import Dashboard from './pages/dashboard';
 import Roles from './pages/roles/index';
 import Workers from './pages/workers';
+import CreateTask from './pages/create-task/index';
 import ProtectedLayout from './components/protectedLayout';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,6 +21,7 @@ root.render(
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="roles" element={<Roles />} />
             <Route path="workers" element={<Workers />} />
+            <Route path="create-task" element={<CreateTask />} />
           </Route>
         </Route>
       </Routes>
