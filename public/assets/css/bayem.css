@@ -48,6 +48,33 @@ body {
 [type='checkbox']:checked{
   background-color: #103d15!important;
 }
+.searchWrapper{
+  min-height: 15px!important;
+}
+/* .multiSelectContainer input{
+  height: 28px!important;
+  min-height: 40px!important;
+} */
+.multiSelectContainer input:focus{
+  border: 1px solid #103d15!important;
+  outline: none!important;
+  outline-color: transparent!important;
+  -webkit-box-shadow: none!important;
+  box-shadow: none!important;
+}
+.chip{
+  background: #103d15!important;
+}
+.multiSelectContainer input::placeholder{
+  font-size: 15px!important;
+  padding-bottom: 9px!important;
+}
+.highlightOption{
+  background: #103d15!important;
+}
+.multiSelectContainer li:hover{
+  background: #103d15!important;
+}
 /*===========Queries ===========*/
 @media only screen and (max-width: 766px) {
   .e_pages {
