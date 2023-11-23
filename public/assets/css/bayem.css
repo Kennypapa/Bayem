@@ -44,6 +44,10 @@ body {
   color: #103d15 !important;
 }
 
+/*=======checkbox ==========*/
+[type='checkbox']:checked{
+  background-color: #103d15!important;
+}
 /*===========Queries ===========*/
 @media only screen and (max-width: 766px) {
   .e_pages {
