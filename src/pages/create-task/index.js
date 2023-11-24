@@ -9,19 +9,18 @@ const CreateTask = () => {
     useEffect(() => {
         switch (radioChecked) {
             case 'days':
-                setTaskFrequency(<div>
+                setTaskFrequency(
+                <div>
                     day
                 </div>)
                 break;
             case 'weeks':
                 setTaskFrequency(<div>
-
                     <label class="cursor-pointer mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Every week:</label>
                     <Multiselect
                         isObject={false}
                         options={options}
                     />
-
                 </div>)
                 break;
             case 'months':
@@ -35,14 +34,13 @@ const CreateTask = () => {
 
     const [options, setOptions] = useState(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
     return (<div className="e_pages">
-        <div className="bg-white rounded-lg pb-7">
-            <div className="w-full">
-                <div className="w-full  pr-5">
-                    <div className="w-full px-3 pt-4">
-                        <p className="text-2xl mb-3">
-                            Create Task
-                        </p>
-
+        <div className="bg-white rounded-lg py-3">
+            <div className="w-full px-3 grid grid-cols-2">
+                <div className="border-r border-r-[#d3d3d340] pr-3 pt-3">
+                    <p className="text-2xl mb-3">
+                        Create Task
+                    </p>
+                    <div >
                         <form>
                             <div className="mb-6">
                                 <label
@@ -191,10 +189,44 @@ const CreateTask = () => {
                             </div>
                         </form>
                     </div>
-
                 </div>
 
+                <div>
+                  <div className=" w-[90px] h-[90px] mx-auto border rounded-full">
+
+                  </div>
+                  <div className="pl-6 pt-6">
+                     <ul >
+                        <li>
+                          <p>
+                            Firstname:
+                          </p>
+                        </li>
+                        <li>
+                           <p>
+                              Lastname:
+                           </p>
+                        </li>
+                        <li>
+                           <p>
+                              Email:
+                           </p>
+                        </li>
+                        <li>
+                           <p>
+                              Gender:
+                           </p>
+                        </li>
+                        <li>
+                           <p>
+                              Role:
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+                </div>
             </div>
+
         </div>
     </div>);
 }

@@ -145,7 +145,7 @@ const Roles = (props) => {
                     </p>
                     <button
                         onClick={() => handleCreateModal()}
-                        className="bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150 text-sm w-[150px] h-[40px]">
+                        className="bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150 text-sm w-[180px] h-[40px]">
                         Create New Role
                         <i className="fa-solid pl-2 fa-circle-plus"></i>
                     </button>

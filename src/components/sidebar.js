@@ -46,13 +46,13 @@ const Sidebar = () => {
                             <p className='text-white text-left text-base font-medium py-2 ml-1'>Create Task</p>
                         </NavLink>
                     </li>
-                    <li>
-                        <button className='flex justify-start items-center'>
-                            <i class="fa-solid fa-power-off text-red-600 font-semibold text-lg w-9"></i>
-                            <p className='text-red-600 font-semibold'>LOG OUT</p>
-                        </button>
-                    </li>
                 </ul>
+            </div>
+            <div className='absolute bottom-6 pl-4'>
+                <button className='flex justify-start items-center'>
+                    <i class="fa-solid fa-power-off text-red-600 font-semibold text-lg w-9"></i>
+                    <p className='text-red-600 font-semibold'>LOG OUT</p>
+                </button>
             </div>
 
         </div>
