@@ -7,47 +7,54 @@ const Sidebar = () => {
                 <img src="assets/img/logos/Bayem-Logo-2.png" alt="logo" />
             </div>
             <div className="mb-4 sidebar">
-                <ul className="flex flex-col text-sm font-medium text-center">
+                <ul className="flex flex-col text-sm font-medium text-center px-2.5">
                     <li className='mb-3 w-full'>
-                        <NavLink className='sidebar_link ease-in-out duration-150 flex justify-start items-center pl-2 hover:bg-gray-100 s_btn  w-full'
+                        <NavLink className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
                             to="/dashboard"
                         >
                             {/* <i className="fa-solid fa-user icon_ text-base w-9"></i> */}
                             <i class="fa-solid fa-house-chimney-window icon_ text-base w-9"></i>
-                            <p className='text-white text-left text-base py-2 ml-3'> Dashboard </p>
+                            <p className='text-white text-left text-base py-2 ml-1'> Dashboard </p>
                         </NavLink>
                     </li>
                     <li className='mb-3'>
                         <NavLink
-                            className=' sidebar_link ease-in-out duration-150 flex justify-start items-center pl-2 hover:bg-gray-100 s_btn  w-full'
+                            className=' sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
                             to="/roles"
                         >
                             <i className="fa-solid fa-list  icon_ text-base w-9"></i>
-                            <p className='text-white text-left text-base py-2 ml-3'> Roles</p>
-                        </NavLink>
-                    </li>
-                    <li className='mb-3'>
-                        <NavLink
-                         
-                            className='sidebar_link ease-in-out duration-150 flex justify-start items-center pl-2 hover:bg-gray-100 s_btn  w-full'
-                            to="/workers"
-                        >
-                            <i class="fa-solid fa-users-line icon_ text-base w-9"></i>
-                            <p className='text-white text-left text-base py-2 ml-3'>Workers</p>
+                            <p className='text-white text-left text-base py-2 ml-1'> Roles</p>
                         </NavLink>
                     </li>
                     <li className='mb-3'>
                         <NavLink
 
-                            className='sidebar_link ease-in-out duration-150 flex justify-start items-center pl-2 hover:bg-gray-100 s_btn  w-full'
+                            className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
+                            to="/workers"
+                        >
+                            <i class="fa-solid fa-users-line icon_ text-base w-9"></i>
+                            <p className='text-white text-left text-base py-2 ml-1'>Workers</p>
+                        </NavLink>
+                    </li>
+                    <li className=' mb-24'>
+                        <NavLink
+
+                            className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
                             to="/create-task"
                         >
                             <i class="fa-solid fa-people-roof icon_ text-base w-9"></i>
-                            <p className='text-white text-left text-base py-2 ml-3'>Create Task</p>
+                            <p className='text-white text-left text-base py-2 ml-1'>Create Task</p>
                         </NavLink>
+                    </li>
+                    <li>
+                        <button className='flex justify-start items-center'>
+                            <i class="fa-solid fa-power-off text-red-600 font-semibold text-lg w-9"></i>
+                            <p className='text-red-600 font-semibold'>LOG OUT</p>
+                        </button>
                     </li>
                 </ul>
             </div>
+
         </div>
 
     )
