@@ -32,11 +32,10 @@ body {
   } */
 
 .icon_ {
-  color: #6b7280 !important;
+  color: #fff !important;
 }
 .sidebar ul li a.active {
   background-color: #f3f4f6 !important;
-  border-right: 2px solid #103d15 !important;
 }
 .sidebar ul li a.active p {
   color: #103d15 !important;
@@ -44,7 +43,12 @@ body {
 .sidebar ul li a.active i {
   color: #103d15 !important;
 }
-
+.sidebar_link:hover p{
+  color: #103d15 !important;
+}
+.sidebar_link:hover i{
+  color: #103d15 !important;
+}
 /*=======checkbox ==========*/
 [type='checkbox']:checked{
   background-color: #103d15!important;
