@@ -1,6 +1,6 @@
 body {
-  font-family: "Roboto", sans-serif !important;
-  background-color: #d3d3d31c;
+  font-family: 'Montserrat', sans-serif!important;
+  background-color: #d3d3d345;
 }
 .s_btn[aria-selected="true"] {
   background-color: #d3d3d363;
@@ -13,7 +13,7 @@ body {
 } */
 
 .e_pages {
-  margin-left: 236px;
+  margin-left: 276px;
   margin-right: 40px;
   margin-top: 101px;
   margin-bottom: 20px;

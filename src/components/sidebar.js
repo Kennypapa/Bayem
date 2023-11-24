@@ -14,7 +14,7 @@ const Sidebar = () => {
                         >
                             {/* <i className="fa-solid fa-user icon_ text-base w-9"></i> */}
                             <i class="fa-solid fa-house-chimney-window icon_ text-base w-9"></i>
-                            <p className='text-white text-left text-base py-2 ml-1'> Dashboard </p>
+                            <p className='text-white text-left text-base font-medium py-2 ml-1'> Dashboard </p>
                         </NavLink>
                     </li>
                     <li className='mb-3'>
@@ -23,7 +23,7 @@ const Sidebar = () => {
                             to="/roles"
                         >
                             <i className="fa-solid fa-list  icon_ text-base w-9"></i>
-                            <p className='text-white text-left text-base py-2 ml-1'> Roles</p>
+                            <p className='text-white text-left text-base font-medium py-2 ml-1'> Roles</p>
                         </NavLink>
                     </li>
                     <li className='mb-3'>
@@ -33,7 +33,7 @@ const Sidebar = () => {
                             to="/workers"
                         >
                             <i class="fa-solid fa-users-line icon_ text-base w-9"></i>
-                            <p className='text-white text-left text-base py-2 ml-1'>Workers</p>
+                            <p className='text-white text-left text-base font-medium py-2 ml-1'>Workers</p>
                         </NavLink>
                     </li>
                     <li className=' mb-24'>
@@ -43,7 +43,7 @@ const Sidebar = () => {
                             to="/create-task"
                         >
                             <i class="fa-solid fa-people-roof icon_ text-base w-9"></i>
-                            <p className='text-white text-left text-base py-2 ml-1'>Create Task</p>
+                            <p className='text-white text-left text-base font-medium py-2 ml-1'>Create Task</p>
                         </NavLink>
                     </li>
                     <li>

@@ -4,11 +4,14 @@ const Dashboard = () => {
   return (
 
     <div className="e_pages">
-      <div className="bg-white rounded-lg pb-4">
-        <div className="w-full flex justify-between items-center px-3 pt-4">
-          <p className="text-2xl">
-            Dashboard
-          </p>
+      <div className="bg-white rounded-lg pb-4 px-3 pt-3">
+        <div>
+           <p className="text-2xl font-medium">
+            Hello, admin.
+           </p>
+           <p className="text-sm font-normal">
+            Welcome to your dashboard.
+           </p>
         </div>
       </div>
     </div>

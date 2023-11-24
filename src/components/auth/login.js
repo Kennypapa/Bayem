@@ -39,10 +39,13 @@ const Login = () => {
                 <div className="row">
                     <div className="col-lg-6 form-section border">
                         <div className="form-inner">
-                            <div className="flex justify-center items-center">
-                                <img src="assets/img/logos/Bayem-Logo.png" alt="logo" />
+                            <div className='flex justify-between items-center mb-4'>
+                                <div className="flex justify-center items-center w-[220px] ">
+                                    <img src="assets/img/logos/Bayem-Logo.png" alt="logo" />
+                                </div>
+                                <p className=' font-semibold !text-2xl'>Admin Login</p>
                             </div>
-                            <h3>Sign in and join us.</h3>
+
                             <form onSubmit={loginHandler}>
                                 <div className="form-group form-box">
                                     <input
