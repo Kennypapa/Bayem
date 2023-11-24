@@ -10,9 +10,9 @@ const CreateTask = () => {
         switch (radioChecked) {
             case 'days':
                 setTaskFrequency(
-                <div>
-                    day
-                </div>)
+                    <div>
+                        day
+                    </div>)
                 break;
             case 'weeks':
                 setTaskFrequency(<div>
@@ -35,7 +35,7 @@ const CreateTask = () => {
     const [options, setOptions] = useState(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
     return (<div className="e_pages">
         <div className="bg-white rounded-lg py-3">
-            <div className="w-full px-3 grid grid-cols-2">
+            <div className="w-full px-3 grid grid-cols-2 hidden">
                 <div className="border-r border-r-[#d3d3d340] pr-3 pt-3">
                     <p className="text-2xl mb-3">
                         Create Task
@@ -192,41 +192,46 @@ const CreateTask = () => {
                 </div>
 
                 <div>
-                  <div className=" w-[90px] h-[90px] mx-auto border rounded-full">
+                    <div className=" w-[90px] h-[90px] mx-auto border rounded-full">
 
-                  </div>
-                  <div className="pl-6 pt-6">
-                     <ul >
-                        <li>
-                          <p>
-                            Firstname:
-                          </p>
-                        </li>
-                        <li>
-                           <p>
-                              Lastname:
-                           </p>
-                        </li>
-                        <li>
-                           <p>
-                              Email:
-                           </p>
-                        </li>
-                        <li>
-                           <p>
-                              Gender:
-                           </p>
-                        </li>
-                        <li>
-                           <p>
-                              Role:
-                           </p>
-                        </li>
-                     </ul>
-                  </div>
+                    </div>
+                    <div className="pl-6 pt-6">
+                        <ul >
+                            <li>
+                                <p>
+                                    Firstname:
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    Lastname:
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    Email:
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    Gender:
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    Role:
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
+            <div className="px-3">
+                <p className="text-2xl mb-3 font-[500] mr-1">
+                    Choose a worker to be assigned to the task
+                    <i class="fa-solid fa-person-digging text-2xl text-[#ff9c40] pl-2"></i>
+                </p>
+            </div>
         </div>
     </div>);
 }
