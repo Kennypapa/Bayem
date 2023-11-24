@@ -6,7 +6,7 @@ const Navbar = () => {
         initFlowbite();
     })
     return (
-        <div className=" h-[70px] w-full flex justify-between items-center bg-white pl-6 pr-10 top-0 fixed z-40">
+        <div className=" h-[70px] w-full flex justify-between items-center bg-white pl-6 pr-10 top-0 fixed z-10">
             <div className="w-[150px]">
                 <img src="assets/img/logos/Bayem-Logo.png" alt="logo" />
             </div>
