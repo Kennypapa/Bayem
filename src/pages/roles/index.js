@@ -19,6 +19,7 @@ const Roles = (props) => {
     const [createNotif, setCreateNotif] = useState("");
     const [deleteNotif, setDeleteNotif] = useState("");
     const [search, setSearch] = useState("");
+    
     const [filter, setFilter] = useState([]);
     //=== Referencing to particular collection in firestore
     const usersCollectionRef = collection(db, "roles");

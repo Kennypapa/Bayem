@@ -89,6 +89,7 @@ const Workers = () => {
     modal.show();
   }
 
+  console.log(allWorkers)
   //===== DeleteHandler ====//    
   const handleDelete = async (id) => {
     setDeleteId(id)
@@ -98,7 +99,7 @@ const Workers = () => {
   //==========search Handler ====//
   const searchhandler = () => {
     const result = allWorkers.filter((worker) => {
-      return worker.title.toLowerCase().match(search.toLocaleLowerCase());
+      return worker.firstname.toLowerCase().match(search.toLocaleLowerCase());
     });
     setFilter(result);
   }
@@ -174,7 +175,7 @@ const Workers = () => {
           fixedHeader
           isSortable
           customStyles={tableHeaderstyle}
-          data={allWorkers}
+          data={filter}
           pagination
           subHeader
           subHeaderComponent={

@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import Multiselect from "multiselect-react-dropdown";
-
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "../../firebase.config";
+import DataTable from "react-data-table-component";
 const CreateTask = () => {
 
     const [isChecked, setIsChecked] = useState(false);
     const [radioChecked, setRadioChecked] = useState('');
     const [taskFreqquency, setTaskFrequency] = useState(<></>);
+    const [allWorkers, setAllWorkers] = useState([]);
     useEffect(() => {
         switch (radioChecked) {
             case 'days':
@@ -30,9 +33,61 @@ const CreateTask = () => {
                 break;
             default: setTaskFrequency(<></>)
         }
+        getWorkers();
     }, [radioChecked])
 
     const [options, setOptions] = useState(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
+    //=============== fetch all workers ===========//
+
+    //=== Referencing to particular collection in firestore ==//
+    const usersCollectionRef = collection(db, "workers");
+
+    const getWorkers = async () => {
+        const data = await getDocs(usersCollectionRef);
+        setAllWorkers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+
+    //==============Table Columns && Rows ============//
+    const columns = [
+        {
+            name: "Firstname",
+            selector: (row) => row.firstname
+        },
+        {
+            name: 'Lastname',
+            selector: (row) => row.lastname
+        },
+        {
+            name: 'Email',
+            selector: (row) => row.email
+        },
+        {
+            name: 'Gender',
+            selector: (row) => row.gender
+        },
+        {
+            name: 'Role',
+            selector: (row) => <div class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">{row.role}</div>
+        },
+
+        {
+            name: "Actions",
+            cell: (row) => (
+                <div className="inline-flex rounded-md py-2.5" role="group">
+                   
+                </div>
+            )
+        }
+    ]
+
+    const tableHeaderstyle = {
+        headCells: {
+            style: {
+                fontWeight: "bold",
+                fontSize: "16px",
+            },
+        }
+    }
     return (<div className="e_pages">
         <div className="bg-white rounded-lg py-3">
             <div className="w-full px-3 grid grid-cols-2 hidden">
@@ -227,10 +282,38 @@ const CreateTask = () => {
                 </div>
             </div>
             <div className="px-3">
-                <p className="text-2xl mb-3 font-[500] mr-1">
+                <p className="text-2xl mb-3 font-[400] mr-1">
                     Choose a worker to be assigned to the task
                     <i class="fa-solid fa-person-digging text-2xl text-[#ff9c40] pl-2"></i>
                 </p>
+                <DataTable
+                    columns={columns}
+                    fixedHeader
+                    isSortable
+                    data={allWorkers}
+                    customStyles={tableHeaderstyle}
+                    pagination
+                    subHeader
+                    subHeaderComponent={
+                        <div className="w-full flex justify-between items-center">
+                            <input
+                                type="text"
+                                id="search"
+                                placeholder="Search..."
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+                            />
+                            <button type="button" class="p-2.5 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
+                                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                                <span class="sr-only">Search</span>
+                            </button>
+                            <button type="button" class="w-9 h-9 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </button>
+                        </div>
+                    }
+                />
             </div>
         </div>
     </div>);
