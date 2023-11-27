@@ -1,14 +1,25 @@
+import { Modal } from "flowbite";
 import { useState, useEffect } from "react";
 import Multiselect from "multiselect-react-dropdown";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../firebase.config";
+import EditModal from './edit-modal';
+import DeleteModal from "./delete-modal";
 import DataTable from "react-data-table-component";
 const CreateTask = () => {
 
+    const [modal, setShowModal] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
+    const [showModalDelete, setShowModalDelete] = useState(false);
     const [radioChecked, setRadioChecked] = useState('');
     const [taskFreqquency, setTaskFrequency] = useState(<></>);
     const [allWorkers, setAllWorkers] = useState([]);
+    const [title, setTitle] = useState("");
+    const [id, setId] = useState("");
+    const [deleteId, setDeleteId] = useState("");
+    const [showSuccessNotif, setShowSuccessNotif] = useState("");
+    const [deleteNotif, setDeleteNotif] = useState("");
+
     useEffect(() => {
         switch (radioChecked) {
             case 'days':
@@ -33,7 +44,21 @@ const CreateTask = () => {
                 break;
             default: setTaskFrequency(<></>)
         }
-        getWorkers();
+        setShowModal(
+            new Modal(document.querySelector("#static-modal"), {
+                backdrop: "dynamic",
+                backdropClasses: "bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40",
+                closable: true,
+            })
+        )
+        setShowModalDelete(
+            new Modal(document.querySelector("#popup-modal"), {
+                backdrop: "dynamic",
+                backdropClasses: "bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40",
+                closable: true,
+            })
+        )
+        getTasks();
     }, [radioChecked])
 
     const [options, setOptions] = useState(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
@@ -42,26 +67,53 @@ const CreateTask = () => {
     //=== Referencing to particular collection in firestore ==//
     const usersCollectionRef = collection(db, "tasks");
 
-    const getWorkers = async () => {
+    const getTasks = async () => {
         const data = await getDocs(usersCollectionRef);
         setAllWorkers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
 
+    //======== successHandler ====//
+    const successNotif = (success) => {
+        setShowSuccessNotif(success);
+    }
+
+    //=========Edit Handler ======//
+    const handleEdit = (id, title) => {
+        setTitle(title);
+        setId(id);
+        modal.show();
+    }
+    //===== DeleteHandler ====//    
+    const handleDelete = async (id) => {
+        setDeleteId(id)
+        showModalDelete.show();
+    }
+    //=========== delete Notif ======//
+    const handleDeleteNotif = (success) => {
+        setDeleteNotif(success)
+    }
     //==============Table Columns && Rows ============//
     const columns = [
         {
             name: "Tasks",
             selector: (row) => row.task
         },
-       
 
         {
             name: "Actions",
             cell: (row) => (
                 <div className="inline-flex rounded-md py-2.5" role="group">
-                   <button className="bg-[#ff9c40] hover:bg-[#103d15] hover:text-white h-[30px] rounded w-[110px] text-sm font-semibold text-[#103d15]">
-                      Assign Task
-                    </button> 
+                    <button
+                        onClick={() => handleEdit(row.id, row.task)}
+                        type="button" className="px-3 py-2  font-medium text-gray-900 border border-gray-100 rounded-s-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent">
+                        <i className="fa-solid fa-pen-to-square text-[#0e90c6] cursor-pointer text-[15px]"
+                        ></i>
+                    </button>
+
+                    <button onClick={() => handleDelete(row.id)} data-modal-target="popup-modal"
+                        data-modal-toggle="popup-modal" type="button" className="px-3 py-2  font-medium text-gray-900 border !border-l-0 border-y-gray-100 rounded-e-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0">
+                        <i className="fa-solid fa-trash text-[#c60e0e] text-[15px]"></i>
+                    </button>
                 </div>
             )
         }
@@ -76,7 +128,8 @@ const CreateTask = () => {
         }
     }
     return (<div className="e_pages">
-        <div className="bg-white rounded-lg py-3">
+        <div className="bg-white rounded-lg">
+            {/* ========== display 1 ============*/}
             <div className="w-full px-3 grid grid-cols-2 hidden">
                 <div className="border-r border-r-[#d3d3d340] pr-3 pt-3">
                     <p className="text-2xl mb-3">
@@ -268,9 +321,11 @@ const CreateTask = () => {
                     </div>
                 </div>
             </div>
-            <div className="px-3">
-                <p className="text-2xl mb-3 font-[400] mr-1">
-                    Choose a worker to be assigned to the task
+            {/* ========== display 1 =============*/}
+
+            <div className="pt-4">
+                <p className="text-2xl font-[400] pl-4">
+                    Available Tasks
                     <i class="fa-solid fa-person-digging text-2xl text-[#ff9c40] pl-2"></i>
                 </p>
                 <DataTable
@@ -295,7 +350,7 @@ const CreateTask = () => {
                                 </svg>
                                 <span class="sr-only">Search</span>
                             </button>
-                            <button type="button" class="w-9 h-9 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40]  text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">          
+                            <button type="button" class="w-9 h-9 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40]  text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
                                 <i class="fa-solid fa-rotate-right"></i>
                             </button>
                         </div>
@@ -303,6 +358,20 @@ const CreateTask = () => {
                 />
             </div>
         </div>
-    </div>);
+
+        <EditModal successNotif={successNotif} modal={modal} editTitle={title} userId={id} setEditTitle={setTitle} getTasks={getTasks} />
+        <DeleteModal deleteId={deleteId} showDeleteNotif={handleDeleteNotif} getTasks={getTasks} hideDeleteModal={showModalDelete} />
+        {
+            showSuccessNotif && (
+                <div className="fixed bottom-8 z-40 right-10 px-4 h-[55px] mb-1 text-sm text-green-800 bg-green-200 w-[300px] flex justify-start items-center" role="alert">
+                    <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <span className="font-medium pl-2"> Role Edited  Successfully!</span>
+                </div>
+            )
+        }
+    </div>
+    );
 }
 export default CreateTask;

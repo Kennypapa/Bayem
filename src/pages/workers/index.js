@@ -175,7 +175,7 @@ const Workers = () => {
           fixedHeader
           isSortable
           customStyles={tableHeaderstyle}
-         
+          data={filter}
           pagination
           subHeader
           subHeaderComponent={
