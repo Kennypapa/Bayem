@@ -27,7 +27,17 @@ const CreateTask = () => {
         weekDays: '',
         monthDays: ''
     });
-
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    console.log(selectedOptions);
+    // const [options, setOptions] = useState(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
+    const [options, setOptions] = useState([
+        { id: 'Monday', name: 'Monday' },
+        { id: 'Tuesday', name: 'Tuesday' },
+        { id: 'Wednesday', name: 'Wednesday' },
+        { id: 'Thursday', name: 'Thursday' },
+        { id: 'Friday', name: 'Friday' },
+    ]);
+    
     useEffect(() => {
         switch (radioChecked) {
             case 'days':
@@ -37,7 +47,6 @@ const CreateTask = () => {
                             type="date"
                             id="firstname"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
-                            required
                         />
                     </div>)
                 break;
@@ -45,8 +54,12 @@ const CreateTask = () => {
                 setTaskFrequency(<div className="mt-3">
                     <label class="cursor-pointer mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Every week:</label>
                     <Multiselect
-                        isObject={false}
+                        isObject={true}
                         options={options}
+                        selectedValues={selectedOptions}
+                        onSelect={handleChange}
+                        onRemove={handleChange}
+                        displayValue="name"
                     />
                 </div>)
                 break;
@@ -74,7 +87,7 @@ const CreateTask = () => {
         getTasks();
     }, [radioChecked])
 
-    const [options, setOptions] = useState(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
+
     //=============== fetch all workers ===========//
 
     //=== Referencing to particular collection in firestore ==//
@@ -89,6 +102,17 @@ const CreateTask = () => {
             }
         })
     }
+
+    const handleChange = (selectedOption) => {
+        setSelectedOptions(selectedOption);
+    };
+
+    // ===========SubmitTaskHandler =======//
+    const submitTaskHandler = (e) => {
+        e.preventDefault();
+        console.log(allTaskDetails);
+    }
+
     const getTasks = async () => {
         const data = await getDocs(usersCollectionRef);
         setAllWorkers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -163,7 +187,7 @@ const CreateTask = () => {
                         Create Task
                     </p>
                     <div >
-                        <form>
+                        <form onSubmit={submitTaskHandler}>
                             <div className="mb-6">
                                 <label
                                     for="firstname"
@@ -176,7 +200,7 @@ const CreateTask = () => {
                                     id="task"
                                     onChange={(e) => inputChangeHandler('task', e.target.value)}
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
-                                    required
+
                                 />
                             </div>
                             <div className="mb-6">
@@ -196,7 +220,7 @@ const CreateTask = () => {
                                         onChange={() => setIsChecked(!isChecked)}
                                         value=""
                                         class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[#103d15]"
-                                        required />
+                                    />
                                 </div>
                                 <label for="remember" class=" cursor-pointer text-sm ml-2 font-medium text-gray-900 dark:text-gray-300">Re-occur </label>
                             </div>
@@ -283,11 +307,7 @@ const CreateTask = () => {
                                                 taskFreqquency
                                             }
                                         </div>
-
-
-
                                     </div>
-
                                     :
                                     <div className="mb-6">
                                         <label
@@ -299,9 +319,9 @@ const CreateTask = () => {
                                         <input
                                             type="date"
                                             id=""
-                                            onChange={() => inputChangeHandler('task', e.target.value)}
+                                            onChange={(e) => inputChangeHandler('aDate', e.target.value)}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
-                                            required
+
                                         />
                                     </div>
                             }
@@ -310,7 +330,6 @@ const CreateTask = () => {
                                     type="submit"
                                     className=" w-[150px] h-[40px] relative text-sm bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none"
                                 >
-
                                     Submit
                                 </button>
                             </div>
