@@ -24,12 +24,17 @@ const CreateTask = () => {
         switch (radioChecked) {
             case 'days':
                 setTaskFrequency(
-                    <div>
-                        day
+                    <div className="mt-3">
+                        <input
+                            type="date"
+                            id="firstname"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+                            required
+                        />
                     </div>)
                 break;
             case 'weeks':
-                setTaskFrequency(<div>
+                setTaskFrequency(<div className="mt-3">
                     <label class="cursor-pointer mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Every week:</label>
                     <Multiselect
                         isObject={false}
@@ -38,7 +43,7 @@ const CreateTask = () => {
                 </div>)
                 break;
             case 'months':
-                setTaskFrequency(<div>
+                setTaskFrequency(<div className="mt-3">
                     months
                 </div>)
                 break;
@@ -129,8 +134,9 @@ const CreateTask = () => {
     }
     return (<div className="e_pages">
         <div className="bg-white rounded-lg">
+
             {/* ========== display 1 ============*/}
-            <div className="w-full px-3 grid grid-cols-2 hidden">
+            <div className="w-full px-3 pb-8 grid grid-cols-2 ">
                 <div className="border-r border-r-[#d3d3d340] pr-3 pt-3">
                     <p className="text-2xl mb-3">
                         Create Task
@@ -142,7 +148,7 @@ const CreateTask = () => {
                                     for="firstname"
                                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                 >
-                                    Title:
+                                    Task:
                                 </label>
                                 <input
                                     type="text"
@@ -205,7 +211,7 @@ const CreateTask = () => {
                                         </div> */}
 
                                         <div>
-                                            <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                            <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex">
                                                 <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                                                     <div class="flex items-center ps-3">
                                                         <input
@@ -214,8 +220,8 @@ const CreateTask = () => {
                                                             type="radio"
                                                             value={'days'}
                                                             name="list-radio"
-                                                            class="w-4 h-4 text-[#103d15] bg-gray-100 border-gray-300 focus:ring-[#103d15]" />
-                                                        <label for="horizontal-list-radio-license" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Days</label>
+                                                            class="w-4 h-4 text-[#103d15] mb-1 bg-gray-100 border-gray-300 focus:ring-[#103d15]" />
+                                                        <label for="horizontal-list-radio-license" class="w-full py-1.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Days</label>
                                                     </div>
                                                 </li>
                                                 <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
@@ -226,8 +232,8 @@ const CreateTask = () => {
                                                             type="radio"
                                                             value={'weeks'}
                                                             name="list-radio"
-                                                            class="w-4 h-4 text-[#103d15] bg-gray-100 border-gray-300 focus:ring-[#103d15]" />
-                                                        <label for="horizontal-list-radio-id" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Weeks</label>
+                                                            class="w-4 h-4 text-[#103d15] mb-1 bg-gray-100 border-gray-300 focus:ring-[#103d15]" />
+                                                        <label for="horizontal-list-radio-id" class="w-full py-1.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Weeks</label>
                                                     </div>
                                                 </li>
                                                 <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
@@ -237,10 +243,10 @@ const CreateTask = () => {
                                                             onChange={(e) => setRadioChecked(e.target.value)}
                                                             type="radio"
                                                             value={'months'} name="list-radio"
-                                                            class="w-4 h-4 text-[#103d15] bg-gray-100 border-gray-300 focus:ring-[#103d15]" />
+                                                            class="w-4 h-4 text-[#103d15] mb-1 bg-gray-100 border-gray-300 focus:ring-[#103d15]" />
                                                         <label
                                                             for="horizontal-list-radio-military"
-                                                            class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                                            class="w-full py-1.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                                                         >Months
                                                         </label>
                                                     </div>
@@ -287,8 +293,7 @@ const CreateTask = () => {
                 </div>
 
                 <div>
-                    <div className=" w-[90px] h-[90px] mx-auto border rounded-full">
-
+                    {/* <div className=" w-[90px] h-[90px] mx-auto border rounded-full">
                     </div>
                     <div className="pl-6 pt-6">
                         <ul >
@@ -318,44 +323,47 @@ const CreateTask = () => {
                                 </p>
                             </li>
                         </ul>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             {/* ========== display 1 =============*/}
 
-            <div className="pt-4">
-                <p className="text-2xl font-[400] pl-4">
-                    Available Tasks
-                    <i class="fa-solid fa-person-digging text-2xl text-[#ff9c40] pl-2"></i>
-                </p>
-                <DataTable
-                    columns={columns}
-                    fixedHeader
-                    isSortable
-                    data={allWorkers}
-                    customStyles={tableHeaderstyle}
-                    pagination
-                    subHeader
-                    subHeaderComponent={
-                        <div className="w-full flex justify-between items-center">
-                            <input
-                                type="text"
-                                id="search"
-                                placeholder="Search..."
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
-                            />
-                            <button type="button" class="p-2.5 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
-                                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                                </svg>
-                                <span class="sr-only">Search</span>
-                            </button>
-                            <button type="button" class="w-9 h-9 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40]  text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
-                                <i class="fa-solid fa-rotate-right"></i>
-                            </button>
-                        </div>
-                    }
-                />
+
+            <div className="hidden">
+                <div className="pt-4">
+                    <p className="text-2xl font-[400] pl-4">
+                        Available Tasks
+                        <i class="fa-solid fa-person-digging text-2xl text-[#ff9c40] pl-2"></i>
+                    </p>
+                    <DataTable
+                        columns={columns}
+                        fixedHeader
+                        isSortable
+                        data={allWorkers}
+                        customStyles={tableHeaderstyle}
+                        pagination
+                        subHeader
+                        subHeaderComponent={
+                            <div className="w-full flex justify-between items-center">
+                                <input
+                                    type="text"
+                                    id="search"
+                                    placeholder="Search..."
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+                                />
+                                <button type="button" class="p-2.5 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
+                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                    </svg>
+                                    <span class="sr-only">Search</span>
+                                </button>
+                                <button type="button" class="w-9 h-9 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40]  text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
+                                    <i class="fa-solid fa-rotate-right"></i>
+                                </button>
+                            </div>
+                        }
+                    />
+                </div>
             </div>
         </div>
 
