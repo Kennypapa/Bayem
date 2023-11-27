@@ -19,6 +19,14 @@ const CreateTask = () => {
     const [deleteId, setDeleteId] = useState("");
     const [showSuccessNotif, setShowSuccessNotif] = useState("");
     const [deleteNotif, setDeleteNotif] = useState("");
+    const [allTaskDetails, setAllTasksDetails] = useState({
+        task: "",
+        description: "",
+        aDate: "",
+        daysDate: '',
+        weekDays: '',
+        monthDays: ''
+    });
 
     useEffect(() => {
         switch (radioChecked) {
@@ -72,6 +80,15 @@ const CreateTask = () => {
     //=== Referencing to particular collection in firestore ==//
     const usersCollectionRef = collection(db, "tasks");
 
+    //=========InputchangeHandler ==============//
+    const inputChangeHandler = (input, value) => {
+        setAllTasksDetails((prevState) => {
+            return {
+                ...prevState,
+                [input]: value
+            }
+        })
+    }
     const getTasks = async () => {
         const data = await getDocs(usersCollectionRef);
         setAllWorkers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -88,15 +105,18 @@ const CreateTask = () => {
         setId(id);
         modal.show();
     }
+
     //===== DeleteHandler ====//    
     const handleDelete = async (id) => {
         setDeleteId(id)
         showModalDelete.show();
     }
+
     //=========== delete Notif ======//
     const handleDeleteNotif = (success) => {
         setDeleteNotif(success)
     }
+
     //==============Table Columns && Rows ============//
     const columns = [
         {
@@ -132,6 +152,7 @@ const CreateTask = () => {
             },
         }
     }
+
     return (<div className="e_pages">
         <div className="bg-white rounded-lg">
 
@@ -152,14 +173,19 @@ const CreateTask = () => {
                                 </label>
                                 <input
                                     type="text"
-                                    id="firstname"
+                                    id="task"
+                                    onChange={(e) => inputChangeHandler('task', e.target.value)}
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                     required
                                 />
                             </div>
                             <div className="mb-6">
                                 <label for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description:</label>
-                                <textarea id="message" rows="2" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5" placeholder="Write your thoughts here..."></textarea>
+                                <textarea
+                                    id="message"
+                                    rows="2"
+                                    onChange={(e) => inputChangeHandler('description', e.target.value)}
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5" placeholder="Write your thoughts here..."></textarea>
                             </div>
                             <div class="flex items-start mb-4">
                                 <div class="flex items-center h-5">
@@ -263,7 +289,6 @@ const CreateTask = () => {
                                     </div>
 
                                     :
-
                                     <div className="mb-6">
                                         <label
                                             for="firstname"
@@ -273,7 +298,8 @@ const CreateTask = () => {
                                         </label>
                                         <input
                                             type="date"
-                                            id="firstname"
+                                            id=""
+                                            onChange={() => inputChangeHandler('task', e.target.value)}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                             required
                                         />
