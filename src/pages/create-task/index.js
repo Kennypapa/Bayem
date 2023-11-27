@@ -40,7 +40,7 @@ const CreateTask = () => {
     //=============== fetch all workers ===========//
 
     //=== Referencing to particular collection in firestore ==//
-    const usersCollectionRef = collection(db, "workers");
+    const usersCollectionRef = collection(db, "tasks");
 
     const getWorkers = async () => {
         const data = await getDocs(usersCollectionRef);
@@ -50,31 +50,18 @@ const CreateTask = () => {
     //==============Table Columns && Rows ============//
     const columns = [
         {
-            name: "Firstname",
-            selector: (row) => row.firstname
+            name: "Tasks",
+            selector: (row) => row.task
         },
-        {
-            name: 'Lastname',
-            selector: (row) => row.lastname
-        },
-        {
-            name: 'Email',
-            selector: (row) => row.email
-        },
-        {
-            name: 'Gender',
-            selector: (row) => row.gender
-        },
-        {
-            name: 'Role',
-            selector: (row) => <div class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">{row.role}</div>
-        },
+       
 
         {
             name: "Actions",
             cell: (row) => (
                 <div className="inline-flex rounded-md py-2.5" role="group">
-                   
+                   <button className="bg-[#ff9c40] hover:bg-[#103d15] hover:text-white h-[30px] rounded w-[110px] text-sm font-semibold text-[#103d15]">
+                      Assign Task
+                    </button> 
                 </div>
             )
         }
@@ -308,7 +295,7 @@ const CreateTask = () => {
                                 </svg>
                                 <span class="sr-only">Search</span>
                             </button>
-                            <button type="button" class="w-9 h-9 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
+                            <button type="button" class="w-9 h-9 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40]  text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">          
                                 <i class="fa-solid fa-rotate-right"></i>
                             </button>
                         </div>
