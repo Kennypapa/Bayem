@@ -1,7 +1,7 @@
 import { Modal, initFlowbite } from "flowbite";
 import { useState, useEffect } from "react";
 import Multiselect from "multiselect-react-dropdown";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
 import EditModal from './edit-modal';
 import DeleteModal from "./delete-modal";
@@ -30,19 +30,22 @@ const CreateTask = () => {
         aDayDate: "",
         daysDate: '',
         weekDays: [],
-        monthDays: '',
+        monthDays: {},
     });
     const [date, setDate] = useState({
         startDate: new Date(),
         endDate: new Date(),
         key: 'selection'
     });
+
     const handleDateChange = (ranges) => {
-        console.log('work')
-        setDate(ranges.selection)
-        console.log(ranges.selection)
+        setDate(ranges.selection);
+        setAllTasksDetails(prevState => ({
+            ...prevState,
+            monthDays: ranges.selection
+        }))
     }
-    console.log(date)
+
     const [options, setOptions] = useState([
         { id: 'Monday', name: 'Monday' },
         { id: 'Tuesday', name: 'Tuesday' },
@@ -51,7 +54,15 @@ const CreateTask = () => {
         { id: 'Friday', name: 'Friday' },
     ]);
 
-
+    //=========InputchangeHandler ==============//
+    const inputChangeHandler = (input, value) => {
+        setAllTasksDetails((prevState) => {
+            return {
+                ...prevState,
+                [input]: value
+            }
+        })
+    }
     useEffect(() => {
         initFlowbite()
         switch (radioChecked) {
@@ -60,8 +71,10 @@ const CreateTask = () => {
                     <div className="mt-3">
                         <input
                             type="date"
-                            id="firstname"
+                            id="daysDate"
+                            onChange={(e) => { inputChangeHandler('daysDate', e.target.value) }}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+
                         />
                     </div>)
                 break;
@@ -80,7 +93,7 @@ const CreateTask = () => {
                 break;
             case 'months':
                 setTaskFrequency(<div className="mt-3">
-                    <div className="flex bg-[#ff9c40] text-white w-[330px] py-1.5 pl-4 rounded">
+                    <div className="flex bg-[#d3d3d345]  w-[330px] py-1.5 pl-4 rounded">
                         <span className="font-[600]">From</span>
                         <p className="mx-2">
                             {format(date.startDate, "MMM,dd,yyyy")}
@@ -95,7 +108,6 @@ const CreateTask = () => {
                     <DateRangePicker
                         ranges={[date]}
                         onChange={handleDateChange}
-
                     />
                 </div>)
                 break;
@@ -123,29 +135,30 @@ const CreateTask = () => {
     //=== Referencing to particular collection in firestore ==//
     const usersCollectionRef = collection(db, "tasks");
 
-    //=========InputchangeHandler ==============//
-    const inputChangeHandler = (input, value) => {
-        setAllTasksDetails((prevState) => {
-            return {
-                ...prevState,
-                [input]: value
-            }
-        })
-    }
-
     const handleChange = (selectedOption) => {
         setSelectedOptions(selectedOption);
         setAllTasksDetails(prevState => ({
             ...prevState,
-            weekDays: [...allTaskDetails.weekDays, selectedOption]
+            weekDays: { ...allTaskDetails.weekDays, selectedOption }
         }))
     };
 
+
     // ===========SubmitTaskHandler =======//
-    const submitTaskHandler = (e) => {
+    const submitTaskHandler = async (e) => {
         e.preventDefault();
-        console.log(selectedOptions)
+        console.log(selectedOptions);
         console.log(allTaskDetails);
+
+        await addDoc(usersCollectionRef, {
+            task: allTaskDetails.task,
+            description: allTaskDetails.description,
+            aDayDate: allTaskDetails.aDayDate,
+            daysDate: allTaskDetails.daysDate,
+            weekDays: allTaskDetails.weekDays,
+            monthDays: allTaskDetails.monthDays,
+        });
+        console.log("done")
     }
 
     const getTasks = async () => {
@@ -217,7 +230,7 @@ const CreateTask = () => {
 
             {/* ========== display 1 ============*/}
             <div className="w-full px-3 pb-8 ">
-                <div className="border-r border-r-[#d3d3d340] pr-3 pt-3">
+                <div className=" pr-3 pt-3">
                     <p className="text-2xl mb-3">
                         Create Task
                     </p>
