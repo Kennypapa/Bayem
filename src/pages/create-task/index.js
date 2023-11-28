@@ -6,6 +6,10 @@ import { db } from "../../firebase.config";
 import EditModal from './edit-modal';
 import DeleteModal from "./delete-modal";
 import DataTable from "react-data-table-component";
+import { DateRangePicker } from "react-date-range";
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
+import { format } from 'date-fns';
 const CreateTask = () => {
 
     const [modal, setShowModal] = useState(false);
@@ -28,7 +32,17 @@ const CreateTask = () => {
         weekDays: [],
         monthDays: '',
     });
-
+    const [date, setDate] = useState({
+        startDate: new Date(),
+        endDate: new Date(),
+        key: 'selection'
+    });
+    const handleDateChange = (ranges) => {
+        console.log('work')
+        setDate(ranges.selection)
+        console.log(ranges.selection)
+    }
+    console.log(date)
     const [options, setOptions] = useState([
         { id: 'Monday', name: 'Monday' },
         { id: 'Tuesday', name: 'Tuesday' },
@@ -36,6 +50,7 @@ const CreateTask = () => {
         { id: 'Thursday', name: 'Thursday' },
         { id: 'Friday', name: 'Friday' },
     ]);
+
 
     useEffect(() => {
         initFlowbite()
@@ -65,25 +80,23 @@ const CreateTask = () => {
                 break;
             case 'months':
                 setTaskFrequency(<div className="mt-3">
-                    <div date-rangepicker class="flex items-center">
-                        <div class="relative">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                                </svg>
-                            </div>
-                            <input name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date start" />
-                        </div>
-                        <span class="mx-4 text-gray-500">to</span>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                                </svg>
-                            </div>
-                            <input name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date end" />
-                        </div>
+                    <div className="flex bg-[#ff9c40] text-white w-[330px] py-1.5 pl-4 rounded">
+                        <span className="font-[600]">From</span>
+                        <p className="mx-2">
+                            {format(date.startDate, "MMM,dd,yyyy")}
+                        </p>
+                        <span className="font-[600]">to</span>
+                        <p className="ml-3">
+                            {format(date.endDate, "MMM,dd,yyyy")}
+                        </p>
+
+
                     </div>
+                    <DateRangePicker
+                        ranges={[date]}
+                        onChange={handleDateChange}
+
+                    />
                 </div>)
                 break;
             default: setTaskFrequency(<></>)
@@ -103,7 +116,7 @@ const CreateTask = () => {
             })
         )
         getTasks();
-    }, [radioChecked])
+    }, [radioChecked, date])
 
     //=============== fetch all workers ===========//
 
@@ -279,7 +292,7 @@ const CreateTask = () => {
                                                             value={'weeks'}
                                                             name="list-radio"
                                                             class="w-4 h-4 text-[#103d15] mb-1 bg-gray-100 border-gray-300 focus:ring-[#103d15]" />
-                                                        <label for="horizontal-list-radio-id" class="w-full py-1.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Weeks</label>
+                                                        <label for="horizontal-list-radio-id" class="w-full py-1.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Week Days</label>
                                                     </div>
                                                 </li>
                                                 <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
@@ -293,7 +306,7 @@ const CreateTask = () => {
                                                         <label
                                                             for="horizontal-list-radio-military"
                                                             class="w-full py-1.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                                        >Months
+                                                        >Month Days
                                                         </label>
                                                     </div>
                                                 </li>
@@ -329,6 +342,7 @@ const CreateTask = () => {
                                     Submit
                                 </button>
                             </div>
+
                         </form>
                     </div>
                 </div>

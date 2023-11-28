@@ -80,6 +80,19 @@ body {
 .multiSelectContainer li:hover{
   background: #103d15!important;
 }
+
+.rdrDefinedRangesWrapper{
+  display: none!important;
+}
+.rdrDateDisplayWrapper{
+  display: none!important;
+}
+.rdrEndEdge{
+  color: #ff9c40!important;
+}
+.rdrDay{
+  color: #ff9c40!important;
+}
 /*===========Queries ===========*/
 @media only screen and (max-width: 766px) {
   .e_pages {
