@@ -23,7 +23,7 @@ const CreateTask = () => {
     const [allTaskDetails, setAllTasksDetails] = useState({
         task: "",
         description: "",
-        aDate: "",
+        aDayDate: "",
         daysDate: '',
         weekDays: [],
         monthDays: '',
@@ -107,7 +107,7 @@ const CreateTask = () => {
             ...prevState,
             weekDays: [...allTaskDetails.weekDays, selectedOption]
         }))
-    }; 
+    };
 
     // ===========SubmitTaskHandler =======//
     const submitTaskHandler = (e) => {
@@ -236,32 +236,6 @@ const CreateTask = () => {
                                                 How often can you commit to the task?
                                             </p>
                                         </div>
-                                        {/* <div className="flex mb-2">
-                                            <div class="flex items-center mr-3">
-                                                <label for="link-checkbox" class="cursor-pointer mr-2 text-sm font-medium text-gray-900 dark:text-gray-300">Days</label>
-                                                <input id="link-checkbox"
-                                                    type="radio"
-                                                    value=""
-                                                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[#103d15]"
-                                                />
-                                            </div>
-                                            <div class="flex items-center mr-3">
-                                                <label for="link-checkbox" class="cursor-pointer mr-2 text-sm font-medium text-gray-900 dark:text-gray-300">Weeks</label>
-                                                <input id="link-checkbox"
-                                                    type="radio"
-                                                    value=""
-                                                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[#103d15]"
-                                                />
-                                            </div>
-                                            <div class="flex items-center mr-3">
-                                                <label for="link-checkbox" class="cursor-pointer mr-2 text-sm font-medium text-gray-900 dark:text-gray-300">Months</label>
-                                                <input id="link-checkbox"
-                                                    type="radio"
-                                                    value=""
-                                                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[#103d15]"
-                                                />
-                                            </div>
-                                        </div> */}
 
                                         <div>
                                             <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex">
