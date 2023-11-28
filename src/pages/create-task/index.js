@@ -19,17 +19,16 @@ const CreateTask = () => {
     const [deleteId, setDeleteId] = useState("");
     const [showSuccessNotif, setShowSuccessNotif] = useState("");
     const [deleteNotif, setDeleteNotif] = useState("");
+    const [selectedOptions, setSelectedOptions] = useState([]);
     const [allTaskDetails, setAllTasksDetails] = useState({
         task: "",
         description: "",
         aDate: "",
         daysDate: '',
-        weekDays: '',
-        monthDays: ''
+        weekDays: [],
+        monthDays: '',
     });
-    const [selectedOptions, setSelectedOptions] = useState([]);
-    console.log(selectedOptions);
-    // const [options, setOptions] = useState(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
+
     const [options, setOptions] = useState([
         { id: 'Monday', name: 'Monday' },
         { id: 'Tuesday', name: 'Tuesday' },
@@ -37,7 +36,7 @@ const CreateTask = () => {
         { id: 'Thursday', name: 'Thursday' },
         { id: 'Friday', name: 'Friday' },
     ]);
-    
+
     useEffect(() => {
         switch (radioChecked) {
             case 'days':
@@ -87,7 +86,6 @@ const CreateTask = () => {
         getTasks();
     }, [radioChecked])
 
-
     //=============== fetch all workers ===========//
 
     //=== Referencing to particular collection in firestore ==//
@@ -105,11 +103,16 @@ const CreateTask = () => {
 
     const handleChange = (selectedOption) => {
         setSelectedOptions(selectedOption);
-    };
+        setAllTasksDetails(prevState => ({
+            ...prevState,
+            weekDays: [...allTaskDetails.weekDays, selectedOption]
+        }))
+    }; 
 
     // ===========SubmitTaskHandler =======//
     const submitTaskHandler = (e) => {
         e.preventDefault();
+        console.log(selectedOptions)
         console.log(allTaskDetails);
     }
 
@@ -181,7 +184,7 @@ const CreateTask = () => {
         <div className="bg-white rounded-lg">
 
             {/* ========== display 1 ============*/}
-            <div className="w-full px-3 pb-8 grid grid-cols-2 ">
+            <div className="w-full px-3 pb-8 ">
                 <div className="border-r border-r-[#d3d3d340] pr-3 pt-3">
                     <p className="text-2xl mb-3">
                         Create Task
