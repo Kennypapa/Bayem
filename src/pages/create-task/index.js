@@ -147,9 +147,6 @@ const CreateTask = () => {
     // ===========SubmitTaskHandler =======//
     const submitTaskHandler = async (e) => {
         e.preventDefault();
-        console.log(selectedOptions);
-        console.log(allTaskDetails);
-
         await addDoc(usersCollectionRef, {
             task: allTaskDetails.task,
             description: allTaskDetails.description,
@@ -158,7 +155,6 @@ const CreateTask = () => {
             weekDays: allTaskDetails.weekDays,
             monthDays: allTaskDetails.monthDays,
         });
-        console.log("done")
     }
 
     const getTasks = async () => {
