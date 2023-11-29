@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 const Sidebar = () => {
     return (
-
         <div className=" w-[250px] h-[100vh] pl-0 pr-0 fixed top-0 md:left-0 left-[-200px] bg-[#103d15] pt-6 shadow-md z-40">
             <div className="w-[160px] ml-6 mb-8">
                 <img src="assets/img/logos/Bayem-Logo-2.png" alt="logo" />
@@ -43,7 +42,7 @@ const Sidebar = () => {
                             to="/create-task"
                         >
                             <i class="fa-solid fa-people-roof icon_ text-base w-9"></i>
-                            <p className='text-white text-left text-base font-medium py-2 ml-1'>Create Task</p>
+                            <p className='text-white text-left text-base font-medium py-2 ml-1'>Tasks</p>
                         </NavLink>
                     </li>
                 </ul>
