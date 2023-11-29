@@ -21,7 +21,7 @@ const EditModal = (props) => {
         }
         setIsLoading(true);
         const updateData = doc(db, "tasks", props.userId);
-        await updateDoc(updateData, { task: props.editTitle })
+        await updateDoc(updateData, { title: props.editTitle })
         setIsLoading(false);
         setSuccess(true);
         props.modal.hide();
