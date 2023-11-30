@@ -12,6 +12,7 @@ const EditTasks = (props) => {
     const [taskFreqquency, setTaskFrequency] = useState(<></>);
     const [isChecked, setIsChecked] = useState(false);
     const [radioChecked, setRadioChecked] = useState('');
+    const [success, setSuccess] = useState(false);
     const [showEditTask, setShowEditTask] = useState(false);
     const [date, setDate] = useState({
         startDate: new Date(),
@@ -35,6 +36,7 @@ const EditTasks = (props) => {
     ]);
     const [isLoading, setIsLoading] = useState(false);
 
+
     //=========InputchangeHandler ==============//
     const inputChangeHandler = (input, value) => {
         props.setCollectAllTasks((prevState) => {
@@ -42,8 +44,9 @@ const EditTasks = (props) => {
                 ...prevState,
                 [input]: value
             }
-        })
+        });
     }
+
 
     const handleDateChange = (ranges) => {
         setDate(ranges.selection);
@@ -67,7 +70,13 @@ const EditTasks = (props) => {
             monthDays: props.collectAllTask.monthDays
         });
         setIsLoading(false);
-    }
+        setSuccess(true);
+        setTimeout(() => {
+            setSuccess(false);
+        }, 4000)
+    };
+
+    props.successNotif(success);
     //========CloseEdit Handler =======//
     const closeEditHandler = () => {
         setShowEditTask(false);
@@ -142,6 +151,7 @@ const EditTasks = (props) => {
                         </p>
                         <div>
                             <button
+                            onClick={closeEditHandler}
                                 className=" hover:font-bold ease-in-out duration-100">
                                 <i class="fa-solid fa-arrow-left-long"></i>
                                 <span className=" pl-2">

@@ -22,11 +22,14 @@ const CreateTask = (props) => {
     const [id, setId] = useState("");
     const [deleteId, setDeleteId] = useState("");
     const [showSuccessNotif, setShowSuccessNotif] = useState("");
+    const [showCreateNotif, setShowCreateNotif] = useState("");
     const [deleteNotif, setDeleteNotif] = useState("");
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [showCreateTask, setShowCreateTask] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [showEditTask, setShowEditTask] = useState(false);
+    const [success, setSuccess] = useState(false);
+
     const [allTaskDetails, setAllTasksDetails] = useState({
         task: "",
         description: "",
@@ -40,7 +43,7 @@ const CreateTask = (props) => {
         endDate: new Date(),
         key: 'selection'
     });
-    console.log(props.closeEditHandler)
+
     //=== Referencing to particular collection in firestore ==//
     const usersCollectionRef = collection(db, "tasks");
 
@@ -81,6 +84,7 @@ const CreateTask = (props) => {
                             id="daysDate"
                             onChange={(e) => { inputChangeHandler('daysDate', e.target.value) }}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+                            required
                         />
                     </div>)
                 break;
@@ -95,6 +99,7 @@ const CreateTask = (props) => {
                             onSelect={handleChange}
                             onRemove={handleChange}
                             displayValue="name"
+                            required
                         />
                     </div>
                 )
@@ -114,6 +119,7 @@ const CreateTask = (props) => {
                     <DateRangePicker
                         ranges={[date]}
                         onChange={handleDateChange}
+                        required
                     />
                 </div>)
                 break;
@@ -139,10 +145,11 @@ const CreateTask = (props) => {
         }))
     };
 
-    // ===========SubmitTaskHandler =======//
+    // ===========SubmitTaskHandler ==========//
     const submitTaskHandler = async (e) => {
         e.preventDefault();
         setIsLoading(true);
+        setSuccess(true);
         await addDoc(usersCollectionRef, {
             task: allTaskDetails.task,
             description: allTaskDetails.description,
@@ -151,7 +158,10 @@ const CreateTask = (props) => {
             weekDays: allTaskDetails.weekDays,
             monthDays: allTaskDetails.monthDays,
         });
-        setIsLoading(false)
+        setTimeout(() => {
+            setSuccess(false);
+        }, 4000);
+        setIsLoading(false);
     }
 
     const getTasks = async () => {
@@ -163,6 +173,11 @@ const CreateTask = (props) => {
     const successNotif = (success) => {
         setShowSuccessNotif(success);
     }
+    //======== successHandler ====//
+    const createNotif = (success) => {
+        setShowCreateNotif(success);
+    }
+
 
     //=========Edit Handler ======//
     const handleEdit = (id, allTasks) => {
@@ -170,7 +185,6 @@ const CreateTask = (props) => {
         setCollectAllTasks(allTasks);
         setId(id);
     }
-    console.log(collectAllTasks);
 
     //========CloseEdit Handler =======//
     const closeEditHandler = () => {
@@ -197,7 +211,7 @@ const CreateTask = (props) => {
     const hideCreateTask = () => {
         setShowCreateTask(false);
     }
-    console.log(showCreateTask);
+
     //==============Table Columns && Rows ============//
     const columns = [
         {
@@ -228,6 +242,7 @@ const CreateTask = (props) => {
             )
         }
     ]
+
 
     const tableHeaderstyle = {
         headCells: {
@@ -274,7 +289,7 @@ const CreateTask = (props) => {
                                                 id="task"
                                                 onChange={(e) => inputChangeHandler('task', e.target.value)}
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
-
+                                                required
                                             />
                                         </div>
                                         <div className="mb-6">
@@ -283,7 +298,7 @@ const CreateTask = (props) => {
                                                 id="message"
                                                 rows="2"
                                                 onChange={(e) => inputChangeHandler('description', e.target.value)}
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5" placeholder="Write your thoughts here..."></textarea>
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5" placeholder="Write your thoughts here..." required ></textarea>
                                         </div>
                                         <div class="flex items-start mb-4">
                                             <div class="flex items-center h-5">
@@ -451,7 +466,7 @@ const CreateTask = (props) => {
                 {/* ========= Edit Tasks ========= */}
                 {
                     showEditTask ?
-                        <EditTask collectAllTask={collectAllTasks} taskId={id}   setCollectAllTasks={setCollectAllTasks} />
+                        <EditTask successNotif={successNotif} hideEditTask={closeEditHandler} collectAllTask={collectAllTasks} taskId={id} setCollectAllTasks={setCollectAllTasks} />
                         :
                         null
                 }
@@ -466,7 +481,17 @@ const CreateTask = (props) => {
                         <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                         </svg>
-                        <span className="font-medium pl-2"> Role Edited  Successfully!</span>
+                        <span className="font-medium pl-2">Task Edited Successfully!</span>
+                    </div>
+                )
+            }
+            {
+                success && (
+                    <div className="fixed bottom-8 z-40 right-10 px-4 h-[55px] mb-1 text-sm text-green-800 bg-green-200 w-[300px] flex justify-start items-center" role="alert">
+                        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                        </svg>
+                        <span className="font-medium pl-2">Task Created Successfully!</span>
                     </div>
                 )
             }
