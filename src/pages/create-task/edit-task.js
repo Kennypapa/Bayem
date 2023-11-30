@@ -32,7 +32,7 @@ const EditTasks = (props) => {
         { id: 'Friday', name: 'Friday' },
     ]);
     const [isLoading, setIsLoading] = useState(false);
-        
+
     //=========InputchangeHandler ==============//
     const inputChangeHandler = (input, value) => {
         setAllTasksDetails((prevState) => {
@@ -64,6 +64,7 @@ const EditTasks = (props) => {
                         <input
                             type="time"
                             id="daysDate"
+                            value={props.collectAllTask.daysDate}
                             onChange={(e) => { inputChangeHandler('daysDate', e.target.value) }}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                         />
@@ -76,7 +77,7 @@ const EditTasks = (props) => {
                         <Multiselect
                             isObject={true}
                             options={options}
-                            selectedValues={selectedOptions}
+                            selectedValues={props.collectAllTask.weekDays}
                             onSelect={handleChange}
                             onRemove={handleChange}
                             displayValue="name"
@@ -177,10 +178,10 @@ const EditTasks = (props) => {
                                         <div className="flex justify-start items-center mb-3">
                                             <div className="h-[2px] w-[50px] rounded-lg bg-[#103d15] mr-2"></div>
                                             <p className="text-sm  font-medium text-gray-900 dark:text-gray-300">
-                                                How often can you commit to the task?
+                                              How often can you commit to the task?
                                             </p>
                                         </div>
-
+                  
                                         <div>
                                             <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex">
                                                 <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
