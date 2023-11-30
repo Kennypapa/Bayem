@@ -12,7 +12,7 @@ const EditTasks = (props) => {
     const [taskFreqquency, setTaskFrequency] = useState(<></>);
     const [isChecked, setIsChecked] = useState(false);
     const [radioChecked, setRadioChecked] = useState('');
-    const [success, setSuccess] = useState(false);
+    const [editSuccess, setEditSuccess] = useState(false);
     const [showEditTask, setShowEditTask] = useState(false);
     const [date, setDate] = useState({
         startDate: new Date(),
@@ -47,7 +47,6 @@ const EditTasks = (props) => {
         });
     }
 
-
     const handleDateChange = (ranges) => {
         setDate(ranges.selection);
         setAllTasksDetails(prevState => ({
@@ -69,14 +68,13 @@ const EditTasks = (props) => {
             weekDays: props.collectAllTask.weekDays,
             monthDays: props.collectAllTask.monthDays
         });
+        setEditSuccess(true);
         setIsLoading(false);
-        setSuccess(true);
-        setTimeout(() => {
-            setSuccess(false);
-        }, 4000)
+        props.hideEditTask();
+        props.getTasks();
     };
-
-    props.successNotif(success);
+    console.log(editSuccess);
+    props.successNotif(editSuccess);
     //========CloseEdit Handler =======//
     const closeEditHandler = () => {
         setShowEditTask(false);
@@ -143,7 +141,7 @@ const EditTasks = (props) => {
     };
     return (
         <div>
-            <div className="w-full px-3 pb-8 absolute top-0 bg-white z-30 rounded-md">
+            <div className="w-full px-3 h-fit pb-8 absolute top-0 bg-white z-30 rounded-md">
                 <div className=" pr-3 pt-3">
                     <div className="flex justify-between items-center mb-3">
                         <p className="text-2xl">
@@ -151,7 +149,7 @@ const EditTasks = (props) => {
                         </p>
                         <div>
                             <button
-                            onClick={closeEditHandler}
+                                onClick={props.hideEditTask}
                                 className=" hover:font-bold ease-in-out duration-100">
                                 <i class="fa-solid fa-arrow-left-long"></i>
                                 <span className=" pl-2">

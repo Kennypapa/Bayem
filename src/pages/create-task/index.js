@@ -43,6 +43,7 @@ const CreateTask = (props) => {
         endDate: new Date(),
         key: 'selection'
     });
+    
 
     //=== Referencing to particular collection in firestore ==//
     const usersCollectionRef = collection(db, "tasks");
@@ -158,6 +159,8 @@ const CreateTask = (props) => {
             weekDays: allTaskDetails.weekDays,
             monthDays: allTaskDetails.monthDays,
         });
+        setShowCreateTask(false);
+        getTasks();
         setTimeout(() => {
             setSuccess(false);
         }, 4000);
@@ -170,14 +173,13 @@ const CreateTask = (props) => {
     };
 
     //======== successHandler ====//
-    const successNotif = (success) => {
-        setShowSuccessNotif(success);
+    const successNotif = (editSuccess) => {
+        setShowSuccessNotif(editSuccess);
     }
     //======== successHandler ====//
     const createNotif = (success) => {
         setShowCreateNotif(success);
     }
-
 
     //=========Edit Handler ======//
     const handleEdit = (id, allTasks) => {
@@ -185,7 +187,7 @@ const CreateTask = (props) => {
         setCollectAllTasks(allTasks);
         setId(id);
     }
-
+    
     //========CloseEdit Handler =======//
     const closeEditHandler = () => {
         setShowEditTask(false);
@@ -466,7 +468,7 @@ const CreateTask = (props) => {
                 {/* ========= Edit Tasks ========= */}
                 {
                     showEditTask ?
-                        <EditTask successNotif={successNotif} hideEditTask={closeEditHandler} collectAllTask={collectAllTasks} taskId={id} setCollectAllTasks={setCollectAllTasks} />
+                        <EditTask successNotif={successNotif} getTasks={getTasks} hideEditTask={closeEditHandler} collectAllTask={collectAllTasks} taskId={id} setCollectAllTasks={setCollectAllTasks} hideCreateTask={hideCreateTask} />
                         :
                         null
                 }

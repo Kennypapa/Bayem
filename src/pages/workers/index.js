@@ -137,7 +137,12 @@ const Workers = () => {
             <i className="fa-solid fa-pen-to-square text-[#0e90c6] cursor-pointer text-[15px]"
             ></i>
           </button>
-
+          <button
+         
+            type="button" className="px-3 py-2  font-medium text-gray-900 border-r border-y border-gray-200 hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent">
+            
+            <i class="fa-regular fa-eye text-[#aac60e] cursor-pointer text-[15px]"></i>
+          </button>
           <button data-modal-target="popup-modal"
             onClick={() => handleDelete(row.id)}
             data-modal-toggle="popup-modal" type="button" className="px-3 py-2  font-medium text-gray-900 border !border-l-0 border-y-gray-100 rounded-e-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0">
