@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 const Sidebar = () => {
     return (
-        <div className=" w-[250px] h-[100vh] pl-0 pr-0 fixed top-0 md:left-0 left-[-200px] bg-[#103d15] pt-6 shadow-md z-40">
+        <div className=" w-[250px] h-[100vh] pl-0 pr-0 fixed top-0 md:left-0 left-[-260px] bg-[#103d15] pt-6 shadow-md z-40">
             <div className="w-[160px] ml-6 mb-8">
                 <img src="assets/img/logos/Bayem-Logo-2.png" alt="logo" />
             </div>
