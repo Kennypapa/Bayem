@@ -90,6 +90,7 @@ const Workers = () => {
   }
 
   console.log(allWorkers)
+
   //===== DeleteHandler ====//    
   const handleDelete = async (id) => {
     setDeleteId(id)
@@ -134,19 +135,19 @@ const Workers = () => {
           <button
             onClick={() => handleEdit(row.id, row)}
             type="button" className="px-3 py-2  font-medium text-gray-900 border border-gray-100 rounded-s-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent">
-            <i className="fa-solid fa-pen-to-square text-[#0e90c6] cursor-pointer text-[15px]"
-            ></i>
+            <i className="fa-solid fa-pen-to-square text-[#0000ff] cursor-pointer text-[15px]"></i>
           </button>
+
           <button
-         
             type="button" className="px-3 py-2  font-medium text-gray-900 border-r border-y border-gray-200 hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent">
-            
-            <i class="fa-regular fa-eye text-[#aac60e] cursor-pointer text-[15px]"></i>
+
+            <i class="fa-solid fa-eye text-[#008000] cursor-pointer text-[15px]"></i>
           </button>
+
           <button data-modal-target="popup-modal"
             onClick={() => handleDelete(row.id)}
             data-modal-toggle="popup-modal" type="button" className="px-3 py-2  font-medium text-gray-900 border !border-l-0 border-y-gray-100 rounded-e-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0">
-            <i className="fa-solid fa-trash text-[#c60e0e] text-[15px]"></i>
+            <i className="fa-solid fa-trash text-[#ff0000] text-[15px]"></i>
           </button>
         </div>
       )
