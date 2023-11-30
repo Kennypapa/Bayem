@@ -91,9 +91,12 @@ const Workers = () => {
     modal.show();
   }
 
+
   //=============ViewWorker Handler ========//
-  const showWorkerDetails = () => {
+  const showWorkerDetails = (id, worker) => {
     setHideTableWorker(true);
+    setWorkerDetails(worker);
+    setId(id);
   }
 
   //===== DeleteHandler ====//    
@@ -144,7 +147,7 @@ const Workers = () => {
           </button>
 
           <button
-            onClick={showWorkerDetails}
+            onClick={() => showWorkerDetails(row.id, row)}
             type="button" className="px-3 py-2  font-medium text-gray-900 border-r border-y border-gray-200 hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent">
             <i class="fa-solid fa-eye text-[#008000] cursor-pointer text-[15px]"></i>
           </button>
@@ -172,12 +175,12 @@ const Workers = () => {
     <div className="e_pages">
       {
         hideTableWorker ?
-          <WorkerProfile />
+          <WorkerProfile   allWorkerDetails={workerDetails}/>
           :
           <div className="bg-white rounded-lg pb-4">
             <div className="w-full flex justify-between items-center px-3 pt-4">
               <p className="text-2xl">
-                Create Worker
+                Manage Employees
               </p>
               <button
                 onClick={() => handleCreateModal()}
