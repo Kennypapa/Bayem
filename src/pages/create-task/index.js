@@ -451,7 +451,7 @@ const CreateTask = (props) => {
                 {/* ========= Edit Tasks ========= */}
                 {
                     showEditTask ?
-                        <EditTask collectAllTask={collectAllTasks} />
+                        <EditTask collectAllTask={collectAllTasks} taskId={id}   setCollectAllTasks={setCollectAllTasks} />
                         :
                         null
                 }
