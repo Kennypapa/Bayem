@@ -6,6 +6,7 @@ import DeleteModal from "./delete-modal";
 import { Modal } from "flowbite";
 import DataTable from "react-data-table-component";
 import { db } from "../../firebase.config";
+import WorkerProfile from "./worker-profile";
 
 const Workers = () => {
   const [modal, setShowModal] = useState(false);
@@ -21,6 +22,7 @@ const Workers = () => {
   const [roles, setRoles] = useState([]);
   const [workerDetails, setWorkerDetails] = useState([]);
   const [deleteNotif, setDeleteNotif] = useState("");
+  const [hideTableWorker, setHideTableWorker] = useState(false);
   useEffect(() => {
     setModalCreate(
       new Modal(document.querySelector("#default-modal"), {
@@ -68,7 +70,7 @@ const Workers = () => {
     showModalCreate.show();
   }
 
-  //============create-success-notif ===//
+  //============create-success-notif =====//
   const createSuccessNotif = (success) => {
     setCreateNotif(success);
   }
@@ -77,7 +79,7 @@ const Workers = () => {
     setShowSuccessNotif(success);
   }
 
-  //=========== delete Notif ======//
+  //=========== deleteNotif ======//
   const handleDeleteNotif = (success) => {
     setDeleteNotif(success)
   }
@@ -89,7 +91,10 @@ const Workers = () => {
     modal.show();
   }
 
-  console.log(allWorkers)
+  //=============ViewWorker Handler ========//
+  const showWorkerDetails = () => {
+    setHideTableWorker(true);
+  }
 
   //===== DeleteHandler ====//    
   const handleDelete = async (id) => {
@@ -135,12 +140,12 @@ const Workers = () => {
           <button
             onClick={() => handleEdit(row.id, row)}
             type="button" className="px-3 py-2  font-medium text-gray-900 border border-gray-100 rounded-s-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent">
-            <i className="fa-solid fa-pen-to-square text-[#0000ff] cursor-pointer text-[15px]"></i>
+            <i className="fa-solid fa-pen-to-square text-[#ff9c40] cursor-pointer text-[15px]"></i>
           </button>
 
           <button
+            onClick={showWorkerDetails}
             type="button" className="px-3 py-2  font-medium text-gray-900 border-r border-y border-gray-200 hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent">
-
             <i class="fa-solid fa-eye text-[#008000] cursor-pointer text-[15px]"></i>
           </button>
 
@@ -165,51 +170,61 @@ const Workers = () => {
 
   return (
     <div className="e_pages">
-      <div className="bg-white rounded-lg pb-4">
-        <div className="w-full flex justify-between items-center px-3 pt-4">
-          <p className="text-2xl">
-            Create Worker
-          </p>
-          <button
-            onClick={() => handleCreateModal()}
-            className="bg-[#103d15] hover:bg-[#ff9c40] flex justify-center items-center text-white rounded-lg ease-in-out duration-150 text-sm w-[40px] h-[40px]">
-            <i className="fa-solid fa-circle-plus"></i>
-          </button>
-        </div>
-        <DataTable
-          columns={columns}
-          fixedHeader
-          isSortable
-          customStyles={tableHeaderstyle}
-          data={filter}
-          pagination
-          subHeader
-          subHeaderComponent={
-            <div className="w-full flex justify-between items-center">
-              <input
-                type="text"
-                id="search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search..."
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
-              />
-              <button type="button" onClick={() => searchhandler()} class="p-2.5 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
-                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                </svg>
-                <span class="sr-only">Search</span>
-              </button>
-              <button type="button" class="w-9 h-9 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
-                <i class="fa-solid fa-rotate-right"></i>
+      {
+        hideTableWorker ?
+          <WorkerProfile />
+          :
+          <div className="bg-white rounded-lg pb-4">
+            <div className="w-full flex justify-between items-center px-3 pt-4">
+              <p className="text-2xl">
+                Create Worker
+              </p>
+              <button
+                onClick={() => handleCreateModal()}
+                className="bg-[#103d15] hover:bg-[#ff9c40] flex justify-center items-center text-white rounded-lg ease-in-out duration-150 text-sm w-[40px] h-[40px]">
+                <i className="fa-solid fa-circle-plus"></i>
               </button>
             </div>
-          }
-        />
-      </div>
+            <DataTable
+              columns={columns}
+              fixedHeader
+              isSortable
+              customStyles={tableHeaderstyle}
+              data={filter}
+              pagination
+              subHeader
+              subHeaderComponent={
+                <div className="w-full flex justify-between items-center">
+                  <input
+                    type="text"
+                    id="search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search..."
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+                  />
+                  <button type="button" onClick={() => searchhandler()} class="p-2.5 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                    <span class="sr-only">Search</span>
+                  </button>
+                  <button type="button" class="w-9 h-9 ms-2 text-sm bg-[#103d15] hover:bg-[#ff9c40] text-white rounded-lg ease-in-out duration-150  focus:ring-0 focus:outline-none">
+                    <i class="fa-solid fa-rotate-right"></i>
+                  </button>
+                </div>
+              }
+            />
+          </div>
+      }
+
+
+      {/* Modals */}
       <CreateModal successNotif={createSuccessNotif} getWorkers={getWorkers} showModal={showModalCreate} />
       <EditModal userId={id} getWorkers={getWorkers} allRoles={roles} successNotif={successNotif} setWorkerDetail={setWorkerDetails} allWorkerDetails={workerDetails} modal={modal} />
       <DeleteModal deleteId={deleteId} showDeleteNotif={handleDeleteNotif} getWorkers={getWorkers} hideDeleteModal={showModalDelete} />
+
+
       {/*=========Nofications ======*/}
       {
         showSuccessNotif && (
