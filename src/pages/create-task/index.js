@@ -43,7 +43,7 @@ const CreateTask = (props) => {
         endDate: new Date(),
         key: 'selection'
     });
-    
+
 
     //=== Referencing to particular collection in firestore ==//
     const usersCollectionRef = collection(db, "tasks");
@@ -187,7 +187,7 @@ const CreateTask = (props) => {
         setCollectAllTasks(allTasks);
         setId(id);
     }
-    
+
     //========CloseEdit Handler =======//
     const closeEditHandler = () => {
         setShowEditTask(false);
@@ -232,13 +232,17 @@ const CreateTask = (props) => {
                     <button
                         onClick={() => handleEdit(row.id, row)}
                         type="button" className="px-3 py-2  font-medium text-gray-900 border border-gray-100 rounded-s-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent">
-                        <i className="fa-solid fa-pen-to-square text-[#0e90c6] cursor-pointer text-[15px]"
+                        <i className="fa-solid fa-pen-to-square text-[#ff9c40] cursor-pointer text-[15px]"
                         ></i>
+                    </button>
+                    <button
+                        type="button" className="px-3 py-2  font-medium text-gray-900 border-r border-y border-gray-200 hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent">
+                        <i class="fa-solid fa-eye text-[#008000] cursor-pointer text-[15px]"></i>
                     </button>
 
                     <button onClick={() => handleDelete(row.id)} data-modal-target="popup-modal"
                         data-modal-toggle="popup-modal" type="button" className="px-3 py-2  font-medium text-gray-900 border !border-l-0 border-y-gray-100 rounded-e-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0">
-                        <i className="fa-solid fa-trash text-[#c60e0e] text-[15px]"></i>
+                        <i className="fa-solid fa-trash text-[#ff0000] text-[15px]"></i>
                     </button>
                 </div>
             )
