@@ -1,10 +1,10 @@
 
 const WorkerProfile = (props) => {
     return (
-        <div className="rounded-lg w-full h-auto max-w-[900px] py-8 bg-[#103d15] relative">
+        <div className="rounded-lg w-full h-auto max-w-[900px] py-8 bg-[#ffffff8a] worker_bg relative">
             <span className="absolute right-4 top-3">
-                <button className="text-[#ff9c40]">
-                   Go Back <i class="fa-light fa-closed-captioning"></i>
+                <button className="text-[#7a7a7a]">
+                   <i class="fa-solid fa-xmark text-2xl"></i>
                 </button>
             </span>
             <div className=" flex w-full h-full">
@@ -14,55 +14,55 @@ const WorkerProfile = (props) => {
                             <img src="assets/img/bayem/CEO.jpg" className=" rounded-full" alt="avatar" />
                         </div>
                         <div className=" h-[60px]  w-[1px] bg-[#60994c]"></div>
-                        <div className="bg-[#f8f8f8] h-[31px] w-[140px] rounded-md flex justify-center items-center">
-                            <p className="text-[#7a7a7a] text-sm font-semibold">Worker Details</p>
+                        <div className="bg-[#7a7a7a] h-[31px] w-[140px] shadow-md rounded-md flex justify-center items-center">
+                            <p className="text-[#fff] text-sm font-semibold">Worker Details</p>
                         </div>
                     </div>
                 </div>
                 <div className="w-full h-full">
                     <ul>
                         <li className="mb-6">
-                            <p className="text-[#ff9c40]">
+                            <p className="text-[#103d15] font-[600]">
                                 Firstname:
-                                <span className="pl-5 text-white">{props.allWorkerDetails.firstname}</span>
+                                <span className="pl-6 text-[#7a7a7a] capitalize">{props.allWorkerDetails.firstname}</span>
                             </p>
                         </li>
                         <li className="mb-6">
-                            <p className="text-[#ff9c40]">
+                            <p className="text-[#103d15] font-[600]">
                                 Lastname:
-                                <span className="pl-5 text-white">{props.allWorkerDetails.lastname}</span>
+                                <span className="pl-6 text-[#7a7a7a] capitalize">{props.allWorkerDetails.lastname}</span>
                             </p>
 
                         </li>
                         <li className="mb-6">
-                            <p className="text-[#ff9c40]">
+                            <p className="text-[#103d15] font-[600]">
                                 Email:
-                                <span className="pl-5 text-white">{props.allWorkerDetails.email}</span>
+                                <span className="pl-6 text-[#7a7a7a] capitalize">{props.allWorkerDetails.email}</span>
                             </p>
 
                         </li>
                         <li className="mb-6">
-                            <p className="text-[#ff9c40]">
+                            <p className="text-[#103d15] font-[600]">
                                 Gender:
-                                <span className="pl-5 text-white">{props.allWorkerDetails.gender}</span>
+                                <span className="pl-6 text-[#7a7a7a] capitalize">{props.allWorkerDetails.gender}</span>
                             </p>
                         </li>
                         <li className="mb-6">
-                            <p className="text-[#ff9c40]">
+                            <p className="text-[#103d15] font-[600]">
                                 Role:
-                                <span className="pl-5 text-white">{props.allWorkerDetails.role}</span>
+                                <span className="ml-6 text-[#fff] capitalize bg-[#7a7a7a] shadow-md rounded-md py-1.5 px-3">{props.allWorkerDetails.role}</span>
                             </p>
                         </li>
                         <li className="mb-6">
-                            <p className="text-[#ff9c40]">
+                            <p className="text-[#103d15] font-[600]">
                                 Phone-no:
-                                <span className="pl-5 text-white"></span>
+                                <span className="pl-6 text-[#7a7a7a] capitalize"></span>
                             </p>
                         </li>
                         <li >
-                            <p className="text-[#ff9c40]">
+                            <p className="text-[#103d15] font-[600]">
                                 Location:
-                                <span className="pl-5 text-white"></span>
+                                <span className="pl-6 text-[#7a7a7a] capitalize"></span>
                             </p>
                         </li>
                     </ul>

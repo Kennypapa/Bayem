@@ -63,7 +63,7 @@ const EditModal = (props) => {
                                         </svg>
                                     </span> : null
                                 }
-                                
+
                                 <button
                                     onClick={handleRefresh}
                                     type="button"

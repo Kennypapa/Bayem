@@ -93,6 +93,13 @@ body {
 .rdrDay{
   color: #ff9c40!important;
 }
+
+.worker_bg::before {
+  content: '';
+  background-image: url('../img/bayem/ARJPAWK.jpg');
+  background-position: center center;
+  background-size: cover;
+}
 /*===========Queries ===========*/
 @media only screen and (max-width: 766px) {
   .e_pages {

@@ -83,7 +83,7 @@ const Roles = (props) => {
     }
     //=========== delete Notif ======//
     const handleDeleteNotif = (success) => {
-        setDeleteNotif(success)
+        setDeleteNotif(success) 
     }
 
     //==========search Handler ====//

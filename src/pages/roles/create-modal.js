@@ -80,7 +80,6 @@ const CreateModal = (props) => {
                             :
                             null
                     }
-
                     <form onSubmit={createRole}>
                         <div className="px-4 md:p-5">
                             <div>
