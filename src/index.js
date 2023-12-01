@@ -15,16 +15,17 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
+      <Routes>  
         <Route path="" element={<App />} >
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<ProtectedLayout />} >
-          <Route path="" element={<GetStarted/>} />
+          <Route path="" element={<GetStarted />} />
+          <Route path="/admin" element={<ProtectedLayout />} >
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="roles" element={<Roles />} />
             <Route path="workers" element={<Workers />} />
             <Route path="create-task" element={<CreateTask />} />
           </Route>
+
         </Route>
       </Routes>
     </BrowserRouter>
