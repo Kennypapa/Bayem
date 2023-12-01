@@ -10,6 +10,7 @@ import Roles from './pages/roles/index';
 import Workers from './pages/workers';
 import CreateTask from './pages/create-task/index';
 import ProtectedLayout from './components/protectedLayout';
+import GetStarted from './pages/get-started';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -17,7 +18,8 @@ root.render(
       <Routes>
         <Route path="" element={<App />} >
           <Route path="/login" element={<Login />} />
-          <Route path="" element={<ProtectedLayout />} >
+          <Route path="/" element={<ProtectedLayout />} >
+          <Route path="" element={<GetStarted/>} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="roles" element={<Roles />} />
             <Route path="workers" element={<Workers />} />
