@@ -8,7 +8,7 @@ import Login from './components/auth/login';
 import Dashboard from './pages/dashboard';
 import Roles from './pages/roles/index';
 import Workers from './pages/workers';
-import CreateTask from './pages/create-task/index';
+import CreateTask from './pages/tasks/index';
 import ProtectedLayout from './components/protectedLayout';
 import GetStarted from './pages/get-started';
 const root = ReactDOM.createRoot(document.getElementById('root'));

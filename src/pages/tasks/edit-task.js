@@ -72,7 +72,7 @@ const EditTasks = (props) => {
         setIsLoading(false);
         props.hideEditTask();
         props.getTasks();
-    };
+    }; 
     console.log(editSuccess);
     props.successNotif(editSuccess);
     //========CloseEdit Handler =======//

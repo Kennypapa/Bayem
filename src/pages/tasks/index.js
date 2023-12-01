@@ -10,6 +10,7 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { format, set } from 'date-fns';
 import EditTask from './edit-task';
+import AllTasksModal from "./all-tasks-modal";
 const CreateTask = (props) => {
 
     const [modal, setShowModal] = useState(false);
@@ -29,7 +30,9 @@ const CreateTask = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [showEditTask, setShowEditTask] = useState(false);
     const [success, setSuccess] = useState(false);
-    
+    const [holdAllTasks, setHoldAllTasks] = useState('');
+    const [showAllTask, setShowAllTasks] = useState(false);
+
 
     const [allTaskDetails, setAllTasksDetails] = useState({
         task: "",
@@ -215,6 +218,15 @@ const CreateTask = (props) => {
         setShowCreateTask(false);
     }
 
+    //======= showAllTask hndler ===========//
+    const handleAllTask = (id, tasks) => {
+        setHoldAllTasks(tasks);
+        setShowAllTasks(true)
+        setId(id);
+    }
+
+    console.log(holdAllTasks)
+
     //==============Table Columns && Rows ============//
     const columns = [
         {
@@ -237,6 +249,7 @@ const CreateTask = (props) => {
                         ></i>
                     </button>
                     <button
+                        onClick={() => handleAllTask(row.id, row)}
                         type="button" className="px-3 py-2  font-medium text-gray-900 border-r border-y border-gray-200 hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent">
                         <i class="fa-solid fa-eye text-[#008000] cursor-pointer text-[15px]"></i>
                     </button>
@@ -469,6 +482,13 @@ const CreateTask = (props) => {
                         </div>
                 }
 
+                {
+                    showAllTask ?
+                        <AllTasks /> 
+                        :
+                     null
+                }
+
 
                 {/* ========= Edit Tasks ========= */}
                 {
@@ -477,7 +497,6 @@ const CreateTask = (props) => {
                         :
                         null
                 }
-
             </div>
 
 
