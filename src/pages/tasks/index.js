@@ -1,7 +1,7 @@
-import { Modal, initFlowbite } from "flowbite";
+import { Modal } from "flowbite";
 import { useState, useEffect } from "react";
 import Multiselect from "multiselect-react-dropdown";
-import { getDocs, collection, addDoc } from "firebase/firestore"
+import { getDocs, collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
 import DeleteModal from "./delete-modal";
 import DataTable from "react-data-table-component";
@@ -10,9 +10,9 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { format, set } from 'date-fns';
 import EditTask from './edit-task';
-import AllTasksModal from "./all-tasks-modal";
-const CreateTask = (props) => {
+import ViewModal from './view-modal';
 
+const CreateTask = (props) => {
     const [modal, setShowModal] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [showModalDelete, setShowModalDelete] = useState(false);
@@ -33,7 +33,6 @@ const CreateTask = (props) => {
     const [holdAllTasks, setHoldAllTasks] = useState('');
     const [showAllTask, setShowAllTasks] = useState(false);
 
-
     const [allTaskDetails, setAllTasksDetails] = useState({
         task: "",
         description: "",
@@ -47,7 +46,6 @@ const CreateTask = (props) => {
         endDate: new Date(),
         key: 'selection'
     });
-
 
     //=== Referencing to particular collection in firestore ==//
     const usersCollectionRef = collection(db, "tasks");
@@ -68,6 +66,7 @@ const CreateTask = (props) => {
         { id: 'Friday', name: 'Friday' },
     ]);
 
+
     //=========InputchangeHandler ==============//
     const inputChangeHandler = (input, value) => {
         setAllTasksDetails((prevState) => {
@@ -75,11 +74,10 @@ const CreateTask = (props) => {
                 ...prevState,
                 [input]: value
             }
-        })
+        });
     }
 
     useEffect(() => {
-        initFlowbite()
         switch (radioChecked) {
             case 'days':
                 setTaskFrequency(
@@ -138,6 +136,14 @@ const CreateTask = (props) => {
                 closable: true,
             })
         )
+
+        setShowModal(
+            new Modal(document.querySelector("#static-modal"), {
+                backdrop: "dynamic",
+                backdropClasses: "bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40",
+                closable: true,
+            })
+        )
         getTasks();
     }, [radioChecked, date]);
 
@@ -180,6 +186,7 @@ const CreateTask = (props) => {
     const successNotif = (editSuccess) => {
         setShowSuccessNotif(editSuccess);
     }
+
     //======== successHandler ====//
     const createNotif = (success) => {
         setShowCreateNotif(success);
@@ -221,11 +228,11 @@ const CreateTask = (props) => {
     //======= showAllTask hndler ===========//
     const handleAllTask = (id, tasks) => {
         setHoldAllTasks(tasks);
-        setShowAllTasks(true)
+        modal.show();
         setId(id);
     }
 
-    console.log(holdAllTasks)
+    console.log(holdAllTasks);
 
     //==============Table Columns && Rows ============//
     const columns = [
@@ -482,13 +489,6 @@ const CreateTask = (props) => {
                         </div>
                 }
 
-                {
-                    showAllTask ?
-                        <AllTasks /> 
-                        :
-                     null
-                }
-
 
                 {/* ========= Edit Tasks ========= */}
                 {
@@ -501,6 +501,7 @@ const CreateTask = (props) => {
 
 
             <DeleteModal deleteId={deleteId} showDeleteNotif={handleDeleteNotif} getTasks={getTasks} hideDeleteModal={showModalDelete} />
+            <ViewModal  holdAllTasks={holdAllTasks}/>
             {
                 showSuccessNotif && (
                     <div className="fixed bottom-8 z-40 right-10 px-4 h-[55px] mb-1 text-sm text-green-800 bg-green-200 w-[300px] flex justify-start items-center" role="alert">
