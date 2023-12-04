@@ -41,10 +41,11 @@ const CreateTask = (props) => {
         weekDays: [],
         monthDays: {},
     });
+
     const [date, setDate] = useState({
         startDate: new Date(),
         endDate: new Date(),
-        key: 'selection'
+        key: 'selection'    
     });
 
     //=== Referencing to particular collection in firestore ==//
@@ -136,7 +137,7 @@ const CreateTask = (props) => {
                 closable: true,
             })
         )
-
+         
         setShowModal(
             new Modal(document.querySelector("#static-modal"), {
                 backdrop: "dynamic",
@@ -228,9 +229,13 @@ const CreateTask = (props) => {
     //======= showAllTask hndler ===========//
     const handleAllTask = (id, tasks) => {
         setHoldAllTasks(tasks);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+      
         modal.show();
         setId(id);
     }
+
+    console.log(holdAllTasks)
 
     console.log(holdAllTasks);
 
@@ -283,6 +288,7 @@ const CreateTask = (props) => {
     return (
         <div className="e_pages">
             <div className="bg-white rounded-lg relative">
+                
                 {
                     showCreateTask ?
                         <div className="w-full px-3 pb-8">
@@ -499,9 +505,8 @@ const CreateTask = (props) => {
                 }
             </div>
 
-
             <DeleteModal deleteId={deleteId} showDeleteNotif={handleDeleteNotif} getTasks={getTasks} hideDeleteModal={showModalDelete} />
-            <ViewModal  holdAllTasks={holdAllTasks}/>
+            <ViewModal  holdAllTasks={holdAllTasks}   />
             {
                 showSuccessNotif && (
                     <div className="fixed bottom-8 z-40 right-10 px-4 h-[55px] mb-1 text-sm text-green-800 bg-green-200 w-[300px] flex justify-start items-center" role="alert">

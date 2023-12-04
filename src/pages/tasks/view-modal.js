@@ -1,5 +1,12 @@
-
+import { useState, useEffect } from "react";
 const EditModal = (props) => {
+    // const eDate = props.holdAllTasks.monthDays.endDate.toDate().toDateString();
+    // const startDate = props.holdAllTasks.monthDays.startDate.toDate().toDateString();
+
+    const formatDate = (seconds) => {
+       return (new Date(seconds * 1000)).toDateString();
+    }
+    
     return (
         <div>
             <div
@@ -11,8 +18,8 @@ const EditModal = (props) => {
             >
                 <div className="relative p-4 w-full max-w-[80%] max-h-full">
                     {/* Modal content */}
-                    <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        <div className="relative p-4 w-full max-w-2xl max-h-full">
+                    <div className="relative bg-white rounded-lg shadow">
+                        <div className="relative p-4 w-full max-w max-h-full">
                             <div>
                                 <p className=" text-2xl font-semibold mb-6 ">
                                     Tasks
@@ -47,7 +54,7 @@ const EditModal = (props) => {
                                     </div>
                                 </div>
                                 <div className="flex mt-1">
-                                    <p className="font-[500] ">
+                                    <p className="font-[500]">
                                         Days (Time):
                                     </p>
                                     <p className="pl-3">
@@ -59,16 +66,39 @@ const EditModal = (props) => {
                                         Week (Days):
                                     </p>
                                     <p className="pl-3">
-                                        {props.holdAllTasks.weekDays}
+
                                     </p>
                                 </div>
                                 <div className="flex mt-1">
-                                    <p className="font-[500] ">
+                                    <p className="font-[500] whitespace-nowrap pr-2">
                                         Month (Days):
                                     </p>
-                                    <p className="pl-3">
-
-                                    </p>
+                                    <div className="flex bg-[#d3d3d345]  w-full h-[26px] pl-4 rounded">
+                                        <span className="font-[600] pr-1">From:</span>
+                                        {
+                                            props.holdAllTasks.monthDays ?
+                                                <p >
+                                                    { formatDate(props.holdAllTasks.monthDays.endDate.seconds) }
+                                                </p>
+                                                :
+                                                <></>
+                                        }
+                                        <p>
+                                        </p>
+                                        <span className="pl-4 pr-1 font-[600]">
+                                            To:
+                                        </span>
+                                        <p>
+                                        {
+                                            props.holdAllTasks.monthDays ?
+                                                <p>
+                                                    { formatDate(props.holdAllTasks.monthDays.startDate.seconds) }
+                                                </p>
+                                                :
+                                                <></>
+                                        }
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
