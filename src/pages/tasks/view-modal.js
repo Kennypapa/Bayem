@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 const EditModal = (props) => {
-    // const eDate = props.holdAllTasks.monthDays.endDate.toDate().toDateString();
-    // const startDate = props.holdAllTasks.monthDays.startDate.toDate().toDateString();
-
+    
     const formatDate = (seconds) => {
        return (new Date(seconds * 1000)).toDateString();
     }
-    
+
     return (
         <div>
             <div
