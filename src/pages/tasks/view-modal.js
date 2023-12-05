@@ -72,23 +72,24 @@ const EditModal = (props) => {
                                     <p className="font-[500] ">
                                         Weeks (Days):
                                     </p>
-                                    <ul className="pl-5">
                                         {
                                             props.holdAllTasks.weekDays ? 
-                                            <p>
+                                            <ul className="pl-5">
                                                 {
                                                       props.holdAllTasks.weekDays.selectedOption.map((week) => {
                                                         return (
-                                                            <p> {week.name} </p>
+                                                            <li>
+                                                                <p> {week.name} </p>
+                                                            </li>
                                                         )
                                                       })
                                                 }
-                                            </p>
+                                            </ul>
 
                                             : 
                                             <></>
                                         }
-                                    </ul>
+                                   
                                     <p className="pl-3">
 
                                     </p>
