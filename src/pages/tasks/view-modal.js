@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
 const EditModal = (props) => {
-    const [listWeekDays, setListWeekDays] = useState([]);
+    // const [listWeekDays, setListWeekDays] = useState([]);
 
     const formatDate = (seconds) => {
         return (new Date(seconds * 1000)).toDateString();
     }
-
+    // const showAllWeekDays = () => {
+    //     return ()
+    // }
     useEffect(() => {
-        setListWeekDays(props.holdAllTasks.weekDays.selectedOption)
-    })
-    console.log(listWeekDays);
+        // setListWeekDays();
+    });
+
+    console.log(props.holdAllTasks.weekDays);
     return (
         <div>
             <div
@@ -65,21 +68,25 @@ const EditModal = (props) => {
                                         {props.holdAllTasks.aDayDate}
                                     </p>
                                 </div>
-                                <div className="flex mt-1">
+                                <div className="flex mt-1 mb-2">
                                     <p className="font-[500] ">
                                         Weeks (Days):
                                     </p>
                                     <ul className="pl-5">
                                         {
-                                            listWeekDays.map((week) => {
-                                                return (
-                                                    <li key={week.id}>
-                                                    <p>
-                                                        {week.name}
-                                                    </p>
-                                                </li>
-                                                )
-                                            })
+                                            props.holdAllTasks.weekDays ? 
+                                            <p>
+                                                {
+                                                      props.holdAllTasks.weekDays.selectedOption.map((week) => {
+                                                        return (
+                                                            <p> {week.name} </p>
+                                                        )
+                                                      })
+                                                }
+                                            </p>
+
+                                            : 
+                                            <></>
                                         }
                                     </ul>
                                     <p className="pl-3">
