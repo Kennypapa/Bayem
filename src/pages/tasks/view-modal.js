@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 const EditModal = (props) => {
-    
+    const [listWeekDays, setListWeekDays] = useState([]);
+
     const formatDate = (seconds) => {
-       return (new Date(seconds * 1000)).toDateString();
+        return (new Date(seconds * 1000)).toDateString();
     }
 
+    useEffect(() => {
+        setListWeekDays(props.holdAllTasks.weekDays.selectedOption)
+    })
+    console.log(listWeekDays);
     return (
         <div>
             <div
@@ -14,6 +19,7 @@ const EditModal = (props) => {
                 aria-hidden="true"
                 className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
             >
+
                 <div className="relative p-4 w-full max-w-[80%] max-h-full">
                     {/* Modal content */}
                     <div className="relative bg-white rounded-lg shadow">
@@ -61,8 +67,21 @@ const EditModal = (props) => {
                                 </div>
                                 <div className="flex mt-1">
                                     <p className="font-[500] ">
-                                        Week (Days):
+                                        Weeks (Days):
                                     </p>
+                                    <ul className="pl-5">
+                                        {
+                                            listWeekDays.map((week) => {
+                                                return (
+                                                    <li key={week.id}>
+                                                    <p>
+                                                        {week.name}
+                                                    </p>
+                                                </li>
+                                                )
+                                            })
+                                        }
+                                    </ul>
                                     <p className="pl-3">
 
                                     </p>
@@ -76,10 +95,12 @@ const EditModal = (props) => {
                                         {
                                             props.holdAllTasks.monthDays ?
                                                 <p >
-                                                    { formatDate(props.holdAllTasks.monthDays.endDate.seconds) }
+                                                    {formatDate(props.holdAllTasks.monthDays.endDate)}
                                                 </p>
                                                 :
-                                                <></>
+                                                <p>
+
+                                                </p>
                                         }
                                         <p>
                                         </p>
@@ -87,14 +108,14 @@ const EditModal = (props) => {
                                             To:
                                         </span>
                                         <p>
-                                        {
-                                            props.holdAllTasks.monthDays ?
-                                                <p>
-                                                    { formatDate(props.holdAllTasks.monthDays.startDate.seconds) }
-                                                </p>
-                                                :
-                                                <></>
-                                        }
+                                            {
+                                                props.holdAllTasks.monthDays ?
+                                                    <p>
+                                                        {formatDate(props.holdAllTasks.monthDays.startDate)}
+                                                    </p>
+                                                    :
+                                                    <></>
+                                            }
                                         </p>
                                     </div>
                                 </div>
