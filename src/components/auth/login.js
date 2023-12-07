@@ -15,7 +15,7 @@ const Login = () => {
                 localStorage.setItem('tokenId', JSON.stringify(userCredentials._tokenResponse.idToken));
                 const user = localStorage.getItem('tokenId');
                 if (user) {
-                    navigate('/dashboard');
+                    navigate('/admin/dashboard');
                     Swal.fire({
                         title: "Logged in successfully",
                         text: "Do you want to continue",

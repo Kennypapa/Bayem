@@ -1,5 +1,5 @@
 import { Modal } from "flowbite";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useRef  } from "react";
 import Multiselect from "multiselect-react-dropdown";
 import { getDocs, collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
@@ -11,6 +11,7 @@ import 'react-date-range/dist/theme/default.css';
 import { format, set } from 'date-fns';
 import EditTask from './edit-task';
 import ViewModal from './view-modal';
+import { Editor } from '@tinymce/tinymce-react';
 
 const CreateTask = (props) => {
     const [modal, setShowModal] = useState(false);
@@ -45,9 +46,15 @@ const CreateTask = (props) => {
     const [date, setDate] = useState({
         startDate: new Date(),
         endDate: new Date(),
-        key: 'selection'    
+        key: 'selection'
     });
-
+    
+    const editorRef = useRef(null);
+    const log = () => {
+      if (editorRef.current) {
+        console.log(editorRef.current.getContent());
+      }
+    };
     //=== Referencing to particular collection in firestore ==//
     const usersCollectionRef = collection(db, "tasks");
 
@@ -66,7 +73,6 @@ const CreateTask = (props) => {
         { id: 'Thursday', name: 'Thursday' },
         { id: 'Friday', name: 'Friday' },
     ]);
-
 
     //=========InputchangeHandler ==============//
     const inputChangeHandler = (input, value) => {
@@ -137,7 +143,7 @@ const CreateTask = (props) => {
                 closable: true,
             })
         )
-         
+
         setShowModal(
             new Modal(document.querySelector("#static-modal"), {
                 backdrop: "dynamic",
@@ -161,7 +167,6 @@ const CreateTask = (props) => {
     const submitTaskHandler = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        setSuccess(true);
         await addDoc(usersCollectionRef, {
             task: allTaskDetails.task,
             description: allTaskDetails.description,
@@ -170,6 +175,7 @@ const CreateTask = (props) => {
             weekDays: allTaskDetails.weekDays,
             monthDays: allTaskDetails.monthDays,
         });
+        setSuccess(true);
         setShowCreateTask(false);
         getTasks();
         setTimeout(() => {
@@ -230,15 +236,12 @@ const CreateTask = (props) => {
     const handleAllTask = (id, tasks) => {
         setHoldAllTasks(tasks);
         localStorage.setItem('tasks', JSON.stringify(tasks));
-      
+
         modal.show();
         setId(id);
     }
 
     console.log(holdAllTasks)
-
-    console.log(holdAllTasks);
-
     //==============Table Columns && Rows ============//
     const columns = [
         {
@@ -288,7 +291,7 @@ const CreateTask = (props) => {
     return (
         <div className="e_pages">
             <div className="bg-white rounded-lg relative">
-                
+
                 {
                     showCreateTask ?
                         <div className="w-full px-3 pb-8">
@@ -325,13 +328,37 @@ const CreateTask = (props) => {
                                                 required
                                             />
                                         </div>
-                                        <div className="mb-6">
+                                        {/* <div className="mb-6">
                                             <label for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description:</label>
                                             <textarea
                                                 id="message"
                                                 rows="2"
                                                 onChange={(e) => inputChangeHandler('description', e.target.value)}
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5" placeholder="Write your thoughts here..." required ></textarea>
+                                        </div> */}
+                                        <div className="mb-6">
+                                            <span>
+                                            <p for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description:</p>
+                                            </span>
+                                            <Editor
+                                                apiKey='your-api-key'
+                                                onInit={(evt, editor) => editorRef.current = editor}
+                                                onChange={(e) => inputChangeHandler('description', e.target.value)}
+                                                init={{
+                                                    height: 200,
+                                                    menubar: true,
+                                                    plugins: [
+                                                        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                                                        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                                                        'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+                                                    ],
+                                                    toolbar: 'undo redo | blocks | ' +
+                                                        'bold italic forecolor | alignleft aligncenter ' +
+                                                        'alignright alignjustify | bullist numlist outdent indent | ' +
+                                                        'removeformat | help',
+                                                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                                                }}
+                                            />
                                         </div>
                                         <div class="flex items-start mb-4">
                                             <div class="flex items-center h-5">
@@ -411,10 +438,10 @@ const CreateTask = (props) => {
                                                         for="firstname"
                                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                                     >
-                                                        Pick a Date:
+                                                        Time (work):
                                                     </label>
                                                     <input
-                                                        type="date"
+                                                        type="time"
                                                         id=""
                                                         onChange={(e) => inputChangeHandler('aDate', e.target.value)}
                                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
@@ -506,7 +533,7 @@ const CreateTask = (props) => {
             </div>
 
             <DeleteModal deleteId={deleteId} showDeleteNotif={handleDeleteNotif} getTasks={getTasks} hideDeleteModal={showModalDelete} />
-            <ViewModal  holdAllTasks={holdAllTasks}   />
+            <ViewModal holdAllTasks={holdAllTasks} />
             {
                 showSuccessNotif && (
                     <div className="fixed bottom-8 z-40 right-10 px-4 h-[55px] mb-1 text-sm text-green-800 bg-green-200 w-[300px] flex justify-start items-center" role="alert">

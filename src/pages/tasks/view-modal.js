@@ -5,11 +5,8 @@ const EditModal = (props) => {
     const formatDate = (seconds) => {
         return (new Date(seconds * 1000)).toDateString();
     }
-    // const showAllWeekDays = () => {
-    //     return ()
-    // }
+
     useEffect(() => {
-        // setListWeekDays();
     });
 
     console.log(props.holdAllTasks.weekDays);
@@ -68,32 +65,41 @@ const EditModal = (props) => {
                                         {props.holdAllTasks.aDayDate}
                                     </p>
                                 </div>
-                                <div className="flex mt-1 mb-2">
-                                    <p className="font-[500] ">
-                                        Weeks (Days):
-                                    </p>
-                                        {
-                                            props.holdAllTasks.weekDays ? 
-                                            <ul className="pl-5">
-                                                {
-                                                      props.holdAllTasks.weekDays.selectedOption.map((week) => {
-                                                        return (
-                                                            <li>
-                                                                <p> {week.name} </p>
-                                                            </li>
-                                                        )
-                                                      })
-                                                }
-                                            </ul>
 
-                                            : 
-                                            <></>
-                                        }
-                                   
-                                    <p className="pl-3">
+                                {
+                                    props.holdAllTasks.weekDay ?
+                                        <div className="flex mt-1 mb-2">
+                                            <p className="font-[500] ">
+                                                Weeks (Days):
+                                            </p>
+                                            {
+                                                props.holdAllTasks.weekDays ?
+                                                    <ul className="pl-8 list-disc">
+                                                        {
+                                                            props.holdAllTasks.weekDays.selectedOption.map((week) => {
+                                                                return (
+                                                                    <li >
+                                                                        <p> {week.name} </p>
+                                                                    </li>
+                                                                )
+                                                            })
+                                                        }
+                                                    </ul>
+                                                    :
+                                                    <p></p>
+                                            }
 
-                                    </p>
-                                </div>
+                                            <p className="pl-3">
+
+                                            </p>
+                                        </div>
+                                        :
+                                        []
+
+                                }
+
+
+
                                 <div className="flex mt-1">
                                     <p className="font-[500] whitespace-nowrap pr-2">
                                         Month (Days):
