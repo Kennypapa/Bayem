@@ -7,6 +7,7 @@ const EditModal = (props) => {
     }
 
     useEffect(() => {
+
     });
 
     console.log(props.holdAllTasks.weekDays);
@@ -57,6 +58,8 @@ const EditModal = (props) => {
                                         <p className="text-[#fff] text-sm font-semibold">Re-occur</p>
                                     </div>
                                 </div>
+
+
                                 <div className="flex mt-1">
                                     <p className="font-[500]">
                                         Days (Time):
@@ -66,38 +69,32 @@ const EditModal = (props) => {
                                     </p>
                                 </div>
 
-                                {
-                                    props.holdAllTasks.weekDay ?
-                                        <div className="flex mt-1 mb-2">
-                                            <p className="font-[500] ">
-                                                Weeks (Days):
-                                            </p>
-                                            {
-                                                props.holdAllTasks.weekDays ?
-                                                    <ul className="pl-8 list-disc">
-                                                        {
-                                                            props.holdAllTasks.weekDays.selectedOption.map((week) => {
-                                                                return (
-                                                                    <li >
-                                                                        <p> {week.name} </p>
-                                                                    </li>
-                                                                )
-                                                            })
-                                                        }
-                                                    </ul>
-                                                    :
-                                                    <p></p>
-                                            }
+                                {props.holdAllTasks?.weekDays?.length === 0 ? (
+                                    <p></p>
+                                ) : (
+                                    <div>
+                                        <p className="font-[500]">
+                                            Week (Days):
+                                        </p>
+                                        {
+                                            props.holdAllTasks.weekDays ?
+                                                <ul className="pl-8 list-disc">
+                                                    {
+                                                        props.holdAllTasks.weekDays.selectedOption.map((week) => {
+                                                            return (
+                                                                <li >
+                                                                    <p> {week.name} </p>
+                                                                </li>
+                                                            )
+                                                        })
+                                                    }
+                                                </ul>
+                                                :
+                                                <p></p>
+                                        }
+                                    </div>
 
-                                            <p className="pl-3">
-
-                                            </p>
-                                        </div>
-                                        :
-                                        []
-
-                                }
-
+                                )}
 
 
                                 <div className="flex mt-1">
