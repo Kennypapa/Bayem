@@ -84,34 +84,53 @@ const CreateTask = (props) => {
         });
     }
 
+
     useEffect(() => {
         switch (radioChecked) {
-            case 'days':
-                setTaskFrequency(
-                    <div className="mt-3">
-                        <input
-                            type="time"
-                            id="daysDate"
-                            onChange={(e) => { inputChangeHandler('daysDate', e.target.value) }}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
-                            required
-                        />
-                    </div>)
-                break;
+            // case 'days':
+            //     setTaskFrequency(
+            //         <div className="mt-3">
+            //             <div className="mb-4">
+            //                 <label
+            //                     for="firstname"
+            //                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            //                 >
+            //                     Time for (work):
+            //                 </label>
+            //                 <input
+            //                     type="date"
+            //                     id=""
+            //                     onChange={(e) => inputChangeHandler('aDate', e.target.value)}
+            //                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+            //                 />
+            //             </div>
+            //             <input
+            //                 type="time"
+            //                 id="daysDate"
+            //                 onChange={(e) => { inputChangeHandler('daysDate', e.target.value) }}
+            //                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+            //                 required
+            //             />
+            //         </div>)
+            //     break;
             case 'weeks':
                 setTaskFrequency(
                     <div className="mt-3">
-                        <label class="cursor-pointer mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Every week:</label>
-                        <Multiselect
-                            isObject={true}
-                            options={options}
-                            selectedValues={selectedOptions}
-                            onSelect={handleChange}
-                            onRemove={handleChange}
-                            displayValue="name"
-                            required
-                        />
+
+                        <div>
+                            <label class="cursor-pointer mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Select week:</label>
+                            <Multiselect
+                                isObject={true}
+                                options={options}
+                                selectedValues={selectedOptions}
+                                onSelect={handleChange}
+                                onRemove={handleChange}
+                                displayValue="name"
+                                required
+                            />
+                        </div>
                     </div>
+
                 )
                 break;
             case 'months':
@@ -313,7 +332,7 @@ const CreateTask = (props) => {
                                 </div>
                                 <div>
                                     <form onSubmit={submitTaskHandler}>
-                                        <div className="mb-6">
+                                        <div className="mb-4">
                                             <label
                                                 for="firstname"
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -336,7 +355,7 @@ const CreateTask = (props) => {
                                                 onChange={(e) => inputChangeHandler('description', e.target.value)}
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5" placeholder="Write your thoughts here..." required ></textarea>
                                         </div> */}
-                                        <div className="mb-6">
+                                        <div className="mb-4">
                                             <span>
                                                 <p for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description for (work):</p>
                                             </span>
@@ -360,21 +379,22 @@ const CreateTask = (props) => {
                                                 }}
                                             />
                                         </div>
-                                        
+
                                         <div className="mb-4">
-                                                        <label
-                                                            for="firstname"
-                                                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                                        >
-                                                            Time for (work):
-                                                        </label>
-                                                        <input
-                                                            type="time"
-                                                            id=""
-                                                            onChange={(e) => inputChangeHandler('aDate', e.target.value)}
-                                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
-                                                        />
-                                                    </div>
+                                            <label
+                                                for="firstname"
+                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                            >
+                                                Time for (work):
+                                            </label>
+                                            <input
+                                                type="time"
+                                                id=""
+                                                onChange={(e) => inputChangeHandler('aDate', e.target.value)}
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+                                            />
+                                        </div>
+
                                         <div class="flex items-start mb-8">
                                             <div class="flex items-center h-5">
                                                 <input
@@ -386,21 +406,21 @@ const CreateTask = (props) => {
                                                     class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[#103d15]"
                                                 />
                                             </div>
-                                            <label for="remember" class=" cursor-pointer text-sm ml-2 font-medium text-gray-900">Affirmative, the worker will attend (work) consistently.</label>
+                                            <label for="remember" class=" cursor-pointer text-sm ml-2 font-medium text-gray-900">Affirmative, the worker will attend (work) weekly/monthly.</label>
                                         </div>
                                         {
                                             isChecked ?
                                                 <div className="mb-6">
-                                                    <div className="flex justify-start items-center mb-3">
+                                                    {/* <div className="flex justify-start items-center mb-3">
                                                         <div className="h-[2px] w-[50px] rounded-lg bg-[#103d15] mr-2"></div>
                                                         <p className="text-sm  font-medium text-gray-900 dark:text-gray-300">
                                                             How often can you commit to the task?
                                                         </p>
-                                                    </div>
+                                                    </div> */}
 
                                                     <div>
                                                         <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex">
-                                                            <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                                                            {/* <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                                                                 <div class="flex items-center ps-3">
                                                                     <input
                                                                         id="horizontal-list-radio-license"
@@ -411,7 +431,7 @@ const CreateTask = (props) => {
                                                                         class="w-4 h-4 text-[#103d15] mb-1 bg-gray-100 border-gray-300 focus:ring-[#103d15]" />
                                                                     <label for="horizontal-list-radio-license" class="w-full py-1.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Days</label>
                                                                 </div>
-                                                            </li>
+                                                            </li> */}
                                                             <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                                                                 <div class="flex items-center ps-3">
                                                                     <input
@@ -450,10 +470,10 @@ const CreateTask = (props) => {
                                                     <div className="mb-3">
                                                         <p className=" text-sm font-medium text-gray-900 bg-[#4b556321] rounded-sm pl-3">Worker will attend (Task) once.</p>
                                                     </div>
-                                                    
+
                                                     <div>
                                                         <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choose Day for (work)</label>
-                                                       <input type="date" />
+                                                        <input type="date" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5" />
                                                     </div>
                                                 </div>
 
