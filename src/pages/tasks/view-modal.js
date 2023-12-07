@@ -60,14 +60,14 @@ const EditModal = (props) => {
                                 </div>
 
 
-                                <div className="flex mt-1">
+                                {/* <div className="flex mt-1">
                                     <p className="font-[500]">
                                         Days (Time):
                                     </p>
                                     <p className="pl-3">
                                         {props.holdAllTasks.aDayDate}
                                     </p>
-                                </div>
+                                </div> */}
 
                                 {props.holdAllTasks?.weekDays?.length === 0 ? (
                                     <p></p>

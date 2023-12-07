@@ -1,5 +1,5 @@
 import { Modal } from "flowbite";
-import { useState, useEffect,useRef  } from "react";
+import { useState, useEffect, useRef } from "react";
 import Multiselect from "multiselect-react-dropdown";
 import { getDocs, collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
@@ -48,12 +48,12 @@ const CreateTask = (props) => {
         endDate: new Date(),
         key: 'selection'
     });
-    
+
     const editorRef = useRef(null);
     const log = () => {
-      if (editorRef.current) {
-        console.log(editorRef.current.getContent());
-      }
+        if (editorRef.current) {
+            console.log(editorRef.current.getContent());
+        }
     };
     //=== Referencing to particular collection in firestore ==//
     const usersCollectionRef = collection(db, "tasks");
@@ -338,7 +338,7 @@ const CreateTask = (props) => {
                                         </div> */}
                                         <div className="mb-6">
                                             <span>
-                                            <p for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description for (work):</p>
+                                                <p for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description for (work):</p>
                                             </span>
                                             <Editor
                                                 apiKey='your-api-key'
@@ -360,7 +360,22 @@ const CreateTask = (props) => {
                                                 }}
                                             />
                                         </div>
-                                        <div class="flex items-start mb-4">
+                                        
+                                        <div className="mb-4">
+                                                        <label
+                                                            for="firstname"
+                                                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                                        >
+                                                            Time for (work):
+                                                        </label>
+                                                        <input
+                                                            type="time"
+                                                            id=""
+                                                            onChange={(e) => inputChangeHandler('aDate', e.target.value)}
+                                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+                                                        />
+                                                    </div>
+                                        <div class="flex items-start mb-8">
                                             <div class="flex items-center h-5">
                                                 <input
                                                     id="remember"
@@ -371,7 +386,7 @@ const CreateTask = (props) => {
                                                     class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[#103d15]"
                                                 />
                                             </div>
-                                            <label for="remember" class=" cursor-pointer text-sm ml-2 font-medium text-gray-900 dark:text-gray-300">Affirmative, the worker will attend consistently.</label>
+                                            <label for="remember" class=" cursor-pointer text-sm ml-2 font-medium text-gray-900">Affirmative, the worker will attend (work) consistently.</label>
                                         </div>
                                         {
                                             isChecked ?
@@ -391,7 +406,6 @@ const CreateTask = (props) => {
                                                                         id="horizontal-list-radio-license"
                                                                         onChange={(e) => setRadioChecked(e.target.value)}
                                                                         type="radio"
-
                                                                         value={'days'}
                                                                         name="list-radio"
                                                                         class="w-4 h-4 text-[#103d15] mb-1 bg-gray-100 border-gray-300 focus:ring-[#103d15]" />
@@ -425,7 +439,6 @@ const CreateTask = (props) => {
                                                                     </label>
                                                                 </div>
                                                             </li>
-
                                                         </ul>
                                                         {
                                                             taskFreqquency
@@ -434,19 +447,16 @@ const CreateTask = (props) => {
                                                 </div>
                                                 :
                                                 <div className="mb-6">
-                                                    <label
-                                                        for="firstname"
-                                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                                    >
-                                                        Time for (work):
-                                                    </label>
-                                                    <input
-                                                        type="time"
-                                                        id=""
-                                                        onChange={(e) => inputChangeHandler('aDate', e.target.value)}
-                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
-                                                    />
+                                                    <div className="mb-3">
+                                                        <p className=" text-sm font-medium text-gray-900 bg-[#4b556321] rounded-sm pl-3">Worker will attend (Task) once.</p>
+                                                    </div>
+                                                    
+                                                    <div>
+                                                        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choose Day for (work)</label>
+                                                       <input type="date" />
+                                                    </div>
                                                 </div>
+
                                         }
                                         <div>
                                             <button
@@ -462,8 +472,6 @@ const CreateTask = (props) => {
                                                         </svg>
                                                     </span>
                                                 }
-
-
                                                 Submit
                                             </button>
                                         </div>
