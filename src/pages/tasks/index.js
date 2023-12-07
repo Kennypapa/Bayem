@@ -318,7 +318,7 @@ const CreateTask = (props) => {
                                                 for="firstname"
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                             >
-                                                Task:
+                                                Work Title:
                                             </label>
                                             <input
                                                 type="text"
@@ -338,7 +338,7 @@ const CreateTask = (props) => {
                                         </div> */}
                                         <div className="mb-6">
                                             <span>
-                                            <p for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description:</p>
+                                            <p for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description for (work):</p>
                                             </span>
                                             <Editor
                                                 apiKey='your-api-key'
@@ -371,7 +371,7 @@ const CreateTask = (props) => {
                                                     class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[#103d15]"
                                                 />
                                             </div>
-                                            <label for="remember" class=" cursor-pointer text-sm ml-2 font-medium text-gray-900 dark:text-gray-300">Re-occur </label>
+                                            <label for="remember" class=" cursor-pointer text-sm ml-2 font-medium text-gray-900 dark:text-gray-300">Affirmative, the worker will attend consistently.</label>
                                         </div>
                                         {
                                             isChecked ?
@@ -438,7 +438,7 @@ const CreateTask = (props) => {
                                                         for="firstname"
                                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                                     >
-                                                        Time (work):
+                                                        Time for (work):
                                                     </label>
                                                     <input
                                                         type="time"

@@ -97,38 +97,45 @@ const EditModal = (props) => {
                                 )}
 
 
-                                <div className="flex mt-1">
-                                    <p className="font-[500] whitespace-nowrap pr-2">
-                                        Month (Days):
-                                    </p>
-                                    <div className="flex bg-[#d3d3d345]  w-full h-[26px] pl-4 rounded">
-                                        <span className="font-[600] pr-1">From:</span>
-                                        {
-                                            props.holdAllTasks.monthDays ?
-                                                <p >
-                                                    {formatDate(props.holdAllTasks.monthDays.endDate)}
-                                                </p>
-                                                :
-                                                <p>
 
-                                                </p>
-                                        }
-                                        <p>
-                                        </p>
-                                        <span className="pl-4 pr-1 font-[600]">
-                                            To:
-                                        </span>
-                                        <p>
-                                            {
-                                                props.holdAllTasks.monthDays ?
-                                                    <p>
-                                                        {formatDate(props.holdAllTasks.monthDays.startDate)}
+                                <div className="flex mt-1">
+                                    {
+                                        props.holdAllTasks.monthDays && Object.keys(props.holdAllTasks.monthDays).length === 0 ? (
+                                            <></>
+                                        ) :
+                                            (
+                                                <div className="flex">
+                                                    <p className="font-[500] whitespace-nowrap pr-2">
+                                                        Month (Days):
                                                     </p>
-                                                    :
-                                                    <></>
-                                            }
-                                        </p>
-                                    </div>
+                                                    <div className="flex bg-[#d3d3d345]  w-full h-[26px] pl-4 rounded">
+                                                        <span className="font-[600] pr-1">From:</span>
+                                                        {
+                                                            props.holdAllTasks.monthDays &&
+                                                            <p >
+                                                                {formatDate(props.holdAllTasks.monthDays.endDate)}
+                                                            </p>
+
+                                                        }
+                                                        <p>
+                                                        </p>
+                                                        <span className="pl-4 pr-1 font-[600]">
+                                                            To:
+                                                        </span>
+                                                        <p>
+                                                            {
+                                                                props.holdAllTasks.monthDays &&
+                                                                <p>
+                                                                    {formatDate(props.holdAllTasks.monthDays.startDate)}
+                                                                </p>
+
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            )
+                                    }
+
                                 </div>
                             </div>
                         </div>
