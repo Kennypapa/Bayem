@@ -35,19 +35,32 @@ const CreateTask = (props) => {
     const [showAllTask, setShowAllTasks] = useState(false);
 
     const [allTaskDetails, setAllTasksDetails] = useState({
-        task: "",
-        description: "",
-        aDayDate: "",
-        daysDate: '',
-        weekDays: [],
-        monthDays: {},
+        title: "",
+        description: {},
+        status:"",
+        date:"",
+        weekDays: []
     });
+
+    console.log(allTaskDetails);
 
     const [date, setDate] = useState({
         startDate: new Date(),
         endDate: new Date(),
         key: 'selection'
     });
+    const [editorContent, setEditorContent] = useState('');
+
+    console.log(editorContent)
+    const handleEditorChange = (content, editor) => {
+        // Update the state with the new content
+        setEditorContent(content);
+        setAllTasksDetails(prevState => ({
+            ...prevState,
+            description: content
+        }));
+      };
+
 
     const editorRef = useRef(null);
     const log = () => {
@@ -86,74 +99,6 @@ const CreateTask = (props) => {
 
 
     useEffect(() => {
-        switch (radioChecked) {
-            // case 'days':
-            //     setTaskFrequency(
-            //         <div className="mt-3">
-            //             <div className="mb-4">
-            //                 <label
-            //                     for="firstname"
-            //                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            //                 >
-            //                     Time for (work):
-            //                 </label>
-            //                 <input
-            //                     type="date"
-            //                     id=""
-            //                     onChange={(e) => inputChangeHandler('aDate', e.target.value)}
-            //                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
-            //                 />
-            //             </div>
-            //             <input
-            //                 type="time"
-            //                 id="daysDate"
-            //                 onChange={(e) => { inputChangeHandler('daysDate', e.target.value) }}
-            //                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
-            //                 required
-            //             />
-            //         </div>)
-            //     break;
-            case 'weeks':
-                setTaskFrequency(
-                    <div className="mt-3">
-
-                        <div>
-                            <label class="cursor-pointer mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Select week:</label>
-                            <Multiselect
-                                isObject={true}
-                                options={options}
-                                selectedValues={selectedOptions}
-                                onSelect={handleChange}
-                                onRemove={handleChange}
-                                displayValue="name"
-                                required
-                            />
-                        </div>
-                    </div>
-
-                )
-                break;
-            case 'months':
-                setTaskFrequency(<div className="mt-3">
-                    <div className="flex bg-[#d3d3d345]  w-[330px] py-1.5 pl-4 rounded">
-                        <span className="font-[600]">From</span>
-                        <p className="mx-2">
-                            {format(date.startDate, "MMM,dd,yyyy")}
-                        </p>
-                        <span className="font-[600]">to</span>
-                        <p className="ml-3">
-                            {format(date.endDate, "MMM,dd,yyyy")}
-                        </p>
-                    </div>
-                    <DateRangePicker
-                        ranges={[date]}
-                        onChange={handleDateChange}
-                        required
-                    />
-                </div>)
-                break;
-            default: setTaskFrequency(<></>)
-        }
 
         setShowModalDelete(
             new Modal(document.querySelector("#popup-modal"), {
@@ -187,12 +132,11 @@ const CreateTask = (props) => {
         e.preventDefault();
         setIsLoading(true);
         await addDoc(usersCollectionRef, {
-            task: allTaskDetails.task,
-            description: allTaskDetails.description,
-            aDayDate: allTaskDetails.aDayDate,
-            daysDate: allTaskDetails.daysDate,
+            title: allTaskDetails.title,
+            date: allTaskDetails.date,
             weekDays: allTaskDetails.weekDays,
-            monthDays: allTaskDetails.monthDays,
+            status: allTaskDetails.status,
+            description: allTaskDetails.description
         });
         setSuccess(true);
         setShowCreateTask(false);
@@ -255,7 +199,6 @@ const CreateTask = (props) => {
     const handleAllTask = (id, tasks) => {
         setHoldAllTasks(tasks);
         localStorage.setItem('tasks', JSON.stringify(tasks));
-
         modal.show();
         setId(id);
     }
@@ -264,8 +207,20 @@ const CreateTask = (props) => {
     //==============Table Columns && Rows ============//
     const columns = [
         {
-            name: "Tasks",
-            selector: (row) => row.task
+            name: "Workers",
+            // selector: (row) => row.weekDays
+        },
+        {
+            name: "Date",
+            selector: (row) => row.date
+        },
+        {
+            name: "Title of Work",
+            selector: (row) => row.title
+        },
+        {
+            name: "Status",
+            selector: (row) => row.status
         },
         {
             name: "Description",
@@ -333,6 +288,7 @@ const CreateTask = (props) => {
                                 <div>
                                     <form onSubmit={submitTaskHandler}>
                                         <div className="grid grid-cols-2 gap-6">
+
                                             <div>
                                                 <div className="mb-4">
                                                     <label
@@ -344,11 +300,25 @@ const CreateTask = (props) => {
                                                     <input
                                                         type="text"
                                                         id="task"
-                                                        onChange={(e) => inputChangeHandler('task', e.target.value)}
+                                                        onChange={(e) => inputChangeHandler('title', e.target.value)}
                                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                                         required
                                                     />
                                                 </div>
+
+
+                                                <div className="mb-4">
+                                                    <label for="status" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Task (Status)</label>
+                                                    <select 
+                                                    id="status" 
+                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                     onChange={(e) => inputChangeHandler("status", e.target.value)}
+                                                    >
+                                                        <option >Pending</option>
+                                                        <option >Closed</option>
+                                                    </select>
+                                                </div>
+
 
                                                 <div className="mb-4">
                                                     <span>
@@ -357,7 +327,7 @@ const CreateTask = (props) => {
                                                     <Editor
                                                         apiKey='your-api-key'
                                                         onInit={(evt, editor) => editorRef.current = editor}
-                                                        onChange={(e) => inputChangeHandler('description', e.target.value)}
+                                               
                                                         init={{
                                                             height: 200,
                                                             menubar: true,
@@ -372,30 +342,40 @@ const CreateTask = (props) => {
                                                                 'removeformat | help',
                                                             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                                                         }}
+                                                        onEditorChange={handleEditorChange}
                                                     />
                                                 </div>
-
-                                                <div className="mb-4">
-                                                    <p className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Task (Status)</p>
-                                                    <div className="bg-green-100 text-green-800 text-xs font-[600] me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
-                                                        Pending
-                                                    </div>
-                                                </div>
                                             </div>
+
                                             <div>
                                                 <div className="mb-4">
                                                     <label
                                                         for="firstname"
                                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                                     >
-                                                        Date
+                                                        Date:
                                                     </label>
                                                     <input
                                                         type="date"
                                                         id=""
-                                                        onChange={(e) => inputChangeHandler('aDate', e.target.value)}
+                                                        onChange={(e) => inputChangeHandler('date', e.target.value)}
                                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                                     />
+                                                </div>
+
+                                                <div className="mb-4">
+                                                    <label class="cursor-pointer mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Select Workers (Task):</label>
+                                                    <Multiselect
+                                                        isObject={true}
+                                                        options={options}
+                                                        selectedValues={selectedOptions}
+                                                        onSelect={handleChange}
+                                                        onRemove={handleChange}
+                                                        displayValue="name"
+                                                        required
+                                                    />
+
+
                                                 </div>
                                             </div>
                                         </div>
