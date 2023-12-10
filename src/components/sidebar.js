@@ -53,7 +53,7 @@ const Sidebar = () => {
                             to="/admin/create-task"
                         >
                             <i class="fa-solid fa-clipboard-check icon_ text-base w-9"></i>
-                            <p className='text-white text-left text-base font-medium py-2 ml-1'>Tasks</p>
+                            <p className='text-white text-left text-base font-medium py-2 ml-1'>Task</p>
                         </NavLink>
                     </li>
                     <li className='mb-3'>
