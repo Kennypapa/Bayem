@@ -35,16 +35,77 @@ const Sidebar = () => {
                             <p className='text-white text-left text-base font-medium py-2 ml-1'>Workers</p>
                         </NavLink>
                     </li>
-                    <li className=' mb-24'>
+
+                    <li className='mb-3'>
+                        <NavLink
+
+                            className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
+                            to="'/admin/field-mapping"
+                        >
+                            <i class="fa-solid fa-users-line icon_ text-base w-9"></i>
+                            <p className='text-white text-left text-base font-medium py-2 ml-1'>Field Mapping</p>
+                        </NavLink>
+                    </li>
+                    <li className=' mb-3'>
                         <NavLink
 
                             className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
                             to="/admin/create-task"
                         >
-                            <i class="fa-solid fa-people-roof icon_ text-base w-9"></i>
+                            <i class="fa-solid fa-clipboard-check icon_ text-base w-9"></i>
                             <p className='text-white text-left text-base font-medium py-2 ml-1'>Tasks</p>
                         </NavLink>
                     </li>
+                    <li className='mb-3'>
+                        <NavLink
+
+                            className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
+                            to="/admin/purchase"
+                        >
+                            <i class="fa-solid fa-cart-shopping icon_ text-base w-9"></i>
+                            <p className='text-white text-left text-base font-medium py-2 ml-1'>Purchase</p>
+                        </NavLink>
+                    </li>
+                    <li className='mb-3'>
+                        <NavLink
+
+                            className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
+                            to="/admin/plans"
+                        >
+                            <i class="fa-solid fa-calendar-days icon_ text-base w-9"></i>
+                            <p className='text-white text-left text-base font-medium py-2 ml-1'>Plans</p>
+                        </NavLink>
+                    </li>
+                    <li className='mb-3'>
+                        <NavLink
+
+                            className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
+                            to="/admin/salary"
+                        >
+                            <i class="fa-solid fa-hand-holding-dollar icon_ text-base w-9"></i>
+                            <p className='text-white text-left text-base font-medium py-2 ml-1'>Salary</p>
+                        </NavLink>
+                    </li>
+                    <li className='mb-3'>
+                        <NavLink
+                            className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
+                            to="/admin/expenses-category"
+                        >
+                            <i class="fa-solid fa-list icon_ text-base w-9"></i>
+                            <p className='text-white text-left text-base font-medium py-2 ml-1'>Expenses Category</p>
+                        </NavLink>
+                    </li>
+                    <li className='mb-3'>
+                        <NavLink
+
+                            className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
+                            to="/admin/reports"
+                        >
+                            <i class="fa-solid fa-file icon_ text-base w-9"></i>
+                            <p className='text-white text-left text-base font-medium py-2 ml-1'>Reports</p>
+                        </NavLink>
+                    </li>
+
                 </ul>
             </div>
             <div className='absolute bottom-6 pl-4'>

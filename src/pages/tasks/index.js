@@ -506,7 +506,7 @@ const CreateTask = (props) => {
                                 <div className="w-full flex justify-between items-center px-3">
                                     <p className="text-2xl font-[400]">
                                         List of Tasks
-                                        <i class="fa-solid fa-person-digging text-2xl text-[#ff9c40] pl-2"></i>
+                                        <i class="fa-solid fa-table-list text-2xl text-[#ff9c40] pl-2"></i>
                                     </p>
                                     <div>
                                         <button
