@@ -86,6 +86,8 @@ const Sidebar = () => {
                             <p className='text-white text-left text-base font-medium py-2 ml-1'>Salary</p>
                         </NavLink>
                     </li>
+
+{/* 
                     <li className='mb-3'>
                         <NavLink
                             className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
@@ -94,7 +96,9 @@ const Sidebar = () => {
                             <i class="fa-solid fa-list icon_ text-base w-9"></i>
                             <p className='text-white text-left text-base font-medium py-2 ml-1'>Expenses Category</p>
                         </NavLink>
-                    </li>
+                    </li> */}
+
+
                     <li className='mb-3'>
                         <NavLink
 
@@ -108,12 +112,12 @@ const Sidebar = () => {
 
                 </ul>
             </div>
-            <div className='absolute bottom-6 pl-4'>
+            {/* <div className='absolute bottom-6 pl-4'>
                 <button className='flex justify-start items-center'>
                     <i class="fa-solid fa-power-off text-red-600 font-semibold text-lg w-9"></i>
                     <p className='text-red-600 font-semibold'>LOG OUT</p>
                 </button>
-            </div>
+            </div> */}
         </div>
     )
 }

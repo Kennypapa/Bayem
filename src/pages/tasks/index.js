@@ -52,8 +52,6 @@ const CreateTask = (props) => {
         listWorkers: []
     });
 
-    console.log(allWorkers);
-
     const [date, setDate] = useState({
         startDate: new Date(),
         endDate: new Date(),
@@ -177,7 +175,7 @@ const CreateTask = (props) => {
         setCollectAllTasks(allTasks);
         setId(id);
     }
-
+   console.log(collectAllTasks)
     //========CloseEdit Handler =======//
     const closeEditHandler = () => {
         setShowEditTask(false);

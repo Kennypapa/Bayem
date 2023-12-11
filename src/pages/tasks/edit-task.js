@@ -40,12 +40,18 @@ const EditTasks = (props) => {
     //=========InputchangeHandler ==============//
     const inputChangeHandler = (input, value) => {
         props.setCollectAllTasks((prevState) => {
-            return {    
+            return {
                 ...prevState,
                 [input]: value
             }
         });
-    }
+    } 
+
+;    //======= Map through the data to create initial options ===//
+    const initialOptions = props.collectAllTask.listWorkers.selectedOption.map(item => ({
+        value: item.id,
+        label: `${item.firstname} ${item.lastname}`,
+    }))
 
     const handleDateChange = (ranges) => {
         setDate(ranges.selection);
@@ -72,7 +78,6 @@ const EditTasks = (props) => {
         props.hideEditTask();
         props.getTasks();
     };
-    console.log(editSuccess);
     props.successNotif(editSuccess);
     //========CloseEdit Handler =======//
     const closeEditHandler = () => {
@@ -172,7 +177,7 @@ const EditTasks = (props) => {
                                         <input
                                             type="text"
                                             id="task"
-                                            value={ props.collectAllTask.title}
+                                            value={props.collectAllTask.title}
                                             onChange={(e) => inputChangeHandler('title', e.target.value)}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                             required
@@ -184,7 +189,7 @@ const EditTasks = (props) => {
                                         <label for="status" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Task (Status)</label>
                                         <select
                                             id="status"
-                                            value={ props.collectAllTask.status}
+                                            value={props.collectAllTask.status}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             onChange={(e) => inputChangeHandler("status", e.target.value)}
                                         >
@@ -200,7 +205,7 @@ const EditTasks = (props) => {
                                         <textarea
                                             id="message"
                                             rows="2"
-                                            value={ props.collectAllTask.description}
+                                            value={props.collectAllTask.description}
                                             onChange={(e) => inputChangeHandler('description', e.target.value)}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 min-h-[150px] text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5" placeholder="Write your thoughts here..." required ></textarea>
                                     </div>
@@ -217,7 +222,7 @@ const EditTasks = (props) => {
                                         <input
                                             type="date"
                                             id="date"
-                                            value={ props.collectAllTask.date}
+                                            value={props.collectAllTask.date}
                                             onChange={(e) => inputChangeHandler('date', e.target.value)}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                         />
@@ -225,16 +230,15 @@ const EditTasks = (props) => {
 
                                     <div className="mb-4">
                                         <label class="cursor-pointer mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Select Workers (Task):</label>
-                                        {/* <Multiselect
+                                        <Multiselect
                                             isObject={true}
-                                            options={props.collectAllTask.listWorkers}
+                                            options={initialOptions}
                                             selectedValues={selectedOptions}
                                             onSelect={handleChange}
                                             onRemove={handleChange}
                                             displayValue="label"
                                             required
-                                        /> */}
-
+                                        />
 
                                     </div>
                                 </div>
