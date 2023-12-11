@@ -32,20 +32,27 @@ const CreateTask = (props) => {
     const [showEditTask, setShowEditTask] = useState(false);
     const [success, setSuccess] = useState(false);
     const [holdAllTasks, setHoldAllTasks] = useState('');
+
     // const [listWorkers, setListWorkers] = useState([]);
     const [listWorkers, setListWorkers] = useState([
-        { id: 1, name: 'Option 1' },
-        // ... other items
-      ]);
+        { id: 1, firstname: 'Option 1', lastname: 'Option 2' }
+    ]);
+
+    //======= Map through the data to create initial options ===//
+    const initialOptions = listWorkers.map(item => ({
+        value: item.id,
+        label: `${item.firstname} ${item.lastname}`,
+    }));
+    const [options, setOptions] = useState(initialOptions);
     const [allTaskDetails, setAllTasksDetails] = useState({
         title: "",
         description: '',
         status: "",
         date: "",
-        weekDays: []
+        listWorkers: []
     });
 
-    console.log(allTaskDetails);
+    console.log(allWorkers);
 
     const [date, setDate] = useState({
         startDate: new Date(),
@@ -53,8 +60,6 @@ const CreateTask = (props) => {
         key: 'selection'
     });
     const [editorContent, setEditorContent] = useState('');
-
-    console.log(editorContent)
     const handleEditorChange = (content, editor) => {
         // Update the state with the new content
         const sanitizedContent = content.replace(/<\/?p>/g, '');
@@ -64,7 +69,6 @@ const CreateTask = (props) => {
             description: sanitizedContent
         }));
     };
-
 
     const editorRef = useRef(null);
     const log = () => {
@@ -86,8 +90,6 @@ const CreateTask = (props) => {
         }));
     }
 
-
-
     //=========InputchangeHandler ==============//
     const inputChangeHandler = (input, value) => {
         setAllTasksDetails((prevState) => {
@@ -97,7 +99,6 @@ const CreateTask = (props) => {
             }
         });
     }
-
 
     useEffect(() => {
 
@@ -125,7 +126,7 @@ const CreateTask = (props) => {
         setSelectedOptions(selectedOption);
         setAllTasksDetails(prevState => ({
             ...prevState,
-            weekDays: { ...allTaskDetails.weekDays, selectedOption }
+            listWorkers: { ...allTaskDetails.listWorkers, selectedOption }
         }))
     };
 
@@ -136,7 +137,7 @@ const CreateTask = (props) => {
         await addDoc(usersCollectionRef, {
             title: allTaskDetails.title,
             date: allTaskDetails.date,
-            weekDays: allTaskDetails.weekDays,
+            listWorkers: allTaskDetails.listWorkers,
             status: allTaskDetails.status,
             description: allTaskDetails.description
         });
@@ -160,11 +161,6 @@ const CreateTask = (props) => {
         setListWorkers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
 
-
-    //======= Map through the data to create initial options ===//
-  const initialOptions = listWorkers.map(item => ({ value: item.id, label: item.firstname }));
-  console.log(initialOptions)
-  const [options, setOptions] = useState(initialOptions);
     //======== successHandler ====//
     const successNotif = (editSuccess) => {
         setShowSuccessNotif(editSuccess);
@@ -216,12 +212,24 @@ const CreateTask = (props) => {
         setId(id);
     }
 
-    console.log(holdAllTasks)
     //==============Table Columns && Rows ============//
     const columns = [
         {
             name: "Workers",
-            // selector: (row) => row.weekDays
+            selector: (row) => <div>
+                <ul className=" list-disc flex">
+                {
+                    listWorkers.map((week) => {
+                        return (
+                            <li className="flex">
+                                <p className="mr-2"> {week.firstname} </p>
+                                <p> {week.lastname},</p>
+                            </li>
+                        )
+                    })
+                }
+                </ul>
+            </div>
         },
         {
             name: "Date",
@@ -326,6 +334,7 @@ const CreateTask = (props) => {
                                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                         onChange={(e) => inputChangeHandler("status", e.target.value)}
                                                     >
+                                                        <option value=""></option>
                                                         <option value="Pending">Pending</option>
                                                         <option value="Closed">Closed</option>
                                                     </select>

@@ -40,7 +40,7 @@ const EditTasks = (props) => {
     //=========InputchangeHandler ==============//
     const inputChangeHandler = (input, value) => {
         props.setCollectAllTasks((prevState) => {
-            return {
+            return {    
                 ...prevState,
                 [input]: value
             }
@@ -61,18 +61,17 @@ const EditTasks = (props) => {
         setIsLoading(true);
         const updateData = doc(db, "tasks", props.taskId);
         await updateDoc(updateData, {
-            task: props.collectAllTask.task,
+            title: props.collectAllTask.title,
             description: props.collectAllTask.description,
-            aDayDate: props.collectAllTask.aDayDate,
-            daysDate: props.collectAllTask.daysDate,
-            weekDays: props.collectAllTask.weekDays,
-            monthDays: props.collectAllTask.monthDays
+            date: props.collectAllTask.date,
+            status: props.collectAllTask.status,
+            // listWorkers : props.collectAllTask. listWorkers,
         });
         setEditSuccess(true);
         setIsLoading(false);
         props.hideEditTask();
         props.getTasks();
-    }; 
+    };
     console.log(editSuccess);
     props.successNotif(editSuccess);
     //========CloseEdit Handler =======//
@@ -158,120 +157,89 @@ const EditTasks = (props) => {
                             </button>
                         </div>
                     </div>
-                    <div className="">
+
+                    <div>
                         <form onSubmit={handleUpdate}>
-                            <div className="mb-6">
-                                <label
-                                    for="firstname"
-                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                >
-                                    Task:
-                                </label>
-                                <input
-                                    type="text"
-                                    id="task"
-                                    value={props.collectAllTask.task}
-                                    onChange={(e) => inputChangeHandler('task', e.target.value)}
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
-                                />
-                            </div>
-                            <div className="mb-6">
-                                <label for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description:</label>
-                                <textarea
-                                    id="message"
-                                    rows="2"
-                                    value={props.collectAllTask.description}
-                                    onChange={(e) => inputChangeHandler('description', e.target.value)}
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5" placeholder="Write your thoughts here..."></textarea>
-                            </div>
-                            <div class="flex items-start mb-4">
-                                <div class="flex items-center h-5">
-                                    <input
-                                        id="remember"
-                                        type="checkbox"
-                                        checked={isChecked}
-                                        onChange={() => setIsChecked(!isChecked)}
-                                        value=""
-                                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-[#103d15]"
-                                    />
-                                </div>
-                                <label for="remember" class=" cursor-pointer text-sm ml-2 font-medium text-gray-900 dark:text-gray-300">Re-occur </label>
-                            </div>
-                            {
-                                isChecked ?
-                                    <div className="mb-6">
-                                        <div className="flex justify-start items-center mb-3">
-                                            <div className="h-[2px] w-[50px] rounded-lg bg-[#103d15] mr-2"></div>
-                                            <p className="text-sm  font-medium text-gray-900 dark:text-gray-300">
-                                                How often can you commit to the task?
-                                            </p>
-                                        </div>
-
-                                        <div>
-                                            <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex">
-                                                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                                                    <div class="flex items-center ps-3">
-                                                        <input
-                                                            id="horizontal-list-radio-license"
-                                                            onChange={(e) => setRadioChecked(e.target.value)}
-                                                            type="radio"
-                                                            value={'days'}
-                                                            name="list-radio"
-                                                            class="w-4 h-4 text-[#103d15] mb-1 bg-gray-100 border-gray-300 focus:ring-[#103d15]" />
-                                                        <label for="horizontal-list-radio-license" class="w-full py-1.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Days</label>
-                                                    </div>
-                                                </li>
-                                                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                                                    <div class="flex items-center ps-3">
-                                                        <input
-                                                            id="horizontal-list-radio-id"
-                                                            onChange={(e) => setRadioChecked(e.target.value)}
-                                                            type="radio"
-                                                            value={'weeks'}
-                                                            name="list-radio"
-                                                            class="w-4 h-4 text-[#103d15] mb-1 bg-gray-100 border-gray-300 focus:ring-[#103d15]" />
-                                                        <label for="horizontal-list-radio-id" class="w-full py-1.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Week Days</label>
-                                                    </div>
-                                                </li>
-                                                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                                                    <div class="flex items-center ps-3">
-                                                        <input
-                                                            id="horizontal-list-radio-military"
-                                                            onChange={(e) => setRadioChecked(e.target.value)}
-                                                            type="radio"
-                                                            value={'months'} name="list-radio"
-                                                            class="w-4 h-4 text-[#103d15] mb-1 bg-gray-100 border-gray-300 focus:ring-[#103d15]" />
-                                                        <label
-                                                            for="horizontal-list-radio-military"
-                                                            class="w-full py-1.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                                        >Month Days
-                                                        </label>
-                                                    </div>
-                                                </li>
-
-                                            </ul>
-                                            {
-                                                taskFreqquency
-                                            }
-                                        </div>
-                                    </div>
-                                    :
-                                    <div className="mb-6">
+                            <div className="grid grid-cols-2 gap-6">
+                                <div>
+                                    <div className="mb-4">
                                         <label
                                             for="firstname"
                                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                         >
-                                            Pick a Date:
+                                            Title of Work:
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="task"
+                                            value={ props.collectAllTask.title}
+                                            onChange={(e) => inputChangeHandler('title', e.target.value)}
+                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
+                                            required
+                                        />
+                                    </div>
+
+
+                                    <div className="mb-4">
+                                        <label for="status" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Task (Status)</label>
+                                        <select
+                                            id="status"
+                                            value={ props.collectAllTask.status}
+                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            onChange={(e) => inputChangeHandler("status", e.target.value)}
+                                        >
+                                            <option value=""></option>
+                                            <option value="Pending">Pending</option>
+                                            <option value="Closed">Closed</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div className="mb-4">
+                                        <label for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description :</label>
+                                        <textarea
+                                            id="message"
+                                            rows="2"
+                                            value={ props.collectAllTask.description}
+                                            onChange={(e) => inputChangeHandler('description', e.target.value)}
+                                            className="bg-gray-50 border border-gray-300 text-gray-900 min-h-[150px] text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5" placeholder="Write your thoughts here..." required ></textarea>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div className="mb-4">
+                                        <label
+                                            for="firstname"
+                                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                        >
+                                            Date:
                                         </label>
                                         <input
                                             type="date"
-                                            id=""
-                                            value={props.collectAllTask.aDayDate}
-                                            onChange={(e) => inputChangeHandler('aDate', e.target.value)}
+                                            id="date"
+                                            value={ props.collectAllTask.date}
+                                            onChange={(e) => inputChangeHandler('date', e.target.value)}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
                                         />
                                     </div>
-                            }
+
+                                    <div className="mb-4">
+                                        <label class="cursor-pointer mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Select Workers (Task):</label>
+                                        {/* <Multiselect
+                                            isObject={true}
+                                            options={props.collectAllTask.listWorkers}
+                                            selectedValues={selectedOptions}
+                                            onSelect={handleChange}
+                                            onRemove={handleChange}
+                                            displayValue="label"
+                                            required
+                                        /> */}
+
+
+                                    </div>
+                                </div>
+                            </div>
+
                             <div>
                                 <button
                                     type="submit"
@@ -289,8 +257,10 @@ const EditTasks = (props) => {
                                     Submit
                                 </button>
                             </div>
+
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>
