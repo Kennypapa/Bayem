@@ -32,13 +32,16 @@ const CreateTask = (props) => {
     const [showEditTask, setShowEditTask] = useState(false);
     const [success, setSuccess] = useState(false);
     const [holdAllTasks, setHoldAllTasks] = useState('');
-    const [showAllTask, setShowAllTasks] = useState(false);
-
+    // const [listWorkers, setListWorkers] = useState([]);
+    const [listWorkers, setListWorkers] = useState([
+        { id: 1, name: 'Option 1' },
+        // ... other items
+      ]);
     const [allTaskDetails, setAllTasksDetails] = useState({
         title: "",
-        description: {},
-        status:"",
-        date:"",
+        description: '',
+        status: "",
+        date: "",
         weekDays: []
     });
 
@@ -54,12 +57,13 @@ const CreateTask = (props) => {
     console.log(editorContent)
     const handleEditorChange = (content, editor) => {
         // Update the state with the new content
-        setEditorContent(content);
+        const sanitizedContent = content.replace(/<\/?p>/g, '');
+        setEditorContent(sanitizedContent);
         setAllTasksDetails(prevState => ({
             ...prevState,
-            description: content
+            description: sanitizedContent
         }));
-      };
+    };
 
 
     const editorRef = useRef(null);
@@ -71,6 +75,9 @@ const CreateTask = (props) => {
     //=== Referencing to particular collection in firestore ==//
     const usersCollectionRef = collection(db, "tasks");
 
+    //=== Referencing to particular collection in firestore ==//
+    const workersCollectionRef = collection(db, "workers");
+
     const handleDateChange = (ranges) => {
         setDate(ranges.selection);
         setAllTasksDetails(prevState => ({
@@ -79,13 +86,7 @@ const CreateTask = (props) => {
         }));
     }
 
-    const [options, setOptions] = useState([
-        { id: 'Monday', name: 'Monday' },
-        { id: 'Tuesday', name: 'Tuesday' },
-        { id: 'Wednesday', name: 'Wednesday' },
-        { id: 'Thursday', name: 'Thursday' },
-        { id: 'Friday', name: 'Friday' },
-    ]);
+
 
     //=========InputchangeHandler ==============//
     const inputChangeHandler = (input, value) => {
@@ -116,6 +117,7 @@ const CreateTask = (props) => {
             })
         )
         getTasks();
+        getWorkers();
     }, [radioChecked, date]);
 
     //=============== fetch all workers ===========//
@@ -147,11 +149,22 @@ const CreateTask = (props) => {
         setIsLoading(false);
     }
 
+    //========= getTasks Handler ==//
     const getTasks = async () => {
         const data = await getDocs(usersCollectionRef);
         setAllWorkers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
+    //=======getWorkers Handler ====//
+    const getWorkers = async () => {
+        const data = await getDocs(workersCollectionRef);
+        setListWorkers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
 
+
+    //======= Map through the data to create initial options ===//
+  const initialOptions = listWorkers.map(item => ({ value: item.id, label: item.firstname }));
+  console.log(initialOptions)
+  const [options, setOptions] = useState(initialOptions);
     //======== successHandler ====//
     const successNotif = (editSuccess) => {
         setShowSuccessNotif(editSuccess);
@@ -220,7 +233,7 @@ const CreateTask = (props) => {
         },
         {
             name: "Status",
-            selector: (row) => row.status
+            selector: (row) => <div className="bg-green-100 text-green-800 text-xs font-[600] me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">{row.status}</div>
         },
         {
             name: "Description",
@@ -288,7 +301,6 @@ const CreateTask = (props) => {
                                 <div>
                                     <form onSubmit={submitTaskHandler}>
                                         <div className="grid grid-cols-2 gap-6">
-
                                             <div>
                                                 <div className="mb-4">
                                                     <label
@@ -309,41 +321,24 @@ const CreateTask = (props) => {
 
                                                 <div className="mb-4">
                                                     <label for="status" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Task (Status)</label>
-                                                    <select 
-                                                    id="status" 
-                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                     onChange={(e) => inputChangeHandler("status", e.target.value)}
+                                                    <select
+                                                        id="status"
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        onChange={(e) => inputChangeHandler("status", e.target.value)}
                                                     >
-                                                        <option >Pending</option>
-                                                        <option >Closed</option>
+                                                        <option value="Pending">Pending</option>
+                                                        <option value="Closed">Closed</option>
                                                     </select>
                                                 </div>
 
 
                                                 <div className="mb-4">
-                                                    <span>
-                                                        <p for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description for (work):</p>
-                                                    </span>
-                                                    <Editor
-                                                        apiKey='your-api-key'
-                                                        onInit={(evt, editor) => editorRef.current = editor}
-                                               
-                                                        init={{
-                                                            height: 200,
-                                                            menubar: true,
-                                                            plugins: [
-                                                                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                                                                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                                                                'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-                                                            ],
-                                                            toolbar: 'undo redo | blocks | ' +
-                                                                'bold italic forecolor | alignleft aligncenter ' +
-                                                                'alignright alignjustify | bullist numlist outdent indent | ' +
-                                                                'removeformat | help',
-                                                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                                                        }}
-                                                        onEditorChange={handleEditorChange}
-                                                    />
+                                                    <label for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description :</label>
+                                                    <textarea
+                                                        id="message"
+                                                        rows="2"
+                                                        onChange={(e) => inputChangeHandler('description', e.target.value)}
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 min-h-[150px] text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5" placeholder="Write your thoughts here..." required ></textarea>
                                                 </div>
                                             </div>
 
@@ -367,11 +362,11 @@ const CreateTask = (props) => {
                                                     <label class="cursor-pointer mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Select Workers (Task):</label>
                                                     <Multiselect
                                                         isObject={true}
-                                                        options={options}
+                                                        options={initialOptions}
                                                         selectedValues={selectedOptions}
                                                         onSelect={handleChange}
                                                         onRemove={handleChange}
-                                                        displayValue="name"
+                                                        displayValue="label"
                                                         required
                                                     />
 
@@ -407,7 +402,7 @@ const CreateTask = (props) => {
                             <div className="pt-4">
                                 <div className="w-full flex justify-between items-center px-3">
                                     <p className="text-2xl font-[400]">
-                                        List of Tasks
+                                        Tasks
                                         <i class="fa-solid fa-table-list text-2xl text-[#ff9c40] pl-2"></i>
                                     </p>
                                     <div>
