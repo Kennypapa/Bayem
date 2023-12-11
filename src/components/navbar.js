@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { initFlowbite } from 'flowbite';
 import { NavLink } from 'react-router-dom';
@@ -8,6 +7,7 @@ const Navbar = () => {
     })
     return (
         <div className=" h-[70px] w-full mr-auto flex justify-between items-center bg-white pl-6 pr-10 top-0 fixed z-10 ">
+
             <div className="flex">
                 <div className='w-[250px]  h-[20px]'></div>
                 <label htmlFor="toggle" className='cursor-pointer'>
@@ -21,7 +21,7 @@ const Navbar = () => {
                 </div>
                 <div >
                     <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className=" focus:ring-0 focus:outline-none focus:ring-transprent font-medium text-sm  py-2.5 text-center inline-flex items-center" type="button">
-                        <div className='h-[50px] w-[50px] border rounded-full'>
+                        <div className='h-[50px] w-[50px] rounded-full'>
                             <img src="../assets/img/bayem/CEO.jpg" className=" rounded-full" alt="avatar" />
                         </div>
                         <p className='pl-3'>kehinde</p>
@@ -52,9 +52,7 @@ const Navbar = () => {
                             </li>
                         </ul>
                     </div>
-                    {/* <p className='text-sm font-[600]'>
-                        Logged in as admin
-                    </p> */}
+                    
                 </div>
             </div>
 
