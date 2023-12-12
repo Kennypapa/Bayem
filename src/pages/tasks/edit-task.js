@@ -46,6 +46,10 @@ const EditTasks = (props) => {
             }
         });
     } 
+    
+    const [listWorkers, setListWorkers] = useState([
+        { id: 1, firstname: 'Option 1', lastname: 'Option 2' }
+    ]);
 
 ;    //======= Map through the data to create initial options ===//
     const initialOptions = props.collectAllTask.listWorkers.selectedOption.map(item => ({

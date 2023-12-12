@@ -2,11 +2,15 @@ import { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import { db } from "../../firebase.config";
 import { getDocs, collection, addDoc } from "firebase/firestore";
+import DeleteModal from "./delete-modal";
+
 const Purchase = () => {
     const [togglePurchase, setTogglePurchase] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [showSuccessNotif, setShowSuccessNotif] = useState(false);
     const [allPurchasedItems, setAllPurchasedItems] = useState([]);
+    const [showModalDelete, setShowModalDelete] = useState(false);
+    const [showEditTask, setShowEditTask] = useState(false);
     const [purchaseItems, setPurchaseItems] = useState({
         productName: '',
         price: '',
@@ -25,7 +29,15 @@ const Purchase = () => {
         setTogglePurchase(true);
     };
 
+
     useEffect(() => {
+        setShowModalDelete(
+            new Modal(document.querySelector("#popup-modal"), {
+                backdrop: "dynamic",
+                backdropClasses: "bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40",
+                closable: true,
+            })
+        )
         getPurchasedItems();
     })
 
@@ -47,6 +59,23 @@ const Purchase = () => {
         const data = await getDocs(usersCollectionRef);
         setAllPurchasedItems(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
+
+    //=========Edit Handler ======//
+    const handleEdit = (id, allTasks) => {
+        setShowEditTask(true);
+        setCollectAllTasks(allTasks);
+        setId(id);
+    }
+     //========CloseEdit Handler =======//
+     const closeEditHandler = () => {
+        setShowEditTask(false);
+    }
+    
+     //===== DeleteHandler ====//    
+     const handleDelete = async (id) => {
+        setDeleteId(id)
+        showModalDelete.show();
+    }
 
     const submitProductHandler = async (e) => {
         e.preventDefault();
@@ -91,7 +120,7 @@ const Purchase = () => {
             name: "Type",
             selector: (row) => row.type,
         },
-       
+
         {
             name: "Date",
             selector: (row) => row.date
@@ -374,6 +403,8 @@ const Purchase = () => {
                 )}
             </div>
 
+            <DeleteModal deleteId={deleteId} showDeleteNotif={handleDeleteNotif} getPurchasedItems={getPurchasedItems} hideDeleteModal={showModalDelete} />
+          //=================success Notification =============//
             {
                 showSuccessNotif && (
                     <div className="fixed bottom-8 z-40 right-10 px-4 h-[55px] mb-1 text-sm text-green-800 bg-green-200 w-[300px] flex justify-start items-center" role="alert">

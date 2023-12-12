@@ -21,6 +21,8 @@ const ProtectedLayout = () => {
             <Outlet />
             <Navbar />
             <Sidebar />
+
+            
         </div>
     )
 }

@@ -86,7 +86,7 @@ const Sidebar = () => {
                             <p className='text-white text-left text-base font-medium py-2 ml-1'>Salary</p>
                         </NavLink>
                     </li>
-
+                   
 {/* 
                     <li className='mb-3'>
                         <NavLink
@@ -97,7 +97,7 @@ const Sidebar = () => {
                             <p className='text-white text-left text-base font-medium py-2 ml-1'>Expenses Category</p>
                         </NavLink>
                     </li> */}
-
+        
 
                     <li className='mb-3'>
                         <NavLink

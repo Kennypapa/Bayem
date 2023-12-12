@@ -61,7 +61,7 @@ const Roles = (props) => {
         setId(id);
         modal.show();
     }
-    console.log(title)
+    console.log(title);
     //========= Create Handler =========//
     const handleCreateModal = () => {
         showModalCreate.show();

@@ -74,10 +74,11 @@ const CreateTask = (props) => {
             console.log(editorRef.current.getContent());
         }
     };
+
     //=== Referencing to particular collection in firestore ==//
     const usersCollectionRef = collection(db, "tasks");
 
-    //=== Referencing to particular collection in firestore ==//
+    //=== Referencing to particular collection in firestore ===//
     const workersCollectionRef = collection(db, "workers");
 
     const handleDateChange = (ranges) => {
@@ -175,7 +176,7 @@ const CreateTask = (props) => {
         setCollectAllTasks(allTasks);
         setId(id);
     }
-   console.log(collectAllTasks)
+    console.log(collectAllTasks)
     //========CloseEdit Handler =======//
     const closeEditHandler = () => {
         setShowEditTask(false);
@@ -216,16 +217,16 @@ const CreateTask = (props) => {
             name: "Workers",
             selector: (row) => <div>
                 <ul className=" list-disc flex">
-                {
-                    listWorkers.map((week) => {
-                        return (
-                            <li className="flex">
-                                <p className="mr-2"> {week.firstname} </p>
-                                <p> {week.lastname},</p>
-                            </li>
-                        )
-                    })
-                }
+                    {
+                        listWorkers.map((week) => {
+                            return (
+                                <li className="flex">
+                                    <p className="mr-2"> {week.firstname} </p>
+                                    <p> {week.lastname},</p>
+                                </li>
+                            )
+                        })
+                    }
                 </ul>
             </div>
         },
