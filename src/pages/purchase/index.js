@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import { db } from "../../firebase.config";
 import { getDocs, collection, addDoc } from "firebase/firestore";
@@ -6,6 +6,7 @@ const Purchase = () => {
     const [togglePurchase, setTogglePurchase] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [showSuccessNotif, setShowSuccessNotif] = useState(false);
+    const [allPurchasedItems, setAllPurchasedItems] = useState([]);
     const [purchaseItems, setPurchaseItems] = useState({
         productName: '',
         price: '',
@@ -14,13 +15,19 @@ const Purchase = () => {
         type: '',
         quantity: '',
         date: '',
-    })
+    });
+
     const openHandler = () => {
         setTogglePurchase(false);
     };
+
     const closeHandler = () => {
         setTogglePurchase(true);
     };
+
+    useEffect(() => {
+        getPurchasedItems();
+    })
 
     //=========InputchangeHandler ==============//
     const inputChangeHandler = (input, value) => {
@@ -35,6 +42,12 @@ const Purchase = () => {
     //=== Referencing to particular collection in firestore ==//
     const usersCollectionRef = collection(db, "purchase");
 
+    //========= getPurchasedItems Handler ==//
+    const getPurchasedItems = async () => {
+        const data = await getDocs(usersCollectionRef);
+        setAllPurchasedItems(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+
     const submitProductHandler = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -47,7 +60,7 @@ const Purchase = () => {
             quantity: purchaseItems.quantity,
             date: purchaseItems.date
         });
-        setShowSuccessNotif(true)
+        setShowSuccessNotif(true);
         setPurchaseItems({
             productName: '',
             price: '',
@@ -67,26 +80,27 @@ const Purchase = () => {
     //==============Table Columns && Rows ============//
     const columns = [
         {
-            name: "Firstname",
-            selector: (row) => row.firstname,
+            name: "ProductName",
+            selector: (row) => row.productName,
         },
         {
-            name: "Lastname",
-            selector: (row) => row.lastname,
+            name: "Price",
+            selector: (row) => <div>₦<span>{row.price}</span></div>,
         },
         {
-            name: "Email",
-            selector: (row) => row.email,
+            name: "Type",
+            selector: (row) => row.type,
+        },
+       
+        {
+            name: "Date",
+            selector: (row) => row.date
         },
         {
-            name: "Gender",
-            selector: (row) => row.gender,
-        },
-        {
-            name: "Role",
+            name: "Condition",
             selector: (row) => (
                 <div className="bg-green-100 text-green-800 text-xs font-[600] me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
-                    {row.role}
+                    {row.condition}
                 </div>
             ),
         },
@@ -124,7 +138,7 @@ const Purchase = () => {
     const tableHeaderstyle = {
         headCells: {
             style: {
-                fontWeight: "bold",
+                fontWeight: "semiBold",
                 fontSize: "16px",
             },
         },
@@ -149,6 +163,7 @@ const Purchase = () => {
                             columns={columns}
                             fixedHeader
                             isSortable
+                            data={allPurchasedItems}
                             customStyles={tableHeaderstyle}
                             pagination
                             subHeader
@@ -358,7 +373,6 @@ const Purchase = () => {
                     </div>
                 )}
             </div>
-
 
             {
                 showSuccessNotif && (
