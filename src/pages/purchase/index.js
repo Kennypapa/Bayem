@@ -21,12 +21,12 @@ const Purchase = () => {
     const [collectAllProducts, setCollectAllProducts] = useState([]);
     const [holdAllproducts, setHoldAllProducts] = useState([]);
     const [purchaseItems, setPurchaseItems] = useState({
-        productName: '',
-        price: '',
-        manufacturer: '',
+        productName: 'porter',
+        price: '500',
+        manufacturer: 'JBL',
         condition: '',
         type: '',
-        quantity: '',
+        quantity: '10',
         date: '',
     });
 
@@ -123,6 +123,7 @@ const Purchase = () => {
             quantity: purchaseItems.quantity,
             date: purchaseItems.date
         });
+        getPurchasedItems();
         setShowSuccessNotif(true);
         setPurchaseItems({
             productName: '',
@@ -203,7 +204,7 @@ const Purchase = () => {
     const tableHeaderstyle = {
         headCells: {
             style: {
-                fontWeight: "semiBold",
+                fontWeight: "600",
                 fontSize: "16px",
             },
         },
@@ -324,6 +325,7 @@ const Purchase = () => {
                                             required
                                         />
                                     </div>
+
                                     <div className="mb-3">
                                         <label
                                             htmlFor="title"
@@ -340,6 +342,8 @@ const Purchase = () => {
                                             required
                                         />
                                     </div>
+
+
                                     <div className="mb-3">
                                         <label
                                             for="status"
@@ -350,10 +354,10 @@ const Purchase = () => {
                                         <select
                                             id="status"
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            value={purchaseItems.condition}
                                             onChange={(e) => inputChangeHandler('condition', e.target.value)}
                                             required
                                         >
+                                            <option selected disabled>Choose a status</option>
                                             <option value="Pending">Pending</option>
                                             <option value="Closed">Closed</option>
                                         </select>
@@ -363,24 +367,24 @@ const Purchase = () => {
                                 <div className="">
                                     <div className="mb-3">
                                         <label
-                                            for="status"
+                                            for="type"
                                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                         >
                                             Type:
                                         </label>
                                         <select
-                                            id="status"
+                                            id="type"
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            value={purchaseItems.type}
                                             onChange={(e) => inputChangeHandler('type', e.target.value)}
                                             required
                                         >
-                                            <option value="Product">Product</option>
+                                            <option selected disabled>Select Product Type</option>
+                             
                                             <option value="Equipment">Equipment</option>
                                             <option value="Fertilizer">Fertilizer</option>
-                                            <option value="Closed">Seed</option>
-                                            <option value="Closed">Chemical</option>
-                                            <option value="Closed">General</option>
+                                            <option value="Seed">Seed</option>
+                                            <option value="Chemical">Chemical</option>
+                                            <option value="General">General</option>
                                         </select>
                                     </div>
 

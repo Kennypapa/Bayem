@@ -251,12 +251,14 @@ const CreateTask = (props) => {
             name: "Actions",
             cell: (row) => (
                 <div className="inline-flex rounded-md py-2.5" role="group">
+                    
                     <button
                         onClick={() => handleEdit(row.id, row)}
                         type="button" className="px-3 py-2  font-medium text-gray-900 border border-gray-100 rounded-s-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent">
                         <i className="fa-solid fa-pen-to-square text-[#ff9c40] cursor-pointer text-[15px]"
                         ></i>
                     </button>
+
                     <button
                         onClick={() => handleAllTask(row.id, row)}
                         type="button" className="px-3 py-2  font-medium text-gray-900 border-r border-y border-gray-200 hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent">
@@ -276,7 +278,7 @@ const CreateTask = (props) => {
     const tableHeaderstyle = {
         headCells: {
             style: {
-                fontWeight: "bold",
+                fontWeight: "600",
                 fontSize: "16px",
             },
         }
@@ -285,7 +287,6 @@ const CreateTask = (props) => {
     return (
         <div className="e_pages">
             <div className="bg-white rounded-lg relative">
-
 
                 {
                     showCreateTask ?
