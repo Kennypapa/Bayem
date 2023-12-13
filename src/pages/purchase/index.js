@@ -3,14 +3,23 @@ import DataTable from "react-data-table-component";
 import { db } from "../../firebase.config";
 import { getDocs, collection, addDoc } from "firebase/firestore";
 import DeleteModal from "./delete-modal";
+import EditModal from './edit-modal';
+import ViewProduct from "./view-product";
+import { Modal } from "flowbite";
 
 const Purchase = () => {
+    const [modal, setShowModal] = useState(false);
     const [togglePurchase, setTogglePurchase] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [showSuccessNotif, setShowSuccessNotif] = useState(false);
     const [allPurchasedItems, setAllPurchasedItems] = useState([]);
     const [showModalDelete, setShowModalDelete] = useState(false);
+    const [showViewProduct, setShowViewProduct] = useState(false);
     const [showEditTask, setShowEditTask] = useState(false);
+    const [id, setId] = useState("");
+    const [deleteId, setDeleteId] = useState("");
+    const [collectAllProducts, setCollectAllProducts] = useState([]);
+    const [holdAllproducts, setHoldAllProducts] = useState([]);
     const [purchaseItems, setPurchaseItems] = useState({
         productName: '',
         price: '',
@@ -29,8 +38,14 @@ const Purchase = () => {
         setTogglePurchase(true);
     };
 
-
     useEffect(() => {
+        setShowModal(
+            new Modal(document.querySelector("#static-modal"), {
+                backdrop: "dynamic",
+                backdropClasses: "bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40",
+                closable: true,
+            })
+        )
         setShowModalDelete(
             new Modal(document.querySelector("#popup-modal"), {
                 backdrop: "dynamic",
@@ -38,8 +53,15 @@ const Purchase = () => {
                 closable: true,
             })
         )
+        setShowViewProduct(
+            new Modal(document.querySelector("#view-modal"), {
+                backdrop: "dynamic",
+                backdropClasses: "bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40",
+                closable: true,
+            })
+        )
         getPurchasedItems();
-    })
+    }, [])
 
     //=========InputchangeHandler ==============//
     const inputChangeHandler = (input, value) => {
@@ -51,31 +73,43 @@ const Purchase = () => {
         });
     };
 
-    //=== Referencing to particular collection in firestore ==//
+    //=== Referencing to particular collection in firestore ===//
     const usersCollectionRef = collection(db, "purchase");
 
-    //========= getPurchasedItems Handler ==//
+    //========= getPurchasedItems Handler ========//
     const getPurchasedItems = async () => {
         const data = await getDocs(usersCollectionRef);
         setAllPurchasedItems(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
 
-    //=========Edit Handler ======//
-    const handleEdit = (id, allTasks) => {
+    // ==========Edit Handler ======//
+    const handleEdit = (id, allProducts) => {
         setShowEditTask(true);
-        setCollectAllTasks(allTasks);
+        setCollectAllProducts(allProducts);
         setId(id);
+        modal.show();
+        console.log(modal.show())
     }
-     //========CloseEdit Handler =======//
-     const closeEditHandler = () => {
+
+
+    //========CloseEdit Handler =======//
+    const closeEditHandler = () => {
         setShowEditTask(false);
     }
-    
-     //===== DeleteHandler ====//    
-     const handleDelete = async (id) => {
-        setDeleteId(id)
+
+    //===== DeleteHandler ====//    
+    const handleDelete = async (id) => {
+        setDeleteId(id);
         showModalDelete.show();
     }
+
+    //======= showAllTask hndler ===========//
+    const handleAllProduct = (id, tasks) => {
+        setHoldAllProducts(tasks);
+        showViewProduct.show();
+        setId(id);
+    }
+
 
     const submitProductHandler = async (e) => {
         e.preventDefault();
@@ -138,6 +172,7 @@ const Purchase = () => {
             cell: (row) => (
                 <div className="inline-flex rounded-md py-2.5" role="group">
                     <button
+                        onClick={() => handleEdit(row.id, row)}
                         type="button"
                         className="px-3 py-2  font-medium text-gray-900 border border-gray-100 rounded-s-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent"
                     >
@@ -145,6 +180,7 @@ const Purchase = () => {
                     </button>
 
                     <button
+                        onClick={() => handleAllProduct(row.id, row)}
                         type="button"
                         className="px-3 py-2  font-medium text-gray-900 border-r border-y border-gray-200 hover:bg-[#d3d3d324] focus:z-10 focus:ring-0 focus:ring-transparent"
                     >
@@ -152,8 +188,8 @@ const Purchase = () => {
                     </button>
 
                     <button
-                        data-modal-target="popup-modal"
-                        data-modal-toggle="popup-modal"
+                        onClick={() => handleDelete(row.id)}
+
                         type="button"
                         className="px-3 py-2  font-medium text-gray-900 border !border-l-0 border-y-gray-100 rounded-e-lg hover:bg-[#d3d3d324] focus:z-10 focus:ring-0"
                     >
@@ -240,10 +276,12 @@ const Purchase = () => {
                         <div className="flex justify-between items-center mb-3 pt-3">
                             <p className="text-2xl">Purchase Product</p>
                             <div>
+
                                 <button
                                     onClick={() => closeHandler()}
                                     className=" hover:font-bold ease-in-out duration-100"
                                 >
+
                                     <i class="fa-solid fa-arrow-left-long"></i>
                                     <span className=" pl-2">Go Back</span>
                                 </button>
@@ -402,9 +440,7 @@ const Purchase = () => {
                     </div>
                 )}
             </div>
-
-            <DeleteModal deleteId={deleteId} showDeleteNotif={handleDeleteNotif} getPurchasedItems={getPurchasedItems} hideDeleteModal={showModalDelete} />
-          //=================success Notification =============//
+            {/*=================success Notification =============*/}
             {
                 showSuccessNotif && (
                     <div className="fixed bottom-8 z-40 right-10 px-4 h-[55px] mb-1 text-sm text-green-800 bg-green-200 w-[300px] flex justify-start items-center" role="alert">
@@ -415,6 +451,10 @@ const Purchase = () => {
                     </div>
                 )
             }
+
+            <ViewProduct holdAllproducts={holdAllproducts}  showViewProduct={showViewProduct} />
+            <DeleteModal deleteId={deleteId} getPurchasedItems={getPurchasedItems} hideDeleteModal={showModalDelete} />
+            <EditModal userId={id} getPurchasedItems={getPurchasedItems} setCollectAllProducts={setCollectAllProducts} collectAllProducts={collectAllProducts} modal={modal} />
         </div>
     );
 };

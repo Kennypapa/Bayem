@@ -286,6 +286,7 @@ const CreateTask = (props) => {
         <div className="e_pages">
             <div className="bg-white rounded-lg relative">
 
+
                 {
                     showCreateTask ?
                         <div className="w-full px-3 pb-8">
@@ -454,7 +455,6 @@ const CreateTask = (props) => {
                             </div>
                         </div>
                 }
-
 
                 {/* ========= Edit Tasks ========= */}
                 {
