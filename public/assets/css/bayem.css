@@ -1,5 +1,5 @@
 body {
-  font-family: 'Montserrat', sans-serif!important;
+  font-family: "Montserrat", sans-serif !important;
   background-color: #d3d3d345;
 }
 .s_btn[aria-selected="true"] {
@@ -43,75 +43,87 @@ body {
 .sidebar ul li a.active i {
   color: #103d15 !important;
 }
-.sidebar_link:hover p{
+.sidebar_link:hover p {
   color: #103d15 !important;
 }
-.sidebar_link:hover i{
+.sidebar_link:hover i {
   color: #103d15 !important;
 }
 /*=======checkbox ==========*/
-[type='checkbox']:checked{
-  background-color: #103d15!important;
+[type="checkbox"]:checked {
+  background-color: #103d15 !important;
 }
-.searchWrapper{
-  min-height: 15px!important;
+.searchWrapper {
+  min-height: 15px !important;
 }
 /* .multiSelectContainer input{
   height: 28px!important;
   min-height: 40px!important;
 } */
-.multiSelectContainer input:focus{
-  border: 1px solid #103d15!important;
-  outline: none!important;
-  outline-color: transparent!important;
-  -webkit-box-shadow: none!important;
-  box-shadow: none!important;
+.multiSelectContainer input:focus {
+  border: 1px solid #103d15 !important;
+  outline: none !important;
+  outline-color: transparent !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
 }
-.chip{
-  background: #103d15!important;
+.chip {
+  background: #103d15 !important;
 }
-.multiSelectContainer input::placeholder{
-  font-size: 15px!important;
-  padding-bottom: 9px!important;
+.multiSelectContainer input::placeholder {
+  font-size: 15px !important;
+  padding-bottom: 9px !important;
 }
-.highlightOption{
-  background: #103d15!important;
+.highlightOption {
+  background: #103d15 !important;
 }
-.multiSelectContainer li:hover{
-  background: #103d15!important;
+.multiSelectContainer li:hover {
+  background: #103d15 !important;
 }
 
-.rdrDefinedRangesWrapper{
-  display: none!important;
+.rdrDefinedRangesWrapper {
+  display: none !important;
 }
-.rdrDateDisplayWrapper{
-  display: none!important;
+.rdrDateDisplayWrapper {
+  display: none !important;
 }
-.rdrEndEdge{
-  color: #ff9c40!important;
+.rdrEndEdge {
+  color: #ff9c40 !important;
 }
-.rdrDay{
-  color: #ff9c40!important;
+.rdrDay {
+  color: #ff9c40 !important;
 }
 
 .worker_bg::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
-  background-image: url('../img/bayem/ARJPAWK.jpg');
+  background-image: url("../img/bayem/ARJPAWK.jpg");
   background-position: center center;
   background-color: #103d15;
   background-size: cover;
 }
 
-.weather-txt:hover i,p{
-    color: #103d15;
+.weather-txt:hover i,
+p {
+  color: #103d15;
 }
 .weather-txt:hover .w_txt {
   color: #103d15;
+}
+.weather_bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-image: url("../img/bayem/bg7.jpg");
+  background-size: cover;
+  width: 100%;
 }
 /* .worker_bg::after{
   content: '';
