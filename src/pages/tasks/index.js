@@ -10,11 +10,10 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { format, set } from 'date-fns';
 import EditTask from './edit-task';
-import ViewModal from './view-modal';
+import ViewTask from './view-task';
 import { Editor } from '@tinymce/tinymce-react';
 
 const CreateTask = (props) => {
-    const [modal, setShowModal] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [showModalDelete, setShowModalDelete] = useState(false);
     const [radioChecked, setRadioChecked] = useState('');
@@ -32,6 +31,7 @@ const CreateTask = (props) => {
     const [showEditTask, setShowEditTask] = useState(false);
     const [success, setSuccess] = useState(false);
     const [holdAllTasks, setHoldAllTasks] = useState('');
+    const [showViewTask, setShowViewTask] = useState(false);
 
     // const [listWorkers, setListWorkers] = useState([]);
     const [listWorkers, setListWorkers] = useState([
@@ -109,8 +109,10 @@ const CreateTask = (props) => {
             })
         )
 
-        setShowModal(
-            new Modal(document.querySelector("#static-modal"), {
+  
+
+        setShowViewTask(
+            new Modal(document.querySelector("#view-modal"), {
                 backdrop: "dynamic",
                 backdropClasses: "bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40",
                 closable: true,
@@ -206,8 +208,7 @@ const CreateTask = (props) => {
     //======= showAllTask hndler ===========//
     const handleAllTask = (id, tasks) => {
         setHoldAllTasks(tasks);
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-        modal.show();
+        showViewTask.show();
         setId(id);
     }
 
@@ -467,7 +468,7 @@ const CreateTask = (props) => {
             </div>
 
             <DeleteModal deleteId={deleteId} showDeleteNotif={handleDeleteNotif} getTasks={getTasks} hideDeleteModal={showModalDelete} />
-            <ViewModal holdAllTasks={holdAllTasks} />
+            <ViewTask holdAllTasks={holdAllTasks}  showViewTask={showViewTask}/>
             {
                 showSuccessNotif && (
                     <div className="fixed bottom-8 z-40 right-10 px-4 h-[55px] mb-1 text-sm text-green-800 bg-green-200 w-[300px] flex justify-start items-center" role="alert">

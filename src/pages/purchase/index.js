@@ -215,6 +215,7 @@ const Purchase = () => {
             <div className="bg-white rounded-lg pb-4">
                 {togglePurchase ? (
                     <div>
+
                         <div className="w-full flex justify-between items-center px-3 pt-4">
                             <p className="text-2xl">Purchase</p>
                             <button
@@ -456,7 +457,7 @@ const Purchase = () => {
                 )
             }
 
-            <ViewProduct holdAllproducts={holdAllproducts}  showViewProduct={showViewProduct} />
+            <ViewProduct holdAllproducts={holdAllproducts}  showViewProduct={showViewProduct}  />
             <DeleteModal deleteId={deleteId} getPurchasedItems={getPurchasedItems} hideDeleteModal={showModalDelete} />
             <EditModal userId={id} getPurchasedItems={getPurchasedItems} setCollectAllProducts={setCollectAllProducts} collectAllProducts={collectAllProducts} modal={modal} />
         </div>
