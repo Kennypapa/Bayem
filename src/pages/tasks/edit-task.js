@@ -45,17 +45,22 @@ const EditTasks = (props) => {
                 [input]: value
             }
         });
-    } 
-    
-    const [listWorkers, setListWorkers] = useState([
-        { id: 1, firstname: 'Option 1', lastname: 'Option 2' }
-    ]);
+    }
 
-;    //======= Map through the data to create initial options ===//
-    const initialOptions = props.collectAllTask.listWorkers.selectedOption.map(item => ({
+    //======= Map through the data to create initial options ===//
+    const initialOptions = props.listWorkers.map(item => ({
         value: item.id,
         label: `${item.firstname} ${item.lastname}`,
-    }))
+    }));
+
+    //=============== fetch all workers ===========//
+    const handleChange = (selectedOption) => {
+        setSelectedOptions(selectedOption);
+        props.setCollectAllTasks(prevState => ({
+            ...prevState,
+            listWorkers: { ...props.collectAllTask.listWorkers, selectedOption }
+        }))
+    };
 
     const handleDateChange = (ranges) => {
         setDate(ranges.selection);
@@ -75,7 +80,7 @@ const EditTasks = (props) => {
             description: props.collectAllTask.description,
             date: props.collectAllTask.date,
             status: props.collectAllTask.status,
-            // listWorkers : props.collectAllTask. listWorkers,
+            listWorkers: props.collectAllTask.listWorkers,
         });
         setEditSuccess(true);
         setIsLoading(false);
@@ -86,67 +91,8 @@ const EditTasks = (props) => {
     //========CloseEdit Handler =======//
     const closeEditHandler = () => {
         setShowEditTask(false);
-    }
-
-    useEffect(() => {
-        switch (radioChecked) {
-            case 'days':
-                setTaskFrequency(
-                    <div className="mt-3">
-                        <input
-                            type="time"
-                            id="daysDate"
-                            value={props.collectAllTask.daysDate}
-                            onChange={(e) => { inputChangeHandler('daysDate', e.target.value) }}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#103d15] focus:border-[#103d15] block w-full p-2.5"
-                        />
-                    </div>)
-                break;
-            case 'weeks':
-                setTaskFrequency(
-                    <div className="mt-3">
-                        <label class="cursor-pointer mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Every week:</label>
-                        <Multiselect
-                            isObject={true}
-                            options={options}
-                            selectedValues={props.collectAllTask.weekDays}
-                            onSelect={handleChange}
-                            onRemove={handleChange}
-                            displayValue="name"
-                        />
-                    </div>
-                )
-                break;
-            case 'months':
-                setTaskFrequency(<div className="mt-3">
-                    <div className="flex bg-[#d3d3d345]  w-[330px] py-1.5 pl-4 rounded">
-                        <span className="font-[600]">From</span>
-                        <p className="mx-2">
-                            {format(date.startDate, "MMM,dd,yyyy")}
-                        </p>
-                        <span className="font-[600]">to</span>
-                        <p className="ml-3">
-                            {format(date.endDate, "MMM,dd,yyyy")}
-                        </p>
-                    </div>
-                    <DateRangePicker
-                        ranges={[date]}
-                        onChange={handleDateChange}
-                    />
-                </div>)
-                break;
-            default: setTaskFrequency(<></>)
-        }
-    }, [radioChecked, date]);
-
-    //=============== fetch all workers ===========//
-    const handleChange = (selectedOption) => {
-        setSelectedOptions(selectedOption);
-        setAllTasksDetails(prevState => ({
-            ...prevState,
-            weekDays: { ...allTaskDetails.weekDays, selectedOption }
-        }))
     };
+
     return (
         <div>
             <div className="w-full px-3 h-fit pb-8 absolute top-0 bg-white z-30 rounded-md">
@@ -237,7 +183,7 @@ const EditTasks = (props) => {
                                         <Multiselect
                                             isObject={true}
                                             options={initialOptions}
-                                            selectedValues={selectedOptions}
+                                            selectedValues={props.selectedOptions}
                                             onSelect={handleChange}
                                             onRemove={handleChange}
                                             displayValue="label"

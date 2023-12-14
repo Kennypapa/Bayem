@@ -57,7 +57,9 @@ const CreateTask = (props) => {
         endDate: new Date(),
         key: 'selection'
     });
+    
     const [editorContent, setEditorContent] = useState('');
+
     const handleEditorChange = (content, editor) => {
         // Update the state with the new content
         const sanitizedContent = content.replace(/<\/?p>/g, '');
@@ -178,7 +180,7 @@ const CreateTask = (props) => {
         setCollectAllTasks(allTasks);
         setId(id);
     }
-    console.log(collectAllTasks)
+    console.log(collectAllTasks);
     //========CloseEdit Handler =======//
     const closeEditHandler = () => {
         setShowEditTask(false);
@@ -461,7 +463,7 @@ const CreateTask = (props) => {
                 {/* ========= Edit Tasks ========= */}
                 {
                     showEditTask ?
-                        <EditTask successNotif={successNotif} getTasks={getTasks} hideEditTask={closeEditHandler} collectAllTask={collectAllTasks} taskId={id} setCollectAllTasks={setCollectAllTasks} hideCreateTask={hideCreateTask} />
+                        <EditTask selectedOptions={selectedOptions} listWorkers={listWorkers} allTaskDetails={allTaskDetails} setAllTasksDetails={setAllTasksDetails} successNotif={successNotif} getTasks={getTasks} hideEditTask={closeEditHandler} collectAllTask={collectAllTasks} taskId={id} setCollectAllTasks={setCollectAllTasks} hideCreateTask={hideCreateTask} />
                         :
                         null
                 }

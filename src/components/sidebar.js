@@ -36,7 +36,7 @@ const Sidebar = () => {
                         </NavLink>
                     </li>
 
-                    <li className='mb-3'>
+                    {/* <li className='mb-3'>
                         <NavLink
 
                             className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
@@ -45,7 +45,7 @@ const Sidebar = () => {
                             <i class="fa-solid fa-users-line icon_ text-base w-9"></i>
                             <p className='text-white text-left text-base font-medium py-2 ml-1'>Field Mapping</p>
                         </NavLink>
-                    </li>
+                    </li> */}
                     <li className=' mb-3'>
                         <NavLink
 

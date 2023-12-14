@@ -10,16 +10,25 @@ const Navbar = () => {
 
             <div className="flex">
                 <div className='w-[250px]  h-[20px]'></div>
+                <div className='block cursor-pointer'>
+                    <input id="toggle" type="checkbox" value="" className="cursor-pointer hidden w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                </div>
                 <label htmlFor="toggle" className='cursor-pointer'>
                     <i class="fa-solid fa-bars text-xl"></i>
                 </label>
             </div>
 
-            <div>
-                <div className='block cursor-pointer'>
-                    <input id="toggle" type="checkbox" value="" className="cursor-pointer hidden w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+            <div className='flex justify-end items-center'>
+               <NavLink to="/admin/weather-update"  className="text-[#282828] weather-txt mr-10">
+                <div className=' flex justify-end items-center' id='Dropdown-one'>
+                    <div className='pl-1'>
+                        <i class="fa-solid fa-cloud-sun-rain text-4xl text-[#282828]"></i>
+                    </div>
+                    <p className='text-[#282828] w_txt font-[500]'>Weather Update</p>
                 </div>
-                <div >
+                </NavLink>
+
+                <div id='Dropdown-two'>
                     <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className=" focus:ring-0 focus:outline-none focus:ring-transprent font-medium text-sm  py-2.5 text-center inline-flex items-center" type="button">
                         <div className='h-[50px] w-[50px] rounded-full'>
                             <img src="../assets/img/bayem/CEO.jpg" className=" rounded-full" alt="avatar" />

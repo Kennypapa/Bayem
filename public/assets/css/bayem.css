@@ -106,6 +106,13 @@ body {
   background-color: #103d15;
   background-size: cover;
 }
+
+.weather-txt:hover i,p{
+    color: #103d15;
+}
+.weather-txt:hover .w_txt {
+  color: #103d15;
+}
 /* .worker_bg::after{
   content: '';
   position: absolute;

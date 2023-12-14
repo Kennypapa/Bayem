@@ -16,6 +16,7 @@ import Salary from './pages/salary';
 import ExpensesCategory from './pages/expenses-category';
 import ProtectedLayout from './components/protectedLayout';
 import GetStarted from './pages/get-started';
+import WeatherForecast from './pages/weather-forecast';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -33,6 +34,7 @@ root.render(
             <Route path="purchase" element={<Purchase />} />
             <Route path="plans" element={<Plans />} />
             <Route path="salary" element={<Salary />} />
+            <Route path="weather-update" element={<WeatherForecast />} />
             <Route path="expenses-category" element={<ExpensesCategory />} />
           </Route>
 
