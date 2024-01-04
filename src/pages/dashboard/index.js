@@ -1,6 +1,31 @@
 
-const Dashboard = () => {
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 
+ChartJS.register(ArcElement, Tooltip, Legend);
+export const data = {
+  labels: ['Crop', 'Machines', 'Tools'],
+  datasets: [
+    {
+      label: 'Farm Health',
+      data: [40, 19, 25],
+      backgroundColor: [
+        '#0cc650',
+        'rgba(54, 162, 235, 0.2)',
+        '#c6b70c'
+      ],
+      borderColor: [
+        '#0cc650',
+        'rgba(54, 162, 235, 1)',
+        '#c6b70c'
+        
+      ],
+      borderWidth: 1,
+    },
+  ],
+};
+const Dashboard = () => { 
+ 
   return (
 
     <div className="e_pages">
@@ -18,46 +43,50 @@ const Dashboard = () => {
           <div className="grid grid-cols-3 w-full gap-6 max-w-[1300px] mt-8">
 
             <div className=" w-full rounded-lg bg-[#f8f8f8] px-4 h-[130px] pt-3">
-              <div className="w-[50px] h-[50px] mb-3 rounded-full bg-[#60994c]">
-
+              <div className="w-[50px] h-[50px] mb-3 rounded-full bg-[#ff9c40] flex justify-center items-center">
+                <i class="fa-solid fa-users text-white"></i>
               </div>
               <div className="flex justify-between items-center">
                 <p className="text-[#7a7a7a] font-medium">
-                  No. of Roles
+                  Total Workers
+                </p>
+                <p className="text-[#7a7a7a] text-2xl font-semibold">
+                  20
+                </p>
+              </div>
+            </div>
+
+            <div className=" w-full rounded-lg bg-[#f8f8f8] px-4 h-[130px] pt-3">
+              <div className="w-[50px] h-[50px] mb-3 rounded-full bg-[#ff9c40] flex justify-center items-center">
+                <i class="fa-solid fa-person text-white text-2xl"></i>
+              </div>
+              <div className="flex justify-between items-center">
+                <p className="text-[#7a7a7a] font-medium">
+                  Male
                 </p>
                 <p className="text-[#7a7a7a] text-2xl font-semibold">
                   8
                 </p>
               </div>
             </div>
-            <div className=" w-full rounded-lg bg-[#f8f8f8] px-4 h-[130px] pt-3">
-              <div className="w-[50px] h-[50px] mb-3 rounded-full bg-[#60994c]">
 
+            <div className=" w-full rounded-lg bg-[#f8f8f8] px-4 h-[130px] pt-3">
+              <div className="w-[50px] h-[50px] mb-3 rounded-full bg-[#ff9c40] flex justify-center items-center">
+                <i class="fa-solid fa-person text-white text-2xl"></i>
               </div>
               <div className="flex justify-between items-center">
                 <p className="text-[#7a7a7a] font-medium">
-                  No. of Workers
+                  Female
                 </p>
                 <p className="text-[#7a7a7a] text-2xl font-semibold">
                   8
                 </p>
               </div>
             </div>
-            <div className=" w-full rounded-lg bg-[#f8f8f8] px-4 h-[130px] pt-3">
-              <div className="w-[50px] h-[50px] mb-3 rounded-full bg-[#60994c]">
 
-              </div>
-              <div className="flex justify-between items-center">
-                <p className="text-[#7a7a7a] font-medium">
-                  No. of Roles
-                </p>
-                <p className="text-[#7a7a7a] text-2xl font-semibold">
-                  8
-                </p>
-              </div>
-            </div>
             <div className=" w-full rounded-lg bg-[#f8f8f8] px-4 h-[130px] pt-3">
-              <div className="w-[50px] h-[50px] mb-3 rounded-full bg-[#60994c]">
+              <div className="w-[50px] h-[50px] mb-3 rounded-full bg-[#ff9c40] flex justify-center items-center">
+                <i class="fa-solid fa-tractor text-white"></i>
               </div>
               <div className="flex justify-between items-center">
                 <p className="text-[#7a7a7a] font-medium">
@@ -68,9 +97,10 @@ const Dashboard = () => {
                 </p>
               </div>
             </div>
-            <div className=" w-full rounded-lg bg-[#f8f8f8] px-4 h-[130px] pt-3">
-              <div className="w-[50px] h-[50px] mb-3 rounded-full bg-[#60994c]">
 
+            <div className=" w-full rounded-lg bg-[#f8f8f8] px-4 h-[130px] pt-3">
+              <div className="w-[50px] h-[50px] mb-3 rounded-full bg-[#ff9c40] flex justify-center items-center">
+                <i class="fa-solid fa-screwdriver-wrench text-white" ></i>
               </div>
               <div className="flex justify-between items-center">
                 <p className="text-[#7a7a7a] font-medium">
@@ -83,11 +113,26 @@ const Dashboard = () => {
 
             </div>
 
+            <div className=" w-full rounded-lg bg-[#f8f8f8] px-4 h-[130px] pt-3">
+              <div className="w-[50px] h-[50px] mb-3 rounded-full bg-[#ff9c40] flex justify-center items-center">
+                <i class="fa-solid fa-screwdriver-wrench text-white" ></i>
+              </div>
+              <div className="flex justify-between items-center">
+                <p className="text-[#7a7a7a] font-medium">
+                  Available Tasks
+                </p>
+                <p className="text-[#7a7a7a] text-2xl font-semibold">
+                  13
+                </p>
+              </div>
+
+            </div>
+
           </div>
 
-          <div className="w-full flex mt-4">
-            <div className=" w-full border mr-3">
-
+          <div className="w-full flex mt-12">
+            <div className=" w-full mr-3">
+               <Doughnut data={data} />
             </div>
             <div className=" rounded-md min-w-[300px] h-[300px] bg-[#f8f8f8]">
               <p className="uppercase font-semibold text-center pt-3">Upcoming Tasks</p>
@@ -109,6 +154,8 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+
+          
         </div>
       </div>
     </div>
