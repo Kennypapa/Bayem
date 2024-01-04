@@ -13,6 +13,7 @@ import FieldMapping from './pages/field-mapping';
 import Purchase from './pages/purchase';
 import Plans from './pages/plans';
 import Salary from './pages/salary';
+import Reports from './pages/reports'
 import ExpensesCategory from './pages/expenses-category';
 import ProtectedLayout from './components/protectedLayout';
 import GetStarted from './pages/get-started';
@@ -35,6 +36,7 @@ root.render(
             <Route path="plans" element={<Plans />} />
             <Route path="salary" element={<Salary />} />
             <Route path="weather-update" element={<WeatherForecast />} />
+            <Route path="reports" element={<Reports />} />
             <Route path="expenses-category" element={<ExpensesCategory />} />
           </Route>
 
