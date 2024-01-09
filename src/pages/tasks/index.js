@@ -330,7 +330,6 @@ const CreateTask = (props) => {
                                                     />
                                                 </div>
 
-
                                                 <div className="mb-4">
                                                     <label for="status" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Task (Status)</label>
                                                     <select

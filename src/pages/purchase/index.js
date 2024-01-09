@@ -91,7 +91,6 @@ const Purchase = () => {
         console.log(modal.show())
     }
 
-
     //========CloseEdit Handler =======//
     const closeEditHandler = () => {
         setShowEditTask(false);
@@ -109,7 +108,6 @@ const Purchase = () => {
         showViewProduct.show();
         setId(id);
     }
-
 
     const submitProductHandler = async (e) => {
         e.preventDefault();

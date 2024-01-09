@@ -125,6 +125,9 @@ p {
   background-size: cover;
   width: 100%;
 }
+.report_txt:hover .report_li{
+     margin-left: 30px!important;
+}
 /* .worker_bg::after{
   content: '';
   position: absolute;
