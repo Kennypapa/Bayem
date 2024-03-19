@@ -13,7 +13,7 @@ const GetStarted = () => {
                     </p>
                 </div>
                 <div className="mt-4">
-                    <Link to="/admin/dashboard">
+                    <Link to="/dashboard">
                         <button className="text-white rounded-md ease-in-out duration-150 border !border-[#60994c] px-3.5 py-2 hover:bg-transparent bg-[#60994c]">
                             Get Started
                         </button>

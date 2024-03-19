@@ -9,7 +9,7 @@ const Sidebar = () => {
                 <ul className="flex flex-col text-sm font-medium text-center px-2.5">
                     <li className='mb-3 w-full'>
                         <NavLink className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
-                            to="/admin/dashboard"
+                            to="/dashboard"
                         >
                             {/* <i className="fa-solid fa-user icon_ text-base w-9"></i> */}
                             <i class="fa-solid fa-house-chimney-window icon_ text-base w-9"></i>
@@ -19,7 +19,7 @@ const Sidebar = () => {
                     <li className='mb-3'>
                         <NavLink
                             className=' sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
-                            to="/admin/roles"
+                            to="/roles"
                         >
                             <i className="fa-solid fa-list  icon_ text-base w-9"></i>
                             <p className='text-white text-left text-base font-medium py-2 ml-1'> Roles</p>
@@ -29,7 +29,7 @@ const Sidebar = () => {
                         <NavLink
 
                             className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
-                            to="/admin/workers"
+                            to="/workers"
                         >
                             <i class="fa-solid fa-users-line icon_ text-base w-9"></i>
                             <p className='text-white text-left text-base font-medium py-2 ml-1'>Workers</p>
@@ -40,7 +40,7 @@ const Sidebar = () => {
                         <NavLink
 
                             className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
-                            to="'/admin/field-mapping"
+                            to="'/field-mapping"
                         >
                             <i class="fa-solid fa-users-line icon_ text-base w-9"></i>
                             <p className='text-white text-left text-base font-medium py-2 ml-1'>Field Mapping</p>
@@ -50,7 +50,7 @@ const Sidebar = () => {
                         <NavLink
 
                             className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
-                            to="/admin/create-task"
+                            to="/create-task"
                         >
                             <i class="fa-solid fa-clipboard-check icon_ text-base w-9"></i>
                             <p className='text-white text-left text-base font-medium py-2 ml-1'>Task</p>
@@ -60,38 +60,20 @@ const Sidebar = () => {
                         <NavLink
 
                             className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
-                            to="/admin/purchase"
+                            to="/purchase"
                         >
                             <i class="fa-solid fa-cart-shopping icon_ text-base w-9"></i>
                             <p className='text-white text-left text-base font-medium py-2 ml-1'>Purchase</p>
                         </NavLink>
                     </li>
-                    <li className='mb-3'>
-                        <NavLink
-
-                            className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
-                            to="/admin/plans"
-                        >
-                            <i class="fa-solid fa-calendar-days icon_ text-base w-9"></i>
-                            <p className='text-white text-left text-base font-medium py-2 ml-1'>Plans</p>
-                        </NavLink>
-                    </li>
-                    <li className='mb-3'>
-                        <NavLink
-
-                            className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
-                            to="/admin/salary"
-                        >
-                            <i class="fa-solid fa-hand-holding-dollar icon_ text-base w-9"></i>
-                            <p className='text-white text-left text-base font-medium py-2 ml-1'>Salary</p>
-                        </NavLink>
-                    </li>
+                   
+                   
                    
 {/* 
                     <li className='mb-3'>
                         <NavLink
                             className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
-                            to="/admin/expenses-category"
+                            to="/expenses-category"
                         >
                             <i class="fa-solid fa-list icon_ text-base w-9"></i>
                             <p className='text-white text-left text-base font-medium py-2 ml-1'>Expenses Category</p>
@@ -103,7 +85,7 @@ const Sidebar = () => {
                         <NavLink
 
                             className='sidebar_link ease-in-out duration-150 flex justify-start items-center  hover:bg-gray-100 s_btn  w-full rounded-md pl-1'
-                            to="/admin/reports"
+                            to="/reports"
                         >
                             <i class="fa-solid fa-file icon_ text-base w-9"></i>
                             <p className='text-white text-left text-base font-medium py-2 ml-1'>Reports</p>
