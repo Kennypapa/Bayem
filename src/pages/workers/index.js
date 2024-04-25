@@ -8,6 +8,7 @@ import DataTable from "react-data-table-component";
 import { db } from "../../firebase.config";
 import WorkerProfile from "./worker-profile";
 
+
 const Workers = () => {
   const [modal, setShowModal] = useState(false);
   const [showModalCreate, setModalCreate] = useState(false);
@@ -191,6 +192,7 @@ const Workers = () => {
               </button>
             </div>
             <DataTable
+
               columns={columns}
               fixedHeader
               isSortable
@@ -219,6 +221,7 @@ const Workers = () => {
                   </button>
                 </div>
               }
+
             />
           </div>
       }

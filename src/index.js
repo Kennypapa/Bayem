@@ -24,7 +24,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="" element={<App />} >
-        
+    
           <Route path="" element={<GetStarted />} />
           <Route path="/" element={<ProtectedLayout />} >
             <Route path="dashboard" element={<Dashboard />} />
@@ -39,7 +39,6 @@ root.render(
             <Route path="reports" element={<Reports />} />
             <Route path="expenses-category" element={<ExpensesCategory />} />
           </Route>
-
         </Route>
       </Routes>
     </BrowserRouter>
