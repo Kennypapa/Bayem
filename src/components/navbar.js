@@ -9,17 +9,11 @@ const Navbar = () => {
         <div className=" h-[70px] w-full mr-auto flex justify-between items-center bg-white pl-6 pr-10 top-0 fixed z-10 ">
 
             <div className="flex">
-                <div className='w-[250px]  h-[20px]'></div>
-                <div className='block cursor-pointer'>
-                    <input id="toggle" type="checkbox" value="" className="cursor-pointer hidden w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                </div>
-                <label htmlFor="toggle" className='cursor-pointer'>
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </label>
+                
             </div>
 
             <div className='flex justify-end items-center'>
-               <NavLink to="/admin/weather-update"  className="text-[#282828] weather-txt mr-10">
+               <NavLink to="/dashboard"  className="text-[#282828] weather-txt mr-10">
                 <div className=' flex justify-end items-center' id='Dropdown-one'>
                     <div className='pl-1'>
                         <i class="fa-solid fa-cloud-sun-rain text-4xl text-[#282828]"></i>
@@ -42,7 +36,7 @@ const Navbar = () => {
                     <div id="dropdown" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                         <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                             <li>
-                                <NavLink to="/admin/profile" className="block px-4 py-2 hover:bg-gray-300  dark:hover:text-white">
+                                <NavLink to="/dashboard" className="block px-4 py-2 hover:bg-gray-300  dark:hover:text-white">
                                     <div className='flex'>
                                         <span>
                                             <i className='fa-regular fa-user'></i>
@@ -52,7 +46,7 @@ const Navbar = () => {
                                         </p>
                                     </div>
                                 </NavLink>
-                                <NavLink to="/admin/profile" className="block px-4 py-2 hover:bg-gray-300  dark:hover:text-white">
+                                <NavLink to="/dashboard" className="block px-4 py-2 hover:bg-gray-300  dark:hover:text-white">
                                     <div className='flex justify-start items-center'>
                                         <i class="fa-solid fa-power-off text-red-600 font-semibold"></i>
                                         <p className='text-red-600 ml-3 '>Logout</p>
