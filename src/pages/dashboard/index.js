@@ -2,28 +2,6 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
-export const data = {
-  labels: ['Crop', 'Machines', 'Tools'],
-  datasets: [
-    {
-      label: 'Farm Health',
-      data: [40, 19, 25],
-      backgroundColor: [
-        '#0cc650',
-        'rgba(54, 162, 235, 0.2)',
-        '#c6b70c'
-      ],
-      borderColor: [
-        '#0cc650',
-        'rgba(54, 162, 235, 1)',
-        '#c6b70c'
-        
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
 const Dashboard = () => { 
  
   return (
@@ -129,33 +107,6 @@ const Dashboard = () => {
             </div>
 
           </div>
-
-          <div className="w-full flex mt-12">
-            <div className=" w-full mr-3">
-               <Doughnut data={data} />
-            </div>
-            <div className=" rounded-md min-w-[300px] h-[300px] bg-[#f8f8f8]">
-              <p className="uppercase font-semibold text-center pt-3">Upcoming Tasks</p>
-              <div className="mt-3">
-                <ul className=" list-disc pl-7">
-                  <li>
-                    Tractor fixing
-                  </li>
-                  <li>
-                    Garden cutting
-                  </li>
-                  <li>
-                    Poultry Cleaning
-                  </li>
-                  <li>
-                    Potatoe plantation
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          
         </div>
       </div>
     </div>
