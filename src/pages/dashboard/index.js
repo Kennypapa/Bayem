@@ -7,7 +7,9 @@ const Dashboard = () => {
   return (
 
     <div className="e_pages">
+
       <div className="bg-white rounded-lg pb-4 px-3 pt-3">
+
         <div>
           <p className="text-2xl font-medium">
             Hello, admin.
@@ -18,6 +20,7 @@ const Dashboard = () => {
         </div>
 
         <div>
+
           <div className="grid grid-cols-3 w-full gap-6 max-w-[1300px] mt-8">
 
             <div className=" w-full rounded-lg bg-[#f8f8f8] px-4 h-[130px] pt-3">
@@ -103,12 +106,13 @@ const Dashboard = () => {
                   13
                 </p>
               </div>
-
             </div>
 
           </div>
         </div>
+
       </div>
+      
     </div>
   )
 }
